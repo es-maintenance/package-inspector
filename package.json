@@ -1,0 +1,16 @@
+{
+  "name": "package-inspector",
+  "version": "0.0.1",
+  "description": "Tooling for inspecting your package",
+  "main": "index.js",
+  "repository": "git@github.com:es-maintenance/package-inspector.git",
+  "author": "Lewis Miller <lewis.miller.github@pm.me>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "prettier": "2.6.2"
+  }
+}
