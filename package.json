@@ -21,5 +21,9 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "volta": {
+    "node": "14.17.0",
+    "yarn": "1.22.10"
   }
 }
