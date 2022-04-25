@@ -79,10 +79,10 @@ export interface ISuggestion {
 export interface Package
   extends Pick<IPackageJson, 'name' | 'version' | 'funding' | 'homepage'> {
   dependencies: Package[];
-  devDependencies: Package[];
   pathOnDisk: string;
   breadcrumb: string;
   size: number;
+  type?: 'prod' | 'dev' | 'peerOptional' | 'peer'
 }
 
 export interface PackageVersionByName {
