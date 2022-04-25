@@ -1,7 +1,5 @@
 import { IDependencyMap, IPackageJson } from 'package-json-type';
 
-export type DependenciesList = [string, IDependency][];
-
 export interface IArboristEdge {
   type: Set<string>;
   name: string;
@@ -45,16 +43,6 @@ export interface IArboristNode {
   version: string;
 }
 
-export interface IDependency {
-  breadcrumb: string;
-  funding?: string;
-  homepage?: string;
-  location: string;
-  version: string;
-  name: string;
-  size: number;
-}
-
 export interface IActionMeta {
   // where it exists in the tree (which dep brought this in) A->B->C
   breadcrumb: string;
@@ -88,9 +76,22 @@ export interface ISuggestion {
   actions: IAction[];
 }
 
+export interface Package
+  extends Pick<IPackageJson, 'name' | 'version' | 'funding' | 'homepage'> {
+  dependencies: Package[];
+  devDependencies: Package[];
+  pathOnDisk: string;
+  breadcrumb: string;
+  size: number;
+}
+
+export interface PackageVersionByName {
+  name: string;
+  version: string;
+}
 export interface IReport {
-  latestPackages: IDependencyMap;
-  package: IPackageJson;
-  dependencies: DependenciesList;
+  latestPackages: PackageVersionByName[];
+  package: Package;
+  dependencies: Package[];
   suggestions: ISuggestion[];
 }
