@@ -79,6 +79,10 @@ export default async function generateReport(cwd: string): Promise<IReport> {
   const dependencies: Package[] = [];
 
   arboristValues.forEach((entryInfo) => {
+    const edge = [...entryInfo.edgesIn.values()].find((edgeIn) => {
+      return edgeIn.name === entryInfo.name;
+    });
+
     dependencies.push({
       pathOnDisk: entryInfo.path
         ? entryInfo.path.replace(process.cwd() + '/', '')
@@ -92,6 +96,7 @@ export default async function generateReport(cwd: string): Promise<IReport> {
         directory: entryInfo.path,
         exclude: new RegExp(path.resolve(entryInfo.path, 'node_modules')),
       }),
+      type: edge?.type,
       // Get the correct values for these
       dependencies: convertDepsFormat(entryInfo.edgesOut),
     });
