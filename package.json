@@ -11,7 +11,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn workspace @package-inspector/pi-ui dev",
+    "dev:ui": "yarn workspace @package-inspector/ui dev",
     "prepare": "husky install"
   },
   "devDependencies": {

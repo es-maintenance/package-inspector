@@ -1,5 +1,5 @@
 {
-  "name": "@package-inspector/pi-ui",
+  "name": "@package-inspector/ui",
   "version": "0.1.0",
   "private": true,
   "engines": {
