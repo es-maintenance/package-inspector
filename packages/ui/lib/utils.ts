@@ -1,4 +1,4 @@
-import { Package } from '@package-inspector/pi-cli';
+import type { Package } from '@package-inspector/core';
 
 export function getDirectDeps(deps: Package[]): Package[] {
   return deps.filter((dep) => dep.type === 'prod' || dep.type === 'dev');

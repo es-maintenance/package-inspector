@@ -1,5 +1,5 @@
 import React from 'react';
-import { ISuggestion } from '@package-inspector/pi-cli';
+import type { ISuggestion } from '@package-inspector/core';
 import Link from 'next/link';
 import { Grid, Link as LinkUI } from '@nextui-org/react';
 

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Grid, Link as LinkUI } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 import { ResponsiveTreeMap } from '@nivo/treemap';
-import type { IReport } from '@package-inspector/pi-cli';
+import type { Report as IReport } from '@package-inspector/core';
 
 import styles from '../styles/Report.module.css';
 interface Report extends IReport {
@@ -124,20 +124,23 @@ const Report: NextPage = () => {
           </tr>
         </thead>
         <tbody>
-          {data?.report.package.dependencies.map((dep) => (
-            <tr className={styles.packageTableRow} key={dep.name}>
-              <td>
-                <Link
-                  href={`packages/${encodeURIComponent(dep.name)}`}
-                  passHref={true}
-                >
-                  <LinkUI>{dep.name}</LinkUI>
-                </Link>
-              </td>
-              <td>{dep.version}</td>
-              <td>{dep.type}</td>
-            </tr>
-          ))}
+          {data?.report.package.dependencies.map(
+            (dep) =>
+              dep.name && (
+                <tr className={styles.packageTableRow} key={dep.name}>
+                  <td>
+                    <Link
+                      href={`packages/${encodeURIComponent(dep.name)}`}
+                      passHref={true}
+                    >
+                      <LinkUI>{dep.name}</LinkUI>
+                    </Link>
+                  </td>
+                  <td>{dep.version}</td>
+                  <td>{dep.type}</td>
+                </tr>
+              )
+          )}
         </tbody>
       </table>
     </>
