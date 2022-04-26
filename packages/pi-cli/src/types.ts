@@ -1,7 +1,7 @@
 import { IDependencyMap, IPackageJson } from 'package-json-type';
 
 export interface IArboristEdge {
-  type: Set<string>;
+  type: string;
   name: string;
   spec: string;
   accept: string;
@@ -82,7 +82,7 @@ export interface Package
   pathOnDisk: string;
   breadcrumb: string;
   size: number;
-  type?: 'prod' | 'dev' | 'peerOptional' | 'peer'
+  type?: string;
 }
 
 export interface PackageVersionByName {

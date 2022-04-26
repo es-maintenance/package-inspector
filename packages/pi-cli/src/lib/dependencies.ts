@@ -43,6 +43,7 @@ function convertDepsFormat(edgesOut: Map<string, IArboristEdge>): Package[] {
         pathOnDisk: node.path,
         funding: node.funding || 'N/A',
         homepage: node.homepage || 'N/A',
+        type: dependency.type,
         size: getDirectorySize({
           directory: node.path,
           exclude: new RegExp(path.resolve(node.path, 'node_modules')),
