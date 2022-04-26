@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
-import { IReport } from '@package-inspector/cli';
+import type { Report } from '@package-inspector/core';
 
 const REPORT_LOCATION = process.env.REPORT_LOCATION;
 
-let _REPORT: IReport | null = null;
+let _REPORT: Report | null = null;
 
-function loadData(): IReport {
+function loadData(): Report {
   if (_REPORT !== null) {
     return _REPORT;
   }
@@ -16,7 +16,7 @@ function loadData(): IReport {
     );
   }
 
-  _REPORT = JSON.parse(readFileSync(REPORT_LOCATION, 'utf-8')) as IReport;
+  _REPORT = JSON.parse(readFileSync(REPORT_LOCATION, 'utf-8')) as Report;
 
   return _REPORT;
 }

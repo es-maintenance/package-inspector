@@ -6,7 +6,7 @@ import debug from 'debug';
 import ora from 'ora';
 import yargs from 'yargs';
 
-import generateReport from '../lib/dependencies';
+import { generateReport } from '@package-inspector/core';
 
 function getHrTimeInSeconds(hrtime: [number, number]) {
   const end = process.hrtime(hrtime);

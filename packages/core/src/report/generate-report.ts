@@ -1,28 +1,67 @@
 import path from 'path';
-import debug from 'debug';
+import { IPackageJson } from 'package-json-type';
+import Arborist from '@npmcli/arborist';
 
-import { getBreadcrumb } from './utils/breadcrumb';
-import { getDirectorySize } from './utils/disk';
-import { getLatestPackages } from './utils/latest-packages';
-
+import { IArboristEdge, IArboristNode } from '../types';
+import { getBreadcrumb, getDirectorySize, getLatestPackages } from '../package';
 import {
-  IReport,
-  IArboristNode,
-  Package,
-  PackageVersionByName,
-  IArboristEdge,
-} from '../types';
-import {
-  topLevelDepsFreshness,
   nestedDependencyFreshness,
   notBeingAbsorbedByTopLevel,
   packagesWithExtraArtifacts,
   packagesWithPinnedVersions,
-} from './suggestors';
+  topLevelDepsFreshness,
+} from '../suggestors';
 
-debug('package-inspector');
+export interface IActionMeta {
+  // where it exists in the tree (which dep brought this in) A->B->C
+  breadcrumb: string;
+  name: string;
+  // path to the full directory (might be )
+  directory: string;
+  version: string;
+  // optional b/c the item might not actually exist where specified (the "link" has 0 bytes)
+  size?: number;
+}
 
-const Arborist = require('@npmcli/arborist');
+export interface IAction {
+  message: string;
+  meta: IActionMeta;
+}
+
+export interface ISuggestion {
+  id: string;
+  name: string;
+  message: string;
+  actions: IAction[];
+}
+
+export interface Package
+  extends Pick<IPackageJson, 'name' | 'version' | 'funding' | 'homepage'> {
+  dependencies: Package[];
+  pathOnDisk: string;
+  breadcrumb: string;
+  size: number;
+  type?: string;
+}
+
+export interface PackageVersionByName {
+  name: string;
+  version: string;
+}
+
+export interface Report {
+  latestPackages: PackageVersionByName[];
+  package: Package;
+  dependencies: Package[];
+  suggestions: ISuggestion[];
+}
+
+function getValues(dependencyTree: IArboristNode) {
+  // ignore the root node
+  return [...dependencyTree.inventory.values()].filter(
+    (node) => node.location !== ''
+  );
+}
 
 function convertDepsFormat(edgesOut: Map<string, IArboristEdge>): Package[] {
   return [...edgesOut.values()]
@@ -54,14 +93,7 @@ function convertDepsFormat(edgesOut: Map<string, IArboristEdge>): Package[] {
     });
 }
 
-function getValues(dependencyTree: IArboristNode) {
-  // ignore the root node
-  return [...dependencyTree.inventory.values()].filter(
-    (node) => node.location !== ''
-  );
-}
-
-export default async function generateReport(cwd: string): Promise<IReport> {
+export async function generateReport(cwd: string): Promise<Report> {
   const arb = new Arborist({
     path: cwd,
   });

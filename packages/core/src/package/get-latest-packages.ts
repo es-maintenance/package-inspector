@@ -4,7 +4,7 @@ import tmp from 'tmp';
 import { exec } from 'child_process';
 import { copyFile, writeFile } from 'fs/promises';
 import { IDependencyMap } from 'package-json-type';
-import { IArboristNode } from '../../types';
+import { IArboristNode } from '../types';
 
 import { promisify } from 'util';
 

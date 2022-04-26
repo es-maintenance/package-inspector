@@ -1,20 +1,17 @@
 import semverDiff from 'semver/functions/diff';
-import {
-  ISuggestion,
-  IAction,
-  IArboristNode,
-  ISuggestionInput,
-} from '../../types';
-import { getBreadcrumb } from '../utils/breadcrumb';
-import { getLatestPackages } from '../utils/latest-packages';
+import { IArboristNode, SuggestionInput } from '../types';
+import { getBreadcrumb, getLatestPackages } from '../package';
+
+// TODO: cleanup this export/import pattern
+import { IAction, ISuggestion } from '../report/generate-report';
 
 /**
  * What percentage of your nested dependencies do you bring in that are out of date
  * (major, minor, patch)
  */
-export default async function nestedDependencyFreshness({
+export async function nestedDependencyFreshness({
   arboristValues,
-}: ISuggestionInput): Promise<ISuggestion> {
+}: SuggestionInput): Promise<ISuggestion> {
   const outOfDate: {
     major: IArboristNode[];
     minor: IArboristNode[];

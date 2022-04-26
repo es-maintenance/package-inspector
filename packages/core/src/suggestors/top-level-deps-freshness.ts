@@ -1,18 +1,15 @@
-import {
-  ISuggestion,
-  IVersionMeta,
-  IAction,
-  ISuggestionInput,
-} from '../../types';
-import { getBreadcrumb } from '../utils/breadcrumb';
 import semverDiff from 'semver/functions/diff';
-import { getLatestPackages } from '../utils/latest-packages';
+import type { IVersionMeta, SuggestionInput } from '../types';
+import { getBreadcrumb, getLatestPackages } from '../package';
 
-export default async function topLevelDepsFreshness({
+// TODO: this import/export is bad
+import { IAction, ISuggestion } from '../report/generate-report';
+
+export async function topLevelDepsFreshness({
   rootArboristNode,
   arboristValues,
 }: // latestPackages: IDependencyMap
-ISuggestionInput): Promise<ISuggestion> {
+SuggestionInput): Promise<ISuggestion> {
   const dependencies = Object.assign(
     {},
     Object.assign({}, rootArboristNode?.package.devDependencies ?? {}),

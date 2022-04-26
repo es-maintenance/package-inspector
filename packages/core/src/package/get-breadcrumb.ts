@@ -1,4 +1,4 @@
-import { IArboristNode } from '../../types';
+import { IArboristNode } from '../types';
 
 export function getBreadcrumb(node: IArboristNode): string {
   const bread: string[] = [];

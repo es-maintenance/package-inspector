@@ -1,20 +1,19 @@
 import path from 'path';
 import debug from 'debug';
 
-import { ISuggestion, ISuggestionInput } from '../../types';
-import { getBreadcrumb } from '../utils/breadcrumb';
-import { getDirectorySize } from '../utils/disk';
-import humanFileSize from '../utils/human-file-size';
+import type { SuggestionInput } from '../types';
+import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
+import { ISuggestion } from '../report/generate-report';
 
 /**
  * What dependencies you are bringing in that don't absorb into
  * the semver ranges at the top level
  * version range that doesn't satisfy the top level version range
  */
-export default function notBeingAbsorbedByTopLevel({
+export function notBeingAbsorbedByTopLevel({
   rootArboristNode,
   arboristValues,
-}: ISuggestionInput): Promise<ISuggestion> {
+}: SuggestionInput): Promise<ISuggestion> {
   const notAbsorbed = [];
 
   for (const node of arboristValues) {

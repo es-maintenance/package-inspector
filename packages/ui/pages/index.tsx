@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Card, Grid, Text } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 
-import type { IReport } from '@package-inspector/cli';
+import type { Report as IReport } from '@package-inspector/core';
 
 import SuggestionOverview from '../components/SuggestionOverview';
 

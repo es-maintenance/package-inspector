@@ -1,16 +1,17 @@
 import path from 'path';
-import { ISuggestion, ISuggestionInput } from '../../types';
-import { getBreadcrumb } from '../utils/breadcrumb';
-import { getDirectorySize } from '../utils/disk';
-import humanFileSize from '../utils/human-file-size';
+
+import type { ISuggestion } from '../report/generate-report';
+import type { SuggestionInput } from '../types';
+
+import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
 
 /**
  * suggestion because doesn't allow you to collapse versions
  * (you end up with copies of what could be the same thing)
  */
-export default async function packagesWithPinnedVersions({
+export async function packagesWithPinnedVersions({
   arboristValues,
-}: ISuggestionInput): Promise<ISuggestion> {
+}: SuggestionInput): Promise<ISuggestion> {
   const packagedWithPinned = [];
 
   for (const node of arboristValues) {

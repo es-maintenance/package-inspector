@@ -1,2 +1,1 @@
-export { foo } from './foo';
-export { bar } from './foo/bar';
+export { generateReport, Report } from './report';

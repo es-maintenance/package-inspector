@@ -2,8 +2,6 @@
   "name": "@package-inspector/cli",
   "version": "0.0.0",
   "description": "Node module analytics tool to help figure out how your dependencies are affecting you 🖲",
-  "main": "./dist/index.js",
-  "types": "./src/types.ts",
   "scripts": {
     "lint": "eslint src",
     "build": "tsc --project tsconfig.json",
@@ -21,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@npmcli/arborist": "^5.0.3",
+    "@package-inspector/core": "*",
     "chalk": "^5.0.0",
     "ora": "^5.0.0",
     "prettier": "^2.5.1",

@@ -1,11 +1,11 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { IReport } from '@package-inspector/cli';
+import type { Report } from '@package-inspector/core';
 import { JsonProvider } from '../data';
 import { humanFileSize } from '../lib/utils';
 
 export const resolvers: IResolvers = {
   Report: {
-    summary: (parent: IReport) => {
+    summary: (parent: Report) => {
       const directDeps = parent.package.dependencies.filter(
         (dep) => dep.type === 'prod' || dep.type === 'dev'
       );

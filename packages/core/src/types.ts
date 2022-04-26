@@ -1,5 +1,8 @@
 import { IDependencyMap, IPackageJson } from 'package-json-type';
 
+// TODO: fix... bad
+import { IActionMeta } from './report/generate-report';
+
 export interface IArboristEdge {
   type: string;
   name: string;
@@ -43,55 +46,12 @@ export interface IArboristNode {
   version: string;
 }
 
-export interface IActionMeta {
-  // where it exists in the tree (which dep brought this in) A->B->C
-  breadcrumb: string;
-  name: string;
-  // path to the full directory (might be )
-  directory: string;
-  version: string;
-  // optional b/c the item might not actually exist where specified (the "link" has 0 bytes)
-  size?: number;
-}
-
 export interface IVersionMeta extends IActionMeta {
   version: string;
 }
 
-export interface IAction {
-  message: string;
-  meta: IActionMeta;
-}
-
-export interface ISuggestionInput {
+export interface SuggestionInput {
   rootArboristNode?: IArboristNode;
   arboristValues: IArboristNode[];
   latestPackages?: IDependencyMap;
-}
-
-export interface ISuggestion {
-  id: string;
-  name: string;
-  message: string;
-  actions: IAction[];
-}
-
-export interface Package
-  extends Pick<IPackageJson, 'name' | 'version' | 'funding' | 'homepage'> {
-  dependencies: Package[];
-  pathOnDisk: string;
-  breadcrumb: string;
-  size: number;
-  type?: string;
-}
-
-export interface PackageVersionByName {
-  name: string;
-  version: string;
-}
-export interface IReport {
-  latestPackages: PackageVersionByName[];
-  package: Package;
-  dependencies: Package[];
-  suggestions: ISuggestion[];
 }

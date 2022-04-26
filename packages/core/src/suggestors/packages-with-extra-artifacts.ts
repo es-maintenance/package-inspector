@@ -1,18 +1,18 @@
 import fs from 'fs';
 import path from 'path';
 
-import { ISuggestion, ISuggestionInput } from '../../types';
-import { getBreadcrumb } from '../utils/breadcrumb';
-import { getDirectorySize } from '../utils/disk';
-import humanFileSize from '../utils/human-file-size';
+import type { SuggestionInput } from '../types';
+import type { ISuggestion } from '../report/generate-report';
+
+import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
 
 /**
  * // docs/ or tests/ is published to npm - how do you NOT publish them
  * (use ignore file or package.json.files[]?
  */
-export default async function packagesWithExtraArtifacts({
+export async function packagesWithExtraArtifacts({
   arboristValues,
-}: ISuggestionInput): Promise<ISuggestion> {
+}: SuggestionInput): Promise<ISuggestion> {
   const extraArtifacts = [];
 
   for (const node of arboristValues) {
