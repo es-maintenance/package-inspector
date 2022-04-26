@@ -57,6 +57,7 @@ export const typeDefs = gql`
     package: Package
     dependencies: [Package]
     suggestions: [Suggestion]
+    summary: String
   }
 
   type Query {
