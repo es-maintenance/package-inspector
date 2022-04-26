@@ -1,5 +1,5 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { IReport } from '@package-inspector/pi-cli';
+import { IReport } from '@package-inspector/cli';
 import { JsonProvider } from '../data';
 import { humanFileSize } from '../lib/utils';
 

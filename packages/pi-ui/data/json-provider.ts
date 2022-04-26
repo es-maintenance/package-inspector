@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { IReport } from '@package-inspector/pi-cli';
+import { IReport } from '@package-inspector/cli';
 
 const REPORT_LOCATION = process.env.REPORT_LOCATION;
 

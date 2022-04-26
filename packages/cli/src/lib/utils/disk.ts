@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import debug from 'debug';
 
-const logger = debug('pi-cli');
+const logger = debug('package-inspector-cli');
 
 export function getAllFiles(
   dirPath: string,
