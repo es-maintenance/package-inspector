@@ -6,41 +6,16 @@ export const typeDefs = gql`
     version: String
   }
 
-  interface Package {
+  type Package {
+    breadcrumb: String
     name: String
     version: String
+    funding: String
+    homepage: String
+    pathOnDisk: String
+    size: Int
+    type: String
     dependencies: [Package]
-    devDependencies: [Package]
-  }
-
-  type ArboristEdge {
-    name: String!
-    spec: String!
-    accept: String!
-    from: ArboristNode!
-    to: ArboristNode!
-  }
-
-  type ArboristNode {
-    dev: Boolean!
-    devOptional: Boolean!
-    dummy: Boolean!
-    extraneous: Boolean!
-    hasShrinkwrap: Boolean!
-    legacyPeerDeps: Boolean!
-    location: String!
-    name: String!
-    optional: Boolean!
-    path: String!
-    peer: String!
-    realpath: String!
-    package: Package!
-    packageName: String!
-    isLink: Boolean!
-    isWorkspace: Boolean!
-    homepage: String!
-    funding: String!
-    version: String!
   }
 
   type Dependency {
@@ -70,12 +45,6 @@ export const typeDefs = gql`
     meta: ActionMeta!
   }
 
-  type Suggestionnput {
-    rootArboristNode: ArboristNode
-    arboristValues: [ArboristNode!]!
-    latestPackages: [DependencyMap]
-  }
-
   type Suggestion {
     id: String!
     name: String!
@@ -84,10 +53,10 @@ export const typeDefs = gql`
   }
 
   type Report {
-    latestPackages: [DependencyMap]!
-    package: Package!
+    latestPackages: [DependencyMap]
+    package: Package
     dependencies: [Package]
-    suggestions: [Suggestion!]!
+    suggestions: [Suggestion]
   }
 
   type Query {
