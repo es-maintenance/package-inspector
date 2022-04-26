@@ -1,3 +1,9 @@
+import { Package } from '@package-inspector/pi-cli';
+
+export function getDirectDeps(deps: Package[]): Package[] {
+  return deps.filter((dep) => dep.type === 'prod' || dep.type === 'dev');
+}
+
 export function humanFileSize(bytes: number, si = false, dp = 1) {
   const thresh = si ? 1000 : 1024;
 
