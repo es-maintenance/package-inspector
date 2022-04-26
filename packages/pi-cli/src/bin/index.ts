@@ -23,7 +23,7 @@ const { argv } = yargs
       default: process.cwd(),
       type: 'string',
     },
-    outputDir: {
+    output: {
       describe: 'The path to output report to',
       default: path.resolve(process.cwd(), 'report'),
       type: 'string',
@@ -40,13 +40,13 @@ const changeStatus = (text: string) =>
   (progress.text = `(${getHrTimeInSeconds(start)}) - ${text}`);
 
 const cwd = path.resolve(process.cwd(), argv.path);
-const outputDir = path.resolve(argv.outputDir);
+const reportPath = argv.output.indexOf('.json')
+  ? path.resolve(argv.output)
+  : path.resolve(argv.output, 'report.json');
 
 (async function main() {
   try {
     const report = await generateReport(cwd);
-
-    const reportPath = path.resolve(outputDir, 'report.json');
 
     try {
       fs.mkdirSync(path.dirname(reportPath), { recursive: true });
