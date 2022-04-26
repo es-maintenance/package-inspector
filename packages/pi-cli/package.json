@@ -2,7 +2,8 @@
   "name": "@package-inspector/pi-cli",
   "version": "0.0.0",
   "description": "Node module analytics tool to help figure out how your dependencies are affecting you 🖲",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./src/types.ts",
   "scripts": {
     "lint": "eslint src",
     "build": "tsc --project tsconfig.json",
