@@ -6,9 +6,11 @@ import { Card, Grid, Text } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 import type { IReport } from '@package-inspector/pi-cli';
 
+import SuggestionOverview from '../components/SuggestionOverview';
+
 import styles from '../styles/Home.module.css';
 
-interface Report extends IReport {
+export interface Report extends IReport {
   summary: string;
 }
 
@@ -35,6 +37,9 @@ const ReportQuery = gql`
         message
         actions {
           message
+          meta {
+            breadcrumb
+          }
         }
       }
     }
@@ -46,6 +51,7 @@ const Home: NextPage = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
+  if (!data) return <p>Oh no... could not load report</p>;
 
   return (
     <div className={styles.container}>
@@ -57,9 +63,10 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <Link href="/report">{data?.report.package.name}</Link>
-          <p>{data?.report.summary}</p>
+          <Link href="/report">{data.report.package.name}</Link>
         </h1>
+
+        <SuggestionOverview report={data.report} />
 
         <Grid.Container gap={2} justify={'center'}>
           {data &&
