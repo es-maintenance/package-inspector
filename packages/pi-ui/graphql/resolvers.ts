@@ -1,7 +1,7 @@
-import report from './report.json';
+import { JsonProvider } from '../data';
 
 export const resolvers = {
   Query: {
-    report: () => report,
+    report: () => JsonProvider.getReport(),
   },
 };

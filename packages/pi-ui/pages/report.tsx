@@ -9,11 +9,14 @@ interface Package {
   name: string;
   version: string;
   dependencies: Package[];
-  devDependencies: Package[];
 }
 
 interface Report {
   package: Package;
+}
+
+interface ReportData {
+  report: Report;
 }
 
 const ReportQuery = gql`
@@ -26,24 +29,22 @@ const ReportQuery = gql`
           name
           version
         }
-        devDependencies {
-          name
-          version
-        }
       }
     }
   }
 `;
 
 const Report: NextPage = () => {
-  const { data, loading, error } = useQuery<Report>(ReportQuery);
+  const { data, loading, error } = useQuery<ReportData>(ReportQuery);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
 
+  console.log(data);
+
   return (
     <>
-      <h1>Report: {data?.package.name}</h1>
+      <h1>Report: {data?.report.package.name}</h1>
       <h2>
         <Link href="/" passHref={true}>
           <LinkUI>Back to home</LinkUI>
@@ -58,7 +59,7 @@ const Report: NextPage = () => {
           </tr>
         </thead>
         <tbody>
-          {data?.package.dependencies.map((dep) => (
+          {data?.report.package.dependencies.map((dep) => (
             <tr className={styles.packageTableRow} key={dep.name}>
               <td>{dep.name}</td>
               <td>{dep.version}</td>
