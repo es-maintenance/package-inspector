@@ -8,6 +8,7 @@ import styles from '../styles/Report.module.css';
 interface Package {
   name: string;
   version: string;
+  type: string;
   dependencies: Package[];
 }
 
@@ -27,6 +28,7 @@ const ReportQuery = gql`
         version
         dependencies {
           name
+          type
           version
         }
       }
@@ -39,8 +41,6 @@ const Report: NextPage = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
-
-  console.log(data);
 
   return (
     <>
@@ -56,13 +56,22 @@ const Report: NextPage = () => {
           <tr>
             <th>NAME</th>
             <th>VERSION</th>
+            <th>TYPE</th>
           </tr>
         </thead>
         <tbody>
           {data?.report.package.dependencies.map((dep) => (
             <tr className={styles.packageTableRow} key={dep.name}>
-              <td>{dep.name}</td>
+              <td>
+                <Link
+                  href={`packages/${encodeURIComponent(dep.name)}`}
+                  passHref={true}
+                >
+                  <LinkUI>{dep.name}</LinkUI>
+                </Link>
+              </td>
               <td>{dep.version}</td>
+              <td>{dep.type}</td>
             </tr>
           ))}
         </tbody>
