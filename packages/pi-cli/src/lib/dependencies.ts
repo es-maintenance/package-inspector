@@ -25,31 +25,32 @@ debug('package-inspector');
 const Arborist = require('@npmcli/arborist');
 
 function convertDepsFormat(edgesOut: Map<string, IArboristEdge>): Package[] {
-  return [...edgesOut.values()].filter((dependency) => {
-    const node = dependency.to;
+  return [...edgesOut.values()]
+    .filter((dependency) => {
+      const node = dependency.to;
 
-    // We don't have a node when it is optional or a peer 
-    // At this point we don't count those as they are counted as a part of the package that brings them in
-    return node
-  }).map((dependency) => {
-    
-    const node = dependency.to;
-  
-    return {
-      breadcrumb: getBreadcrumb(node),
-      name: node.name,
-      version: node.version,
-      pathOnDisk: node.path,
-      funding: node.funding || 'N/A',
-      homepage: node.homepage || 'N/A',
-      size: getDirectorySize({
-        directory: node.path,
-        exclude: new RegExp(path.resolve(node.path, 'node_modules')),
-      }),
-      // TODO: going more than two levels causes infinite recursion
-      dependencies: [],
-    }
-  })
+      // We don't have a node when it is optional or a peer
+      // At this point we don't count those as they are counted as a part of the package that brings them in
+      return node;
+    })
+    .map((dependency) => {
+      const node = dependency.to;
+
+      return {
+        breadcrumb: getBreadcrumb(node),
+        name: node.name,
+        version: node.version,
+        pathOnDisk: node.path,
+        funding: node.funding || 'N/A',
+        homepage: node.homepage || 'N/A',
+        size: getDirectorySize({
+          directory: node.path,
+          exclude: new RegExp(path.resolve(node.path, 'node_modules')),
+        }),
+        // TODO: going more than two levels causes infinite recursion
+        dependencies: [],
+      };
+    });
 }
 
 function getValues(dependencyTree: IArboristNode) {
@@ -107,7 +108,7 @@ export default async function generateReport(cwd: string): Promise<IReport> {
         homepage: rootArboristNode.homepage || 'N/A',
       },
       size: 0,
-      dependencies: []
+      dependencies: convertDepsFormat(rootArboristNode.edgesOut),
     },
     dependencies,
     suggestions: [
