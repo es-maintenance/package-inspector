@@ -50,8 +50,8 @@ export async function generateReport(cwd: string): Promise<Report> {
 
     if (!report.dependencies[lookupKey]) {
       report.dependencies[lookupKey] = {
-        funding: depNode.funding || 'N/A',
-        homepage: depNode.homepage || 'N/A',
+        funding: depNode.funding,
+        homepage: depNode.homepage,
         name: depNode.name,
         version: depNode.version,
         type: edge?.type,
@@ -87,8 +87,8 @@ export async function generateReport(cwd: string): Promise<Report> {
   report.root = {
     name: rootArboristNode.packageName,
     version: rootArboristNode.version,
-    funding: rootArboristNode.funding || 'N/A',
-    homepage: rootArboristNode.homepage || 'N/A',
+    funding: rootArboristNode.funding,
+    homepage: rootArboristNode.homepage,
     metadata: {
       pathsOnDisk: [stripPathOnDisk(rootArboristNode.path, cwd)],
     },
