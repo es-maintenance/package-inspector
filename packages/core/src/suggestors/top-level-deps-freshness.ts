@@ -1,8 +1,11 @@
 import semverDiff from 'semver/functions/diff';
+import debug from 'debug';
 
 import type { SuggestionInput } from '../types';
 import { getBreadcrumb, getLatestPackages } from '../package';
 import type { SuggestionAction, Suggestion } from '../models';
+
+const logger = debug('pi-core:suggestor:top-level-deps-freshness');
 
 export async function topLevelDepsFreshness({
   rootArboristNode,
@@ -39,7 +42,7 @@ export async function topLevelDepsFreshness({
             latestPackages[topLevelPackage.name]
           );
         } catch (ex) {
-          console.log(
+          logger(
             `Could not get a diff for ${topLevelPackage.name} between (${
               topLevelPackage.version
             } <> ${latestPackages[topLevelPackage.name]}) (${
@@ -60,11 +63,11 @@ export async function topLevelDepsFreshness({
             break;
         }
       } else {
-        console.log(`No topLevelPackage found for ${dependency}`);
+        logger(`No topLevelPackage found for ${dependency}`);
       }
     } catch (ex) {
       // TODO: better debugging messaging here
-      console.log(ex);
+      logger(ex);
     }
   }
 

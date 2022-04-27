@@ -1,10 +1,12 @@
 import path from 'path';
+import debug from 'debug';
 
 import type { SuggestionAction, Suggestion } from '../models';
 import type { SuggestionInput } from '../types';
 
 import { getBreadcrumb, getDirectorySize } from '../package';
 
+const logger = debug('pi-core:suggestor:packages-with-pinned-versions');
 /**
  * suggestion because doesn't allow you to collapse versions
  * (you end up with copies of what could be the same thing)
@@ -37,7 +39,7 @@ export async function packagesWithPinnedVersions({
             targetPackage: `${node.name}@${version}`,
           });
         } catch (ex) {
-          console.log(ex);
+          logger(ex);
         }
       }
     }
