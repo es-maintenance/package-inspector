@@ -10,6 +10,7 @@ import {
 import fixturify, { type DirJSON } from 'fixturify';
 import tmp from 'tmp';
 
+import NO_NODE_MODULES from '../../__tests__/__fixtures__/no-node-modules.json';
 import MIN_NODE_MODULES from '../../__tests__/__fixtures__/min-node-modules.json';
 import { generateReport } from '../generate-report';
 
@@ -17,6 +18,24 @@ describe('generate-report', () => {
   beforeAll(() => {
     tmp.setGracefulCleanup();
   });
+
+  test('it generates a report for a package with no node_modules', async () => {
+    const { name: tmpLocation } = tmp.dirSync();
+
+    fixturify.writeSync(tmpLocation, NO_NODE_MODULES as DirJSON);
+
+    // TODO: create a page-object for `getOutdated`
+    // Mocking out `outdated` npm call
+    vi.mock('../../package/get-outdated', () => {
+      return {
+        getOutdated: vi.fn(),
+      };
+    });
+
+    const r = await generateReport(tmpLocation);
+
+    expect(r).toMatchSnapshot();
+  }, 10000);
 
   test('it generates a report for a package with basic node_modules', async () => {
     const { name: tmpLocation } = tmp.dirSync();

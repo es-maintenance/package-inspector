@@ -70,3 +70,56 @@ Report {
   ],
 }
 `;
+
+exports[`generate-report > it generates a report for a package with no node_modules 1`] = `
+Report {
+  "dependencies": {},
+  "latestPackages": {},
+  "pluginInfo": {},
+  "root": {
+    "breadcrumb": "",
+    "dependencies": [],
+    "funding": "N/A",
+    "homepage": "N/A",
+    "metadata": {
+      "pathsOnDisk": [
+        "",
+      ],
+    },
+    "name": "no-node-modules",
+    "version": "1.0.0",
+  },
+  "suggestions": [
+    {
+      "actions": [],
+      "id": "packagesWithPinnedVersions",
+      "message": "There are currently 0 pinned dependencies",
+      "name": "Packages with pinned dependencies",
+    },
+    {
+      "actions": [],
+      "id": "packagesWithExtraArtifacts",
+      "message": "There are currently 0 extra artifacts",
+      "name": "Packages with extra artifacts",
+    },
+    {
+      "actions": [],
+      "id": "notBeingAbsorbedByTopLevel",
+      "message": "There are currently 0 duplicate packages being installed on disk",
+      "name": "Dependencies not being absorbed",
+    },
+    {
+      "actions": [],
+      "id": "nestedDependencyFreshness",
+      "message": "Out of the total 0 sub packages currently installed; 0 major versions out of date (NaN%), 0 minor versions out of date (NaN%), 0 patch versions out of date (NaN%)",
+      "name": "Nested Dependency Freshness",
+    },
+    {
+      "actions": [],
+      "id": "topLevelDepsFreshness",
+      "message": "Out of the total 0 explicit dependencies defined in the package.json; 0 major versions out of date (NaN%), 0 minor versions out of date (NaN%), 0 patch versions out of date (NaN%)",
+      "name": "Top Level Dependency Freshness",
+    },
+  ],
+}
+`;
