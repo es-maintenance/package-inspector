@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeAll } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, test } from 'vitest';
 import fixturify, { type DirJSON } from 'fixturify';
 import tmp from 'tmp';
 

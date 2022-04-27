@@ -26,6 +26,7 @@ export interface IArboristNode {
   hasShrinkwrap: boolean;
   integrity: unknown | null;
   inventory: Map<string, IArboristNode>;
+  isProjectRoot: boolean;
   legacyPeerDeps: boolean;
   linksIn: Set<IArboristNode>;
   location: string;

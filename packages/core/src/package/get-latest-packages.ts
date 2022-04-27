@@ -12,6 +12,26 @@ const execPromise = promisify(exec);
 
 let _CACHEDLATESTPACKAGES: IDependencyMap = {};
 
+interface OutdatedData {
+  [key: string]: {
+    latest: string;
+  };
+}
+
+export async function getOutdated(dir: string): Promise<OutdatedData> {
+  let packageData: OutdatedData = {};
+
+  try {
+    await execPromise('npm outdated --json', {
+      cwd: dir,
+    });
+  } catch (ex: any) {
+    packageData = JSON.parse(ex.stdout.toString('utf8')) as OutdatedData;
+  }
+
+  return packageData;
+}
+
 export async function getLatestPackages(
   arboristValues: IArboristNode[]
 ): Promise<IDependencyMap> {
@@ -58,15 +78,10 @@ export async function getLatestPackages(
     debug('Could not copy .npmrc, using the default npm registry.');
   }
 
-  try {
-    await execPromise('npm outdated --json', {
-      cwd: tmpobj.name,
-    });
-  } catch (ex: any) {
-    const packageData = JSON.parse(ex.stdout.toString('utf8'));
-    for (const packageName in packageData) {
-      latestPackages[packageName] = packageData[packageName].latest;
-    }
+  const outdatedPackages = await getOutdated(tmpobj.name);
+
+  for (const packageName in outdatedPackages) {
+    latestPackages[packageName] = outdatedPackages[packageName].latest;
   }
 
   tmpobj.removeCallback();

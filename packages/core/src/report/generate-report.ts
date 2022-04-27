@@ -64,7 +64,7 @@ export interface Report {
 function getValues(dependencyTree: IArboristNode) {
   // ignore the root node
   return [...dependencyTree.inventory.values()].filter(
-    (node) => node.location !== ''
+    (node) => !node.isProjectRoot
   );
 }
 
@@ -116,27 +116,28 @@ export async function generateReport(cwd: string): Promise<Report> {
       version: latestPackagesMap[packageName],
     };
   });
+
   const dependencies: Package[] = [];
 
-  arboristValues.forEach((entryInfo) => {
-    const edge = [...entryInfo.edgesIn.values()].find((edgeIn) => {
-      return edgeIn.name === entryInfo.name;
+  arboristValues.forEach((depNode) => {
+    const edge = [...depNode.edgesIn.values()].find((edgeIn) => {
+      return edgeIn.name === depNode.name;
     });
 
     dependencies.push({
-      pathOnDisk: entryInfo.path ? stripPathOnDisk(entryInfo.path, cwd) : 'N/A',
-      breadcrumb: getBreadcrumb(entryInfo),
-      funding: entryInfo.funding || 'N/A',
-      homepage: entryInfo.homepage || 'N/A',
-      name: entryInfo.name,
-      version: entryInfo.version,
+      pathOnDisk: depNode.path ? stripPathOnDisk(depNode.path, cwd) : 'N/A',
+      breadcrumb: getBreadcrumb(depNode),
+      funding: depNode.funding || 'N/A',
+      homepage: depNode.homepage || 'N/A',
+      name: depNode.name,
+      version: depNode.version,
       size: getDirectorySize({
-        directory: entryInfo.path,
-        exclude: new RegExp(path.resolve(entryInfo.path, 'node_modules')),
+        directory: depNode.path,
+        exclude: new RegExp(path.resolve(depNode.path, 'node_modules')),
       }),
       type: edge?.type,
       // Get the correct values for these
-      dependencies: convertDepsFormat(entryInfo.edgesOut, cwd),
+      dependencies: convertDepsFormat(depNode.edgesOut, cwd),
     });
   });
 
@@ -145,7 +146,7 @@ export async function generateReport(cwd: string): Promise<Report> {
     package: {
       ...{
         breadcrumb: getBreadcrumb(rootArboristNode),
-        name: rootArboristNode.name,
+        name: rootArboristNode.packageName,
         version: rootArboristNode.version,
         pathOnDisk: stripPathOnDisk(rootArboristNode.path, cwd),
         funding: rootArboristNode.funding || 'N/A',
