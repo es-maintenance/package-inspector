@@ -23,14 +23,13 @@ const ReportQuery = gql`
   query {
     report {
       summary
-      package {
+      root {
         name
         version
-        dependencies {
-          name
-          type
-          version
-        }
+      }
+      dependencies {
+        name
+        version
       }
       suggestions {
         id
@@ -38,9 +37,7 @@ const ReportQuery = gql`
         message
         actions {
           message
-          meta {
-            breadcrumb
-          }
+          targetPackage
         }
       }
     }
@@ -54,6 +51,7 @@ const Home: NextPage = () => {
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load report</p>;
 
+  console.log(data.report.dependencies);
   return (
     <div className={styles.container}>
       <Head>
@@ -64,10 +62,11 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <Link href="/report">{data.report.package.name}</Link>
+          <Link href="/report">{data.report.root.name}</Link>
         </h1>
 
-        <SuggestionOverview report={data.report} />
+        {/* TODO: we need to talk about this */}
+        {/* <SuggestionOverview report={data.report} /> */}
 
         <Grid.Container gap={2} justify={'center'}>
           {data &&

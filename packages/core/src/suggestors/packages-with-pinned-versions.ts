@@ -1,24 +1,18 @@
 import path from 'path';
 
-import type { ISuggestion } from '../report/generate-report';
+import type { SuggestionAction, Suggestion } from '../models';
 import type { SuggestionInput } from '../types';
 
-import {
-  getBreadcrumb,
-  getDirectorySize,
-  humanFileSize,
-  stripPathOnDisk,
-} from '../package';
+import { getBreadcrumb, getDirectorySize } from '../package';
 
 /**
  * suggestion because doesn't allow you to collapse versions
  * (you end up with copies of what could be the same thing)
  */
-export async function packagesWithPinnedVersions(
-  { arboristValues }: SuggestionInput,
-  workingPath: string
-): Promise<ISuggestion> {
-  const packagedWithPinned = [];
+export async function packagesWithPinnedVersions({
+  arboristValues,
+}: SuggestionInput): Promise<Suggestion> {
+  const packagedWithPinned: SuggestionAction[] = [];
 
   for (const node of arboristValues) {
     const breadcrumb = getBreadcrumb(node);
@@ -40,13 +34,7 @@ export async function packagesWithPinnedVersions(
 
           packagedWithPinned.push({
             message: `"${node.name}" (${breadcrumb}) has a pinned version for ${dependencyName}@${version} that will never collapse.`,
-            meta: {
-              breadcrumb,
-              name: node.name,
-              directory: stripPathOnDisk(node.path, workingPath),
-              version,
-              size,
-            },
+            targetPackage: `${node.name}@${version}`,
           });
         } catch (ex) {
           console.log(ex);
@@ -55,14 +43,19 @@ export async function packagesWithPinnedVersions(
     }
   }
 
-  return Promise.resolve({
-    id: 'packagesWithPinnedVersions',
-    name: 'Packages with pinned dependencies',
-    message: `There are currently ${
+  // TODO: THis is the old message that we need to be able to somehow get back.
+  // It does require us to pass in the dependencyMap / the report to get the node info such as size
+  /**
+   `There are currently ${
       new Set(packagedWithPinned.map((action) => action.meta.name)).size
     } packages with pinned versions which will never collapse those dependencies causing an additional ${humanFileSize(
       packagedWithPinned.reduce((total, dep) => total + dep.meta.size, 0)
     )}`,
-    actions: packagedWithPinned.sort((a, b) => b.meta.size - a.meta.size),
+   */
+  return Promise.resolve({
+    id: 'packagesWithPinnedVersions',
+    name: 'Packages with pinned dependencies',
+    message: `There are currently ${packagedWithPinned.length.toLocaleString()} pinned dependencies`,
+    actions: packagedWithPinned,
   });
 }

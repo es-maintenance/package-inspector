@@ -1,14 +1,13 @@
 import semverDiff from 'semver/functions/diff';
-import type { IVersionMeta, SuggestionInput } from '../types';
-import { getBreadcrumb, getLatestPackages, stripPathOnDisk } from '../package';
 
-// TODO: this import/export is bad
-import { IAction, ISuggestion } from '../report/generate-report';
+import type { SuggestionInput } from '../types';
+import { getBreadcrumb, getLatestPackages } from '../package';
+import type { SuggestionAction, Suggestion } from '../models';
 
-export async function topLevelDepsFreshness(
-  { rootArboristNode, arboristValues }: SuggestionInput,
-  workingPath: string
-): Promise<ISuggestion> {
+export async function topLevelDepsFreshness({
+  rootArboristNode,
+  arboristValues,
+}: SuggestionInput): Promise<Suggestion> {
   const dependencies = Object.assign(
     {},
     Object.assign({}, rootArboristNode?.package.devDependencies ?? {}),
@@ -16,9 +15,9 @@ export async function topLevelDepsFreshness(
   );
   const totalDeps = Object.keys(dependencies).length;
   const outOfDate: {
-    major: IVersionMeta[];
-    minor: IVersionMeta[];
-    patch: IVersionMeta[];
+    major: string[];
+    minor: string[];
+    patch: string[];
   } = { major: [], minor: [], patch: [] };
   const latestPackages = await getLatestPackages(arboristValues);
 
@@ -51,28 +50,13 @@ export async function topLevelDepsFreshness(
 
         switch (diff) {
           case 'major':
-            outOfDate.major.push({
-              name: dependency,
-              directory: `node_module/${dependency}`,
-              version: topLevelPackage.version,
-              breadcrumb,
-            });
+            outOfDate.major.push(`${dependency}@${topLevelPackage.version}`);
             break;
           case 'minor':
-            outOfDate.minor.push({
-              name: dependency,
-              directory: `node_module/${dependency}`,
-              version: topLevelPackage.version,
-              breadcrumb,
-            });
+            outOfDate.minor.push(`${dependency}@${topLevelPackage.version}`);
             break;
           case 'patch':
-            outOfDate.patch.push({
-              name: dependency,
-              directory: `node_module/${dependency}`,
-              version: topLevelPackage.version,
-              breadcrumb,
-            });
+            outOfDate.patch.push(`${dependency}@${topLevelPackage.version}`);
             break;
         }
       } else {
@@ -84,41 +68,32 @@ export async function topLevelDepsFreshness(
     }
   }
 
-  const actions: IAction[] = [];
+  const actions: SuggestionAction[] = [];
 
-  outOfDate.major.forEach(({ name, directory, version, breadcrumb }) => {
+  outOfDate.major.forEach((dependencyKey) => {
     actions.push({
-      message: `"${name}@${version}" is required as a direct dependency, the latest is ${latestPackages[name]}. This is a major version out of date.`,
-      meta: {
-        version,
-        name,
-        directory: stripPathOnDisk(directory, workingPath),
-        breadcrumb,
-      },
+      message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
+        latestPackages[dependencyKey.split('@')[0]]
+      }. This is a major version out of date.`,
+      targetPackage: dependencyKey,
     });
   });
 
-  outOfDate.minor.forEach(({ name, directory, version, breadcrumb }) => {
+  outOfDate.minor.forEach((dependencyKey) => {
     actions.push({
-      message: `"${name}@${version}" is required as a direct dependency, the latest is ${latestPackages[name]}. This is a minor version out of date.`,
-      meta: {
-        version,
-        name,
-        directory: stripPathOnDisk(directory, workingPath),
-        breadcrumb,
-      },
+      message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
+        latestPackages[dependencyKey.split('@')[0]]
+      }. This is a minor version out of date.`,
+      targetPackage: dependencyKey,
     });
   });
 
-  outOfDate.patch.forEach(({ name, directory, version, breadcrumb }) => {
+  outOfDate.patch.forEach((dependencyKey) => {
     actions.push({
-      message: `"${name}@${version}" is required as a direct dependency, the latest is ${latestPackages[name]}. This is a patch version out of date.`,
-      meta: {
-        version,
-        name,
-        directory: stripPathOnDisk(directory, workingPath),
-        breadcrumb,
-      },
+      message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
+        latestPackages[dependencyKey.split('@')[0]]
+      }. This is a patch version out of date.`,
+      targetPackage: dependencyKey,
     });
   });
 
