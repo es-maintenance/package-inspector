@@ -100,10 +100,10 @@ export async function generateReport(cwd: string): Promise<Report> {
         // At this point we don't count those as they are counted as a part of the package that brings them in
         return dependencyNode;
       })
-      .map((dependency) => {
-        const node = dependency.to;
+      .map((dependencyEdge) => {
+        const dependencyNode = dependencyEdge.to;
 
-        return `${node.name}@${node.version}`;
+        return `${dependencyNode.name}@${dependencyNode.version}`;
       }),
   };
 
