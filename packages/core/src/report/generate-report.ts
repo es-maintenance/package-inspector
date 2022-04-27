@@ -93,12 +93,12 @@ export async function generateReport(cwd: string): Promise<Report> {
       pathsOnDisk: [stripPathOnDisk(rootArboristNode.path, cwd)],
     },
     dependencies: [...rootArboristNode.edgesOut.values()]
-      .filter((dependency) => {
-        const node = dependency.to;
+      .filter((dependencyEdge) => {
+        const dependencyNode = dependencyEdge.to;
 
         // We don't have a node when it is optional or a peer
         // At this point we don't count those as they are counted as a part of the package that brings them in
-        return node;
+        return dependencyNode;
       })
       .map((dependency) => {
         const node = dependency.to;
