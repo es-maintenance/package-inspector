@@ -3,7 +3,12 @@ import { IPackageJson } from 'package-json-type';
 import Arborist from '@npmcli/arborist';
 
 import { IArboristEdge, IArboristNode } from '../types';
-import { getBreadcrumb, getDirectorySize, getLatestPackages } from '../package';
+import {
+  getBreadcrumb,
+  getDirectorySize,
+  getLatestPackages,
+  stripPathOnDisk,
+} from '../package';
 import {
   nestedDependencyFreshness,
   notBeingAbsorbedByTopLevel,
@@ -63,7 +68,10 @@ function getValues(dependencyTree: IArboristNode) {
   );
 }
 
-function convertDepsFormat(edgesOut: Map<string, IArboristEdge>): Package[] {
+function convertDepsFormat(
+  edgesOut: Map<string, IArboristEdge>,
+  cwd: string
+): Package[] {
   return [...edgesOut.values()]
     .filter((dependency) => {
       const node = dependency.to;
@@ -79,7 +87,7 @@ function convertDepsFormat(edgesOut: Map<string, IArboristEdge>): Package[] {
         breadcrumb: getBreadcrumb(node),
         name: node.name,
         version: node.version,
-        pathOnDisk: node.path,
+        pathOnDisk: stripPathOnDisk(node.path, cwd),
         funding: node.funding || 'N/A',
         homepage: node.homepage || 'N/A',
         type: dependency.type,
@@ -116,9 +124,7 @@ export async function generateReport(cwd: string): Promise<Report> {
     });
 
     dependencies.push({
-      pathOnDisk: entryInfo.path
-        ? entryInfo.path.replace(process.cwd() + '/', '')
-        : 'N/A',
+      pathOnDisk: entryInfo.path ? stripPathOnDisk(entryInfo.path, cwd) : 'N/A',
       breadcrumb: getBreadcrumb(entryInfo),
       funding: entryInfo.funding || 'N/A',
       homepage: entryInfo.homepage || 'N/A',
@@ -130,7 +136,7 @@ export async function generateReport(cwd: string): Promise<Report> {
       }),
       type: edge?.type,
       // Get the correct values for these
-      dependencies: convertDepsFormat(entryInfo.edgesOut),
+      dependencies: convertDepsFormat(entryInfo.edgesOut, cwd),
     });
   });
 
@@ -141,27 +147,36 @@ export async function generateReport(cwd: string): Promise<Report> {
         breadcrumb: getBreadcrumb(rootArboristNode),
         name: rootArboristNode.name,
         version: rootArboristNode.version,
-        pathOnDisk: rootArboristNode.path,
+        pathOnDisk: stripPathOnDisk(rootArboristNode.path, cwd),
         funding: rootArboristNode.funding || 'N/A',
         homepage: rootArboristNode.homepage || 'N/A',
       },
       size: 0,
-      dependencies: convertDepsFormat(rootArboristNode.edgesOut),
+      dependencies: convertDepsFormat(rootArboristNode.edgesOut, cwd),
     },
     dependencies,
     suggestions: [
-      await packagesWithPinnedVersions({ arboristValues }),
+      await packagesWithPinnedVersions({ arboristValues }, cwd),
 
-      await packagesWithExtraArtifacts({ arboristValues }),
+      await packagesWithExtraArtifacts({ arboristValues }, cwd),
 
-      await notBeingAbsorbedByTopLevel({ rootArboristNode, arboristValues }),
+      await notBeingAbsorbedByTopLevel(
+        { rootArboristNode, arboristValues },
+        cwd
+      ),
 
-      await nestedDependencyFreshness({ rootArboristNode, arboristValues }),
+      await nestedDependencyFreshness(
+        { rootArboristNode, arboristValues },
+        cwd
+      ),
 
-      await topLevelDepsFreshness({
-        rootArboristNode,
-        arboristValues,
-      }),
+      await topLevelDepsFreshness(
+        {
+          rootArboristNode,
+          arboristValues,
+        },
+        cwd
+      ),
     ],
   };
 }

@@ -1,6 +1,6 @@
 import semverDiff from 'semver/functions/diff';
 import { IArboristNode, SuggestionInput } from '../types';
-import { getBreadcrumb, getLatestPackages } from '../package';
+import { getBreadcrumb, getLatestPackages, stripPathOnDisk } from '../package';
 
 // TODO: cleanup this export/import pattern
 import { IAction, ISuggestion } from '../report/generate-report';
@@ -9,9 +9,10 @@ import { IAction, ISuggestion } from '../report/generate-report';
  * What percentage of your nested dependencies do you bring in that are out of date
  * (major, minor, patch)
  */
-export async function nestedDependencyFreshness({
-  arboristValues,
-}: SuggestionInput): Promise<ISuggestion> {
+export async function nestedDependencyFreshness(
+  { arboristValues }: SuggestionInput,
+  workingPath: string
+): Promise<ISuggestion> {
   const outOfDate: {
     major: IArboristNode[];
     minor: IArboristNode[];
@@ -71,7 +72,7 @@ export async function nestedDependencyFreshness({
       meta: {
         name,
         version,
-        directory: path,
+        directory: stripPathOnDisk(path, workingPath),
         breadcrumb,
       },
     });
@@ -85,7 +86,7 @@ export async function nestedDependencyFreshness({
       meta: {
         name,
         version,
-        directory: path,
+        directory: stripPathOnDisk(path, workingPath),
         breadcrumb,
       },
     });
@@ -99,7 +100,7 @@ export async function nestedDependencyFreshness({
       meta: {
         name,
         version,
-        directory: path,
+        directory: stripPathOnDisk(path, workingPath),
         breadcrumb,
       },
     });

@@ -1,15 +1,14 @@
 import semverDiff from 'semver/functions/diff';
 import type { IVersionMeta, SuggestionInput } from '../types';
-import { getBreadcrumb, getLatestPackages } from '../package';
+import { getBreadcrumb, getLatestPackages, stripPathOnDisk } from '../package';
 
 // TODO: this import/export is bad
 import { IAction, ISuggestion } from '../report/generate-report';
 
-export async function topLevelDepsFreshness({
-  rootArboristNode,
-  arboristValues,
-}: // latestPackages: IDependencyMap
-SuggestionInput): Promise<ISuggestion> {
+export async function topLevelDepsFreshness(
+  { rootArboristNode, arboristValues }: SuggestionInput,
+  workingPath: string
+): Promise<ISuggestion> {
   const dependencies = Object.assign(
     {},
     Object.assign({}, rootArboristNode?.package.devDependencies ?? {}),
@@ -93,7 +92,7 @@ SuggestionInput): Promise<ISuggestion> {
       meta: {
         version,
         name,
-        directory,
+        directory: stripPathOnDisk(directory, workingPath),
         breadcrumb,
       },
     });
@@ -105,7 +104,7 @@ SuggestionInput): Promise<ISuggestion> {
       meta: {
         version,
         name,
-        directory,
+        directory: stripPathOnDisk(directory, workingPath),
         breadcrumb,
       },
     });
@@ -117,7 +116,7 @@ SuggestionInput): Promise<ISuggestion> {
       meta: {
         version,
         name,
-        directory,
+        directory: stripPathOnDisk(directory, workingPath),
         breadcrumb,
       },
     });
