@@ -1,36 +1,12 @@
 import path from 'path';
 import debug from 'debug';
 import tmp from 'tmp';
-import { exec } from 'child_process';
 import { copyFile, writeFile } from 'fs/promises';
 import { IDependencyMap } from 'package-json-type';
 import { IArboristNode } from '../types';
-
-import { promisify } from 'util';
-
-const execPromise = promisify(exec);
+import { getOutdated } from './get-outdated';
 
 let _CACHEDLATESTPACKAGES: IDependencyMap = {};
-
-interface OutdatedData {
-  [key: string]: {
-    latest: string;
-  };
-}
-
-export async function getOutdated(dir: string): Promise<OutdatedData> {
-  let packageData: OutdatedData = {};
-
-  try {
-    await execPromise('npm outdated --json', {
-      cwd: dir,
-    });
-  } catch (ex: any) {
-    packageData = JSON.parse(ex.stdout.toString('utf8')) as OutdatedData;
-  }
-
-  return packageData;
-}
 
 export async function getLatestPackages(
   arboristValues: IArboristNode[]
