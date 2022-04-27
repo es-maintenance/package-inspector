@@ -54,7 +54,7 @@ export async function generateReport(cwd: string): Promise<Report> {
         homepage: depNode.homepage || 'N/A',
         name: depNode.name,
         version: depNode.version,
-        type: edge!.type,
+        type: edge?.type,
         metadata: {
           size: getDirectorySize({
             directory: depNode.path,

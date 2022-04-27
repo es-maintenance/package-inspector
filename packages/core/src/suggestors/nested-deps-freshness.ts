@@ -63,7 +63,7 @@ export async function nestedDependencyFreshness({
   const actions: SuggestionAction[] = [];
 
   outOfDate.major.forEach((node) => {
-    const { name, version, path } = node;
+    const { name, version } = node;
     const breadcrumb = getBreadcrumb(node);
     actions.push({
       message: `"${name}@${version}" is required at "${breadcrumb}", the latest is ${latestPackages[name]}. This is a major version out of date.`,
@@ -72,7 +72,7 @@ export async function nestedDependencyFreshness({
   });
 
   outOfDate.minor.map((node) => {
-    const { name, version, path } = node;
+    const { name, version } = node;
     const breadcrumb = getBreadcrumb(node);
     actions.push({
       message: `"${name}@${version}" is required at "${breadcrumb}", the latest is ${latestPackages[name]}. This is a minor version out of date.`,
@@ -81,7 +81,7 @@ export async function nestedDependencyFreshness({
   });
 
   outOfDate.patch.map((node) => {
-    const { name, version, path } = node;
+    const { name, version } = node;
     const breadcrumb = getBreadcrumb(node);
     actions.push({
       message: `"${name}@${version}" is required at "${breadcrumb}", the latest is ${latestPackages[name]}. This is a patch version out of date.`,
