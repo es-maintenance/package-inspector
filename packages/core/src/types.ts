@@ -1,8 +1,4 @@
 import { IDependencyMap, IPackageJson } from 'package-json-type';
-
-// TODO: fix... bad
-import { IActionMeta } from './report/generate-report';
-
 export interface IArboristEdge {
   type: string;
   name: string;
@@ -44,10 +40,6 @@ export interface IArboristNode {
   isWorkspace: boolean;
   homepage: string;
   funding: string;
-  version: string;
-}
-
-export interface IVersionMeta extends IActionMeta {
   version: string;
 }
 

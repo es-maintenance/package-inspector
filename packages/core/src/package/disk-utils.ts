@@ -47,14 +47,17 @@ export function getDirectorySize({
 }: {
   directory: string;
   exclude?: RegExp;
-}) {
+}): { files: number; physical: number } {
   const arrayOfFiles = getAllFiles(directory, exclude);
 
   const size = arrayOfFiles
     .map((filePath) => fs.statSync(filePath).size)
     .reduce((a, b) => a + b, 0);
 
-  return size;
+  return {
+    files: arrayOfFiles.length,
+    physical: size,
+  };
 }
 
 export function stripPathOnDisk(nodePath: string, workingPath: string): string {

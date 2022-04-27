@@ -1,18 +1,16 @@
 import semverDiff from 'semver/functions/diff';
 import { IArboristNode, SuggestionInput } from '../types';
-import { getBreadcrumb, getLatestPackages, stripPathOnDisk } from '../package';
+import { getBreadcrumb, getLatestPackages } from '../package';
 
-// TODO: cleanup this export/import pattern
-import { IAction, ISuggestion } from '../report/generate-report';
+import type { SuggestionAction, Suggestion } from '../models';
 
 /**
  * What percentage of your nested dependencies do you bring in that are out of date
  * (major, minor, patch)
  */
-export async function nestedDependencyFreshness(
-  { arboristValues }: SuggestionInput,
-  workingPath: string
-): Promise<ISuggestion> {
+export async function nestedDependencyFreshness({
+  arboristValues,
+}: SuggestionInput): Promise<Suggestion> {
   const outOfDate: {
     major: IArboristNode[];
     minor: IArboristNode[];
@@ -62,19 +60,14 @@ export async function nestedDependencyFreshness(
     }
   }
 
-  const actions: IAction[] = [];
+  const actions: SuggestionAction[] = [];
 
   outOfDate.major.forEach((node) => {
     const { name, version, path } = node;
     const breadcrumb = getBreadcrumb(node);
     actions.push({
       message: `"${name}@${version}" is required at "${breadcrumb}", the latest is ${latestPackages[name]}. This is a major version out of date.`,
-      meta: {
-        name,
-        version,
-        directory: stripPathOnDisk(path, workingPath),
-        breadcrumb,
-      },
+      targetPackage: `${name}@${version}`,
     });
   });
 
@@ -83,12 +76,7 @@ export async function nestedDependencyFreshness(
     const breadcrumb = getBreadcrumb(node);
     actions.push({
       message: `"${name}@${version}" is required at "${breadcrumb}", the latest is ${latestPackages[name]}. This is a minor version out of date.`,
-      meta: {
-        name,
-        version,
-        directory: stripPathOnDisk(path, workingPath),
-        breadcrumb,
-      },
+      targetPackage: `${name}@${version}`,
     });
   });
 
@@ -97,12 +85,7 @@ export async function nestedDependencyFreshness(
     const breadcrumb = getBreadcrumb(node);
     actions.push({
       message: `"${name}@${version}" is required at "${breadcrumb}", the latest is ${latestPackages[name]}. This is a patch version out of date.`,
-      meta: {
-        name,
-        version,
-        directory: stripPathOnDisk(path, workingPath),
-        breadcrumb,
-      },
+      targetPackage: `${name}@${version}`,
     });
   });
 

@@ -2,24 +2,18 @@ import fs from 'fs';
 import path from 'path';
 
 import type { SuggestionInput } from '../types';
-import type { ISuggestion } from '../report/generate-report';
+import type { SuggestionAction, Suggestion } from '../models';
 
-import {
-  getBreadcrumb,
-  getDirectorySize,
-  humanFileSize,
-  stripPathOnDisk,
-} from '../package';
+import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
 
 /**
  * // docs/ or tests/ is published to npm - how do you NOT publish them
  * (use ignore file or package.json.files[]?
  */
-export async function packagesWithExtraArtifacts(
-  { arboristValues }: SuggestionInput,
-  workingPath: string
-): Promise<ISuggestion> {
-  const extraArtifacts = [];
+export async function packagesWithExtraArtifacts({
+  arboristValues,
+}: SuggestionInput): Promise<Suggestion> {
+  const extraArtifacts: SuggestionAction[] = [];
 
   for (const node of arboristValues) {
     const breadcrumb = getBreadcrumb(node);
@@ -29,20 +23,14 @@ export async function packagesWithExtraArtifacts(
         directory: path.resolve(node.path, 'docs'),
       });
 
-      if (size > 0) {
+      if (size.physical > 0) {
         extraArtifacts.push({
           message: `"${
             node.name
           }" (${breadcrumb}) has a "docs" folder which is not necessary for production usage ${humanFileSize(
-            size
+            size.physical
           )}.`,
-          meta: {
-            breadcrumb,
-            name: node.name,
-            directory: stripPathOnDisk(node.path, workingPath),
-            version: node.version,
-            size,
-          },
+          targetPackage: `${node.name}@${node.version}`,
         });
       }
     }
@@ -52,33 +40,31 @@ export async function packagesWithExtraArtifacts(
         directory: path.resolve(node.path, 'tests'),
       });
 
-      if (size > 0) {
+      if (size.physical > 0) {
         extraArtifacts.push({
           message: `"${
             node.name
           }" (${breadcrumb}) has a "tests" folder which is not necessary for production usage ${humanFileSize(
-            size
+            size.physical
           )}.`,
-          meta: {
-            breadcrumb,
-            name: node.name,
-            directory: stripPathOnDisk(node.path, workingPath),
-            version: node.version,
-            size,
-          },
+          targetPackage: `${node.name}@${node.version}`,
         });
       }
     }
   }
 
-  return Promise.resolve({
-    id: 'packagesWithExtraArtifacts',
-    name: 'Packages with extra artifacts',
-    message: `There are currently ${
+  // TODO: this message is no longer possible
+  /**
+   `There are currently ${
       new Set(extraArtifacts.map((action) => action.meta.name)).size
     } packages with artifacts that are superflous and are not necessary for production usage. ${humanFileSize(
       extraArtifacts.reduce((total, dep) => total + dep.meta.size, 0)
-    )}`,
-    actions: extraArtifacts.sort((a, b) => b.meta.size - a.meta.size),
+    )}`
+   */
+  return Promise.resolve({
+    id: 'packagesWithExtraArtifacts',
+    name: 'Packages with extra artifacts',
+    message: `There are currently ${extraArtifacts.length.toLocaleString()} extra artifacts`,
+    actions: extraArtifacts,
   });
 }

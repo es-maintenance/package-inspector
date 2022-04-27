@@ -1,1 +1,1 @@
-export { generateReport, ISuggestion, Report, Package } from './report';
+export { generateReport } from './report';

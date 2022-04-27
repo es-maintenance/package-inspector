@@ -3,6 +3,7 @@ import debug from 'debug';
 import tmp from 'tmp';
 import { copyFile, writeFile } from 'fs/promises';
 import { IDependencyMap } from 'package-json-type';
+
 import { IArboristNode } from '../types';
 import { getOutdated } from './get-outdated';
 
