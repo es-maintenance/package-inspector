@@ -85,13 +85,10 @@ export async function generateReport(cwd: string): Promise<Report> {
   });
 
   report.root = {
-    ...{
-      breadcrumb: getBreadcrumb(rootArboristNode),
-      name: rootArboristNode.packageName,
-      version: rootArboristNode.version,
-      funding: rootArboristNode.funding || 'N/A',
-      homepage: rootArboristNode.homepage || 'N/A',
-    },
+    name: rootArboristNode.packageName,
+    version: rootArboristNode.version,
+    funding: rootArboristNode.funding || 'N/A',
+    homepage: rootArboristNode.homepage || 'N/A',
     metadata: {
       pathsOnDisk: [stripPathOnDisk(rootArboristNode.path, cwd)],
     },

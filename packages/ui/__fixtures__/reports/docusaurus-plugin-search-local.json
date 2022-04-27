@@ -1471,7 +1471,6 @@
     "zwitch": "2.0.2"
   },
   "root": {
-    "breadcrumb": "",
     "name": "docusaurus-plugin-search-local",
     "version": "0.5.0",
     "funding": "N/A",
