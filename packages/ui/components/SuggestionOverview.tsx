@@ -1,9 +1,12 @@
 import React from 'react';
-import type { ISuggestion } from '@package-inspector/core';
+import type {
+  Suggestion,
+  Package,
+  DependenciesMap,
+} from '@package-inspector/core';
 import Link from 'next/link';
 import { Grid, Link as LinkUI } from '@nextui-org/react';
 
-import { getDirectDeps } from '../lib/utils';
 import { Report } from '../pages/index';
 
 import styles from '../styles/SuggestionOverview.module.css';
@@ -14,7 +17,7 @@ interface SuggestionCount {
 }
 
 function getCostlyPackages(
-  suggestions: ISuggestion[],
+  suggestions: Suggestion[],
   count = 5
 ): SuggestionCount[] {
   const countMap: Record<string, SuggestionCount> = {};
@@ -24,22 +27,22 @@ function getCostlyPackages(
 
   suggestions.forEach((suggestion) => {
     suggestion.actions.forEach((action) => {
-      const parts = action.meta.breadcrumb.split('#');
+      const node = action.targetPackage;
 
-      if (parts.length) {
-        const associatedActionPackageName = parts[0];
-        if (!countMap[associatedActionPackageName]) {
-          console.log(`Missed: ${associatedActionPackageName}`);
-          const suggestionCount = {
-            packageName: associatedActionPackageName,
-            count: 1,
-          };
-          countMap[associatedActionPackageName] = suggestionCount;
-          counts.push(suggestionCount);
-        } else {
-          countMap[associatedActionPackageName].count++;
-        }
-      }
+      // if (parts.length) {
+      //   const associatedActionPackageName = parts[0];
+      //   if (!countMap[associatedActionPackageName]) {
+      //     console.log(`Missed: ${associatedActionPackageName}`);
+      //     const suggestionCount = {
+      //       packageName: associatedActionPackageName,
+      //       count: 1,
+      //     };
+      //     countMap[associatedActionPackageName] = suggestionCount;
+      //     counts.push(suggestionCount);
+      //   } else {
+      //     countMap[associatedActionPackageName].count++;
+      //   }
+      // }
     });
   });
 
@@ -54,7 +57,7 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
   const { report } = props;
   const { suggestions } = report;
 
-  const directDeps = getDirectDeps(report.package.dependencies);
+  const directDeps = report.root.dependencies;
   const heaviestDeps = getCostlyPackages(suggestions);
 
   return (

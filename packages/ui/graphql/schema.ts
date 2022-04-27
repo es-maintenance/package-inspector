@@ -6,55 +6,41 @@ export const typeDefs = gql`
     version: String
   }
 
+  type SizeInfo {
+    files: Int
+    physical: Int
+  }
+
+  type PackageMetadata {
+    size: SizeInfo
+    pathsOnDisk: [String]
+  }
+
   type Package {
-    breadcrumb: String
-    name: String
-    version: String
     funding: String
     homepage: String
-    pathOnDisk: String
-    size: Int
+    name: String!
+    version: String!
+    metadata: PackageMetadata
+    dependencies: [String]
     type: String
-    dependencies: [Package]
   }
 
-  type Dependency {
-    breadcrumb: String!
-    funding: String
-    homepage: String
-    location: String!
-    version: String!
-    name: String!
-    size: Float!
-  }
-
-  type ActionMeta {
-    breadcrumb: String!
-    name: String!
-    directory: String!
-    version: String!
-    size: Float
-  }
-
-  type VersionMeta {
-    version: String!
-  }
-
-  type Action {
+  type SuggestionAction {
     message: String!
-    meta: ActionMeta!
+    targetPackage: String!
   }
 
   type Suggestion {
     id: String!
     name: String!
     message: String!
-    actions: [Action!]!
+    actions: [SuggestionAction!]!
   }
 
   type Report {
     latestPackages: [DependencyMap]
-    package: Package
+    root: Package
     dependencies: [Package]
     suggestions: [Suggestion]
     summary: String

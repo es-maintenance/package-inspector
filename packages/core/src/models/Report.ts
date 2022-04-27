@@ -1,5 +1,6 @@
-export type LatestPackages = Record<string, string>;
+import fs from 'fs-extra';
 
+export type LatestPackages = Record<string, string>;
 export interface SizeInfo {
   files: number;
   physical: number;
@@ -118,5 +119,14 @@ export class Report {
     this.dependencies = {};
     this.suggestions = [];
     this.pluginInfo = {};
+  }
+
+  loadFromFile(jsonFilePath: string) {
+    const object = fs.readJSONSync(jsonFilePath);
+
+    this.root = object.root;
+    this.dependencies = object.dependencies;
+    this.suggestions = object.suggestions;
+    this.pluginInfo = object.pluginInfo;
   }
 }
