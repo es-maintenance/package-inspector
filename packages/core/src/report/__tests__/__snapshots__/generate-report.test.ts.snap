@@ -1,0 +1,62 @@
+// Vitest Snapshot v1
+
+exports[`generate-report > it generates a report for a package with basic node_modules 1`] = `
+{
+  "dependencies": [
+    {
+      "breadcrumb": "left-pad",
+      "dependencies": [],
+      "funding": "N/A",
+      "homepage": "N/A",
+      "name": "left-pad",
+      "pathOnDisk": "/node_modules/left-pad",
+      "size": 9752,
+      "type": "prod",
+      "version": "1.3.0",
+    },
+  ],
+  "latestPackages": [],
+  "package": {
+    "breadcrumb": "",
+    "dependencies": [],
+    "funding": "N/A",
+    "homepage": "N/A",
+    "name": "min-node-modules",
+    "pathOnDisk": "",
+    "size": 0,
+    "version": "1.0.0",
+  },
+  "suggestions": [
+    {
+      "actions": [],
+      "id": "packagesWithPinnedVersions",
+      "message": "There are currently 0 packages with pinned versions which will never collapse those dependencies causing an additional 0 B",
+      "name": "Packages with pinned dependencies",
+    },
+    {
+      "actions": [],
+      "id": "packagesWithExtraArtifacts",
+      "message": "There are currently 0 packages with artifacts that are superflous and are not necessary for production usage. 0 B",
+      "name": "Packages with extra artifacts",
+    },
+    {
+      "actions": [],
+      "id": "notBeingAbsorbedByTopLevel",
+      "message": "There are currently 0 duplicate packages being installed on disk because they are not being absorbed into the top level semver range. This equates to a total of 0 B",
+      "name": "Dependencies not being absorbed",
+    },
+    {
+      "actions": [],
+      "id": "nestedDependencyFreshness",
+      "message": "Out of the total 1 sub packages currently installed; 0 major versions out of date (0.00%), 0 minor versions out of date (0.00%), 0 patch versions out of date (0.00%)",
+      "name": "Nested Dependency Freshness",
+    },
+    {
+      "actions": [],
+      "id": "topLevelDepsFreshness",
+      "message": "Out of the total 1 explicit dependencies defined in the package.json; 0 major versions out of date (0.00%), 0 minor versions out of date (0.00%), 0 patch versions out of date (0.00%)",
+      "name": "Top Level Dependency Freshness",
+    },
+  ],
+}
+`;

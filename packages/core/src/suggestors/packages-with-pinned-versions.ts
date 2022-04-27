@@ -3,15 +3,21 @@ import path from 'path';
 import type { ISuggestion } from '../report/generate-report';
 import type { SuggestionInput } from '../types';
 
-import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
+import {
+  getBreadcrumb,
+  getDirectorySize,
+  humanFileSize,
+  stripPathOnDisk,
+} from '../package';
 
 /**
  * suggestion because doesn't allow you to collapse versions
  * (you end up with copies of what could be the same thing)
  */
-export async function packagesWithPinnedVersions({
-  arboristValues,
-}: SuggestionInput): Promise<ISuggestion> {
+export async function packagesWithPinnedVersions(
+  { arboristValues }: SuggestionInput,
+  workingPath: string
+): Promise<ISuggestion> {
   const packagedWithPinned = [];
 
   for (const node of arboristValues) {
@@ -37,7 +43,7 @@ export async function packagesWithPinnedVersions({
             meta: {
               breadcrumb,
               name: node.name,
-              directory: node.path,
+              directory: stripPathOnDisk(node.path, workingPath),
               version,
               size,
             },

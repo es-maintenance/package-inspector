@@ -15,7 +15,7 @@ function getHrTimeInSeconds(hrtime: [number, number]) {
   return `${seconds}s`;
 }
 
-const { argv } = yargs
+const argv = yargs
   .usage('See how your dependencies are affecting your project.')
   .options({
     path: {
@@ -32,7 +32,8 @@ const { argv } = yargs
       describe: 'Shows the help menu',
     },
   })
-  .strict();
+  .strict()
+  .parseSync();
 
 const start = process.hrtime();
 const progress = ora('Identifying your node_modules').start();

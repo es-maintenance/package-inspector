@@ -3,7 +3,12 @@ import { IPackageJson } from 'package-json-type';
 import Arborist from '@npmcli/arborist';
 
 import { IArboristEdge, IArboristNode } from '../types';
-import { getBreadcrumb, getDirectorySize, getLatestPackages } from '../package';
+import {
+  getBreadcrumb,
+  getDirectorySize,
+  getLatestPackages,
+  stripPathOnDisk,
+} from '../package';
 import {
   nestedDependencyFreshness,
   notBeingAbsorbedByTopLevel,
@@ -59,11 +64,14 @@ export interface Report {
 function getValues(dependencyTree: IArboristNode) {
   // ignore the root node
   return [...dependencyTree.inventory.values()].filter(
-    (node) => node.location !== ''
+    (node) => !node.isProjectRoot
   );
 }
 
-function convertDepsFormat(edgesOut: Map<string, IArboristEdge>): Package[] {
+function convertDepsFormat(
+  edgesOut: Map<string, IArboristEdge>,
+  cwd: string
+): Package[] {
   return [...edgesOut.values()]
     .filter((dependency) => {
       const node = dependency.to;
@@ -79,7 +87,7 @@ function convertDepsFormat(edgesOut: Map<string, IArboristEdge>): Package[] {
         breadcrumb: getBreadcrumb(node),
         name: node.name,
         version: node.version,
-        pathOnDisk: node.path,
+        pathOnDisk: stripPathOnDisk(node.path, cwd),
         funding: node.funding || 'N/A',
         homepage: node.homepage || 'N/A',
         type: dependency.type,
@@ -108,29 +116,28 @@ export async function generateReport(cwd: string): Promise<Report> {
       version: latestPackagesMap[packageName],
     };
   });
+
   const dependencies: Package[] = [];
 
-  arboristValues.forEach((entryInfo) => {
-    const edge = [...entryInfo.edgesIn.values()].find((edgeIn) => {
-      return edgeIn.name === entryInfo.name;
+  arboristValues.forEach((depNode) => {
+    const edge = [...depNode.edgesIn.values()].find((edgeIn) => {
+      return edgeIn.name === depNode.name;
     });
 
     dependencies.push({
-      pathOnDisk: entryInfo.path
-        ? entryInfo.path.replace(process.cwd() + '/', '')
-        : 'N/A',
-      breadcrumb: getBreadcrumb(entryInfo),
-      funding: entryInfo.funding || 'N/A',
-      homepage: entryInfo.homepage || 'N/A',
-      name: entryInfo.name,
-      version: entryInfo.version,
+      pathOnDisk: depNode.path ? stripPathOnDisk(depNode.path, cwd) : 'N/A',
+      breadcrumb: getBreadcrumb(depNode),
+      funding: depNode.funding || 'N/A',
+      homepage: depNode.homepage || 'N/A',
+      name: depNode.name,
+      version: depNode.version,
       size: getDirectorySize({
-        directory: entryInfo.path,
-        exclude: new RegExp(path.resolve(entryInfo.path, 'node_modules')),
+        directory: depNode.path,
+        exclude: new RegExp(path.resolve(depNode.path, 'node_modules')),
       }),
       type: edge?.type,
       // Get the correct values for these
-      dependencies: convertDepsFormat(entryInfo.edgesOut),
+      dependencies: convertDepsFormat(depNode.edgesOut, cwd),
     });
   });
 
@@ -139,29 +146,38 @@ export async function generateReport(cwd: string): Promise<Report> {
     package: {
       ...{
         breadcrumb: getBreadcrumb(rootArboristNode),
-        name: rootArboristNode.name,
+        name: rootArboristNode.packageName,
         version: rootArboristNode.version,
-        pathOnDisk: rootArboristNode.path,
+        pathOnDisk: stripPathOnDisk(rootArboristNode.path, cwd),
         funding: rootArboristNode.funding || 'N/A',
         homepage: rootArboristNode.homepage || 'N/A',
       },
       size: 0,
-      dependencies: convertDepsFormat(rootArboristNode.edgesOut),
+      dependencies: convertDepsFormat(rootArboristNode.edgesOut, cwd),
     },
     dependencies,
     suggestions: [
-      await packagesWithPinnedVersions({ arboristValues }),
+      await packagesWithPinnedVersions({ arboristValues }, cwd),
 
-      await packagesWithExtraArtifacts({ arboristValues }),
+      await packagesWithExtraArtifacts({ arboristValues }, cwd),
 
-      await notBeingAbsorbedByTopLevel({ rootArboristNode, arboristValues }),
+      await notBeingAbsorbedByTopLevel(
+        { rootArboristNode, arboristValues },
+        cwd
+      ),
 
-      await nestedDependencyFreshness({ rootArboristNode, arboristValues }),
+      await nestedDependencyFreshness(
+        { rootArboristNode, arboristValues },
+        cwd
+      ),
 
-      await topLevelDepsFreshness({
-        rootArboristNode,
-        arboristValues,
-      }),
+      await topLevelDepsFreshness(
+        {
+          rootArboristNode,
+          arboristValues,
+        },
+        cwd
+      ),
     ],
   };
 }

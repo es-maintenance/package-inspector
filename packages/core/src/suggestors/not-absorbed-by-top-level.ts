@@ -2,7 +2,12 @@ import path from 'path';
 import debug from 'debug';
 
 import type { SuggestionInput } from '../types';
-import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
+import {
+  getBreadcrumb,
+  getDirectorySize,
+  humanFileSize,
+  stripPathOnDisk,
+} from '../package';
 import { ISuggestion } from '../report/generate-report';
 
 /**
@@ -10,10 +15,10 @@ import { ISuggestion } from '../report/generate-report';
  * the semver ranges at the top level
  * version range that doesn't satisfy the top level version range
  */
-export function notBeingAbsorbedByTopLevel({
-  rootArboristNode,
-  arboristValues,
-}: SuggestionInput): Promise<ISuggestion> {
+export function notBeingAbsorbedByTopLevel(
+  { rootArboristNode, arboristValues }: SuggestionInput,
+  workingPath: string
+): Promise<ISuggestion> {
   const notAbsorbed = [];
 
   for (const node of arboristValues) {
@@ -53,7 +58,7 @@ export function notBeingAbsorbedByTopLevel({
         meta: {
           breadcrumb,
           name: node.name,
-          directory: node.path,
+          directory: stripPathOnDisk(node.path, workingPath),
           version: node.version,
           size,
         },

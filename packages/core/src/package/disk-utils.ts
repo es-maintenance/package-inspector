@@ -56,3 +56,16 @@ export function getDirectorySize({
 
   return size;
 }
+
+export function stripPathOnDisk(nodePath: string, workingPath: string): string {
+  if (process.env.NODE_ENV === 'test') {
+    // macOS uses a sym-link for `/tmp -> /private/tmp` dir and `nodePath` will start `/private`
+    const slugToStrip = nodePath.startsWith('/private')
+      ? `/private${workingPath}`
+      : workingPath;
+
+    return nodePath.replace(slugToStrip, '');
+  }
+
+  return nodePath;
+}

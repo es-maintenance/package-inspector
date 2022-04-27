@@ -4,15 +4,21 @@ import path from 'path';
 import type { SuggestionInput } from '../types';
 import type { ISuggestion } from '../report/generate-report';
 
-import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
+import {
+  getBreadcrumb,
+  getDirectorySize,
+  humanFileSize,
+  stripPathOnDisk,
+} from '../package';
 
 /**
  * // docs/ or tests/ is published to npm - how do you NOT publish them
  * (use ignore file or package.json.files[]?
  */
-export async function packagesWithExtraArtifacts({
-  arboristValues,
-}: SuggestionInput): Promise<ISuggestion> {
+export async function packagesWithExtraArtifacts(
+  { arboristValues }: SuggestionInput,
+  workingPath: string
+): Promise<ISuggestion> {
   const extraArtifacts = [];
 
   for (const node of arboristValues) {
@@ -33,7 +39,7 @@ export async function packagesWithExtraArtifacts({
           meta: {
             breadcrumb,
             name: node.name,
-            directory: node.path,
+            directory: stripPathOnDisk(node.path, workingPath),
             version: node.version,
             size,
           },
@@ -56,7 +62,7 @@ export async function packagesWithExtraArtifacts({
           meta: {
             breadcrumb,
             name: node.name,
-            directory: node.path,
+            directory: stripPathOnDisk(node.path, workingPath),
             version: node.version,
             size,
           },
