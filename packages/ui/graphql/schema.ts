@@ -41,7 +41,7 @@ export const typeDefs = gql`
   type Report {
     latestPackages: [DependencyMap]
     root: Package
-    dependencies: [Package]
+    dependencies: [Package]!
     suggestions: [Suggestion]
     summary: String
   }
