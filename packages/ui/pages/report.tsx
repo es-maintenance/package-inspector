@@ -51,24 +51,25 @@ const Report: NextPage = () => {
 
   const topLevelDepMap: { [name: string]: NivoGraphNode } = {};
 
-  [...(data?.report?.dependencies || [])].forEach((dependency) => {
-    if (!dependency.name) return;
+  // FIXME: https://github.com/es-maintenance/package-inspector/issues/31
+  // [...(data?.report?.dependencies || [])].forEach((dependency) => {
+  //   if (!dependency.name) return;
 
-    const topLevelDepName = dependency.breadcrumb.split('#')[0];
+  //   const topLevelDepName = dependency.breadcrumb.split('#')[0];
 
-    if (!topLevelDepMap[topLevelDepName]) {
-      topLevelDepMap[topLevelDepName] = {
-        name: topLevelDepName,
-        children: [],
-      };
-    }
+  //   if (!topLevelDepMap[topLevelDepName]) {
+  //     topLevelDepMap[topLevelDepName] = {
+  //       name: topLevelDepName,
+  //       children: [],
+  //     };
+  //   }
 
-    topLevelDepMap[topLevelDepName].children.push({
-      name: dependency.name,
-      size: dependency.size,
-      children: [],
-    });
-  });
+  //   topLevelDepMap[topLevelDepName].children.push({
+  //     name: dependency.name,
+  //     size: dependency.size,
+  //     children: [],
+  //   });
+  // });
 
   const nivoData = {
     name: 'dependencies',
@@ -79,7 +80,7 @@ const Report: NextPage = () => {
 
   return (
     <>
-      <h1>Report: {data?.report.package.name}</h1>
+      <h1>Report: {data?.report.root.name}</h1>
       <h2>
         <Link href="/" passHref={true}>
           <LinkUI>Back to home</LinkUI>
@@ -115,7 +116,12 @@ const Report: NextPage = () => {
       </Grid.Container>
 
       <h2>Dependencies:</h2>
-      <table className={styles.packageTable}>
+      <p>
+        Dependency table is broken, fixing in
+        https://github.com/es-maintenance/package-inspector/issues/31
+      </p>
+      {/* FIXME: https://github.com/es-maintenance/package-inspector/issues/31 */}
+      {/* <table className={styles.packageTable}>
         <thead>
           <tr>
             <th>NAME</th>
@@ -142,7 +148,7 @@ const Report: NextPage = () => {
               )
           )}
         </tbody>
-      </table>
+      </table> */}
     </>
   );
 };
