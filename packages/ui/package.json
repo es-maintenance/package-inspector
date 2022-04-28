@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "yarn build:nexus && next dev",
     "build": "yarn build:nexus && next build",
-    "build:nexus": "ts-node -O '{ \"module\": \"commonjs\" }' --transpile-only graphql/schema.ts",
+    "build:nexus": "ts-node -O '{ \"module\": \"commonjs\" }' --transpile-only graphql/schema.ts && prettier --write graphql/generated/*",
     "start": "next start",
     "lint": "yarn build:nexus && next lint"
   },
