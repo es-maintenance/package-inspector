@@ -17,7 +17,9 @@ export type Report = NexusGenFieldTypes['Report'];
 
 // TODO: figure out how to Pick from other picks
 interface ReportData {
-  report: Pick<NexusGenFieldTypes['Report'], 'summary' | 'root'>;
+  report: Pick<NexusGenFieldTypes['Report'], 'summary' | 'root'> & {
+    suggestions: NexusGenFieldTypes['Suggestion'][];
+  };
 }
 
 const ReportQuery = gql`
@@ -27,6 +29,14 @@ const ReportQuery = gql`
       root {
         name
         version
+      }
+      suggestions {
+        id
+        name
+        message
+        actions {
+          message
+        }
       }
     }
   }
@@ -57,17 +67,21 @@ const Home: NextPage = () => {
         {/* <SuggestionOverview report={data.report} /> */}
 
         <Grid.Container gap={2} justify={'center'}>
-          <h2>TODO: Suggestions not impl yet</h2>
-          {/* {data &&
-            data.report.suggestions.map((suggestion) => (
-              <Grid sm={12} md={3} key={suggestion.id}>
-                <Card>
-                  <Text h4>{suggestion.name}</Text>
-                  <Text>{suggestion.message}</Text>
-                  <Card.Footer>{suggestion.actions.length} actions</Card.Footer>
-                </Card>
-              </Grid>
-            ))} */}
+          {data &&
+            data.report.suggestions.map(
+              (suggestion) =>
+                suggestion && (
+                  <Grid sm={12} md={3} key={suggestion.id}>
+                    <Card>
+                      <Text h4>{suggestion.name}</Text>
+                      <Text>{suggestion.message}</Text>
+                      <Card.Footer>
+                        {suggestion.actions.length} actions
+                      </Card.Footer>
+                    </Card>
+                  </Grid>
+                )
+            )}
         </Grid.Container>
       </main>
 
