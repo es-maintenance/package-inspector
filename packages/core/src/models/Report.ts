@@ -110,6 +110,10 @@ export class Report {
   suggestions: Suggestion[];
   pluginInfo: PluginInfo;
 
+  get id(): string {
+    return '';
+  }
+
   constructor() {
     this.root = {
       name: '',

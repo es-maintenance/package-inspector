@@ -55,10 +55,15 @@ interface SuggestionOverviewProps {
 
 const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
   const { report } = props;
-  const { suggestions } = report;
+  // const { suggestions } = report;
 
-  const directDeps = report.root.dependencies;
-  const heaviestDeps = getCostlyPackages(suggestions);
+  // FIXME: needs to be this
+  // const directDeps = report.root.dependencies;
+  const directDeps = report.dependencies;
+
+  // FIXME: need to actually get costly packages
+  // const heaviestDeps = getCostlyPackages(suggestions);
+  const heaviestDeps = getCostlyPackages([]);
 
   return (
     <section>

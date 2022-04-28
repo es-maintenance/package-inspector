@@ -7,16 +7,17 @@ import { gql, useQuery } from '@apollo/client';
 
 import type { Report as IReport } from '@package-inspector/core';
 
+import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 import SuggestionOverview from '../components/SuggestionOverview';
 
 import styles from '../styles/Home.module.css';
 
-export interface Report extends IReport {
-  summary: string;
-}
+// TODO: This is being used in SuggestionOverview because we are passing the query report result to it, need to refactor this
+export type Report = NexusGenFieldTypes['Report'];
 
+// TODO: figure out how to Pick from other picks
 interface ReportData {
-  report: Report;
+  report: Pick<NexusGenFieldTypes['Report'], 'summary' | 'root'>;
 }
 
 const ReportQuery = gql`
@@ -26,19 +27,6 @@ const ReportQuery = gql`
       root {
         name
         version
-      }
-      dependencies {
-        name
-        version
-      }
-      suggestions {
-        id
-        name
-        message
-        actions {
-          message
-          targetPackage
-        }
       }
     }
   }
@@ -51,7 +39,7 @@ const Home: NextPage = () => {
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load report</p>;
 
-  console.log(data.report.dependencies);
+  console.log(data.report);
   return (
     <div className={styles.container}>
       <Head>
@@ -69,7 +57,8 @@ const Home: NextPage = () => {
         {/* <SuggestionOverview report={data.report} /> */}
 
         <Grid.Container gap={2} justify={'center'}>
-          {data &&
+          <h2>TODO: Suggestions not impl yet</h2>
+          {/* {data &&
             data.report.suggestions.map((suggestion) => (
               <Grid sm={12} md={3} key={suggestion.id}>
                 <Card>
@@ -78,7 +67,7 @@ const Home: NextPage = () => {
                   <Card.Footer>{suggestion.actions.length} actions</Card.Footer>
                 </Card>
               </Grid>
-            ))}
+            ))} */}
         </Grid.Container>
       </main>
 
