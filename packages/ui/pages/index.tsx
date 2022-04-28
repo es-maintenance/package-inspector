@@ -49,7 +49,6 @@ const Home: NextPage = () => {
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load report</p>;
 
-  console.log(data.report);
   return (
     <div className={styles.container}>
       <Head>
