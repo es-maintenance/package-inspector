@@ -6,11 +6,11 @@
     "node": ">= 16"
   },
   "scripts": {
-    "dev": "yarn generate && next dev",
-    "build": "yarn generate && next build",
+    "dev": "yarn build:nexus && next dev",
+    "build": "yarn build:nexus && next build",
+    "build:nexus": "ts-node -O '{ \"module\": \"commonjs\" }' --transpile-only graphql/schema.ts",
     "start": "next start",
-    "lint": "yarn generate && next lint",
-    "generate": "ts-node -O '{ \"module\": \"commonjs\" }' --transpile-only graphql/schema.ts"
+    "lint": "yarn build:nexus && next lint"
   },
   "dependencies": {
     "@apollo/client": "3.5.10",
