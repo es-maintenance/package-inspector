@@ -91,6 +91,7 @@ export async function nestedDependencyFreshness({
 
   return {
     id: 'nestedDependencyFreshness',
+    pluginTarget: '@package-inspector/plugin-preset',
     name: 'Nested Dependency Freshness',
     message: `Out of the total ${totalDeps} sub packages currently installed; ${
       outOfDate.major.length

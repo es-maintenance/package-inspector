@@ -45,6 +45,7 @@ export async function packagesWithPinnedVersions({
       */
   return Promise.resolve({
     id: 'packagesWithPinnedVersions',
+    pluginTarget: '@package-inspector/plugin-preset',
     name: 'Packages with pinned dependencies',
     message: `There are currently ${packagedWithPinned.length.toLocaleString()} pinned dependencies`,
     actions: packagedWithPinned,

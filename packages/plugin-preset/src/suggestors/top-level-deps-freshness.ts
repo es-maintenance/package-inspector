@@ -104,6 +104,7 @@ export async function topLevelDepsFreshness({
 
   return {
     id: 'topLevelDepsFreshness',
+    pluginTarget: '@package-inspector/plugin-preset',
     name: 'Top Level Dependency Freshness',
     message: `Out of the total ${totalDeps} explicit dependencies defined in the package.json; ${
       outOfDate.major.length

@@ -70,6 +70,7 @@ export function notBeingAbsorbedByTopLevel({
    */
   return Promise.resolve({
     id: 'notBeingAbsorbedByTopLevel',
+    pluginTarget: '@package-inspector/plugin-preset',
     name: 'Dependencies not being absorbed',
     message: `There are currently ${notAbsorbed.length.toLocaleString()} duplicate packages being installed on disk`,
     actions: notAbsorbed,

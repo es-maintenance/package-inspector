@@ -25,6 +25,10 @@ export interface Package {
   type?: string;
 }
 
+export interface SuggestionMap {
+  [packageName: string]: Suggestion[];
+}
+
 export interface SuggestionAction {
   message: string;
   targetPackage: string;
@@ -32,6 +36,7 @@ export interface SuggestionAction {
 
 export interface Suggestion {
   id: string;
+  pluginTarget: string;
   name: string;
   message: string;
   actions: SuggestionAction[];
@@ -107,7 +112,7 @@ export class Report {
   latestPackages: LatestPackages = {};
   root: Package;
   dependencies: DependenciesMap;
-  suggestions: Suggestion[];
+  suggestions: SuggestionMap;
   pluginInfo: PluginInfo;
 
   constructor() {
@@ -117,7 +122,7 @@ export class Report {
       dependencies: [],
     };
     this.dependencies = {};
-    this.suggestions = [];
+    this.suggestions = {};
     this.pluginInfo = {};
   }
 

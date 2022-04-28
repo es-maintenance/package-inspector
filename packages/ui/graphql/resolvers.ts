@@ -36,6 +36,11 @@ export const resolvers: IResolvers = {
         return parent.dependencies[dependencyLookupKey];
       });
     },
+    suggestions(parent: Report) {
+      return Object.keys(parent.suggestions).map((pluginTarget) => {
+        return parent.suggestions[pluginTarget];
+      });
+    },
     latestPackages(parent: Report) {
       return Object.keys(parent.latestPackages).map((packageName) => {
         return {

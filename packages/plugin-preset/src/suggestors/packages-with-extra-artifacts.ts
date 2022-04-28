@@ -67,6 +67,7 @@ export async function packagesWithExtraArtifacts({
    */
   return Promise.resolve({
     id: 'packagesWithExtraArtifacts',
+    pluginTarget: '@package-inspector/plugin-preset',
     name: 'Packages with extra artifacts',
     message: `There are currently ${extraArtifacts.length.toLocaleString()} extra artifacts`,
     actions: extraArtifacts,

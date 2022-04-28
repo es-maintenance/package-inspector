@@ -135,11 +135,10 @@ export async function generateReport(
     if (plugin.getSuggestions) {
       const suggestions = await plugin?.getSuggestions(suggestionInput);
 
-      suggestionsFromPlugins.push(...suggestions);
+      // TODO: this should be a plugin id not just the name
+      report.suggestions[plugin.name] = [...suggestions];
     }
   }
-
-  report.suggestions = [...suggestionsFromPlugins];
 
   return report;
 }
