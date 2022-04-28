@@ -10,7 +10,8 @@
     "build": "yarn build:nexus && next build",
     "build:nexus": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only graphql/schema.ts && prettier --write graphql/generated/*",
     "start": "next start",
-    "lint": "yarn build:nexus && next lint"
+    "lint": "yarn build:nexus && next lint",
+    "test:ci": "echo 'TESTING NOT AVAILABLE YET'"
   },
   "dependencies": {
     "@apollo/client": "3.5.10",

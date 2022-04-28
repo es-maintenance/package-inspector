@@ -23,3 +23,17 @@ jobs:
         run: yarn install
       - name: Build Workspaces
         run: yarn workspaces run build
+
+  test:
+    name: Run Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Volta
+        uses: volta-cli/action@v1.7.0
+      - name: Install Dependencies
+        run: yarn install
+      - name: Test Workspaces
+        run: yarn workspaces run test:ci
