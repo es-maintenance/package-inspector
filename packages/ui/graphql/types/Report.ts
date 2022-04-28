@@ -33,7 +33,7 @@ export const Report = objectType({
         );
       },
     });
-    t.nonNull.field('root', { type: Package }); // FIXME: root.dependencies are not resolving
+    t.nonNull.field('root', { type: Package });
     t.nonNull.string('summary', {
       resolve: (parent, __, ctx) => {
         const directDeps = ctx.report.root.dependencies;
