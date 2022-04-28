@@ -2,19 +2,20 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Card, Grid, Text } from '@nextui-org/react';
+import { Card, Grid, Loading, Text } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 
-import type { Report as IReport } from '@package-inspector/core';
 import { TestPlugin } from '@package-inspector/plugin-preset/browser';
 
+import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 import SuggestionOverview from '../components/SuggestionOverview';
 
 import styles from '../styles/Home.module.css';
 
-export interface Report extends IReport {
-  summary: string;
-}
+export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
+  root: NexusGenFieldTypes['Package'];
+  suggestions: NexusGenFieldTypes['Suggestion'][];
+};
 
 interface ReportData {
   report: Report;
@@ -27,10 +28,9 @@ const ReportQuery = gql`
       root {
         name
         version
-      }
-      dependencies {
-        name
-        version
+        dependencies {
+          id
+        }
       }
       suggestions {
         id
@@ -38,7 +38,6 @@ const ReportQuery = gql`
         message
         actions {
           message
-          targetPackage
         }
       }
     }
@@ -50,7 +49,7 @@ const Home: NextPage = () => {
 
   const { data, loading, error } = useQuery<ReportData>(ReportQuery);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load report</p>;
 
@@ -64,11 +63,11 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <Link href="/report">{data.report.root.name}</Link>
+          <Link href="/details">{data.report.root.name}</Link>
         </h1>
 
         {/* TODO: we need to talk about this */}
-        {/* <SuggestionOverview report={data.report} /> */}
+        <SuggestionOverview report={data.report} />
 
         <Grid.Container gap={2} justify={'center'}>
           <Grid sm={12} md={3}>
@@ -76,15 +75,20 @@ const Home: NextPage = () => {
           </Grid>
 
           {data &&
-            data.report.suggestions.map((suggestion) => (
-              <Grid sm={12} md={3} key={suggestion.id}>
-                <Card>
-                  <Text h4>{suggestion.name}</Text>
-                  <Text>{suggestion.message}</Text>
-                  <Card.Footer>{suggestion.actions.length} actions</Card.Footer>
-                </Card>
-              </Grid>
-            ))}
+            data.report.suggestions.map(
+              (suggestion) =>
+                suggestion && (
+                  <Grid sm={12} md={3} key={suggestion.id}>
+                    <Card>
+                      <Text h4>{suggestion.name}</Text>
+                      <Text>{suggestion.message}</Text>
+                      <Card.Footer>
+                        {suggestion.actions.length} actions
+                      </Card.Footer>
+                    </Card>
+                  </Grid>
+                )
+            )}
         </Grid.Container>
       </main>
 

@@ -108,12 +108,57 @@ export interface PluginInfo {
 }
  ```
  */
+
+export interface SerializedReport {
+  latestPackages: LatestPackages;
+}
+
+export function serializeReport(jsonReport: any): SerializedReport {
+  const errors: string[] = [];
+
+  const serializedReport: SerializedReport = {
+    latestPackages: {},
+  };
+
+  if (jsonReport.hasOwnProperty('latestPackages')) {
+    if (typeof jsonReport.latestPackages !== 'object') {
+      errors.push(
+        `"jsonReport.latestPackages" should be of type "object" but found "${typeof jsonReport.latestPackages}"`
+      );
+    } else {
+      for (const [key, value] of Object.entries(jsonReport.latestPackages)) {
+        if (typeof value !== 'string') {
+          errors.push(
+            `"jsonReport.latestPackages['${key}']" should be of type "string" but found "${typeof value}"`
+          );
+        } else {
+          serializedReport.latestPackages[key] = value;
+        }
+      }
+    }
+  }
+
+  if (errors.length) {
+    throw new Error(
+      `Error(s) occurred while processing the provided report:
+      ${errors.join('\n')}`
+    );
+  }
+
+  return serializedReport;
+}
+
 export class Report {
-  latestPackages: LatestPackages = {};
   root: Package;
-  dependencies: DependenciesMap;
-  suggestions: SuggestionMap;
-  pluginInfo: PluginInfo;
+
+  latestPackages: LatestPackages = {};
+  dependencies: DependenciesMap = {};
+  suggestions: Suggestion[] = [];
+  pluginInfo: PluginInfo = {};
+
+  get id(): string {
+    return '';
+  }
 
   constructor() {
     this.root = {
@@ -121,17 +166,17 @@ export class Report {
       version: '',
       dependencies: [],
     };
-    this.dependencies = {};
-    this.suggestions = {};
-    this.pluginInfo = {};
   }
 
   async loadFromFile(jsonFilePath: string) {
     const object = await fs.readJSON(jsonFilePath);
 
+    const serializedReport = serializeReport(object);
+
     this.root = object.root;
     this.dependencies = object.dependencies;
     this.suggestions = object.suggestions;
     this.pluginInfo = object.pluginInfo;
+    this.latestPackages = serializedReport.latestPackages;
   }
 }
