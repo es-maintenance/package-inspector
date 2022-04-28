@@ -75,8 +75,16 @@ export const ReportQuery = extendType({
         return {
           id: 'root',
           root: {
-            id: `${ctx.report.root.name}@${ctx.report.root.version}`,
             ...ctx.report.root,
+            id: `${ctx.report.root.name}@${ctx.report.root.version}`,
+            dependencies: ctx.report.root.dependencies.map((depID) => {
+              const pkg = ctx.report.dependencies[depID];
+              return {
+                id: getPackageID(pkg),
+                name: pkg.name,
+                version: pkg.version,
+              };
+            }),
           },
         };
       },
