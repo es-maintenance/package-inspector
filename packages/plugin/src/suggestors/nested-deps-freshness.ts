@@ -1,8 +1,8 @@
 import semverDiff from 'semver/functions/diff';
-import { IArboristNode, SuggestionInput } from '../types';
-import { getBreadcrumb, getLatestPackages } from '../package';
+import { IArboristNode, SuggestionInput } from '@package-inspector/core';
+import { getBreadcrumb, getLatestPackages } from '@package-inspector/core';
 
-import type { SuggestionAction, Suggestion } from '../models';
+import type { SuggestionAction, Suggestion } from '@package-inspector/core';
 
 /**
  * What percentage of your nested dependencies do you bring in that are out of date

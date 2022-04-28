@@ -1,8 +1,8 @@
 import semverDiff from 'semver/functions/diff';
 
-import type { SuggestionInput } from '../types';
-import { getBreadcrumb, getLatestPackages } from '../package';
-import type { SuggestionAction, Suggestion } from '../models';
+import type { SuggestionInput } from '@package-inspector/core';
+import { getBreadcrumb, getLatestPackages } from '@package-inspector/core';
+import type { SuggestionAction, Suggestion } from '@package-inspector/core';
 
 export async function topLevelDepsFreshness({
   rootArboristNode,
@@ -19,6 +19,7 @@ export async function topLevelDepsFreshness({
     minor: string[];
     patch: string[];
   } = { major: [], minor: [], patch: [] };
+  // TODO: this should not be done in this package, it should be done at the top level core library
   const latestPackages = await getLatestPackages(arboristValues);
 
   for (const dependency in dependencies) {

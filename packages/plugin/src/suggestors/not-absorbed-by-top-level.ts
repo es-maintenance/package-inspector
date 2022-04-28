@@ -1,10 +1,16 @@
 import path from 'path';
 import debug from 'debug';
 
-import type { SuggestionInput } from '../types';
-import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
-
-import type { SuggestionAction, Suggestion } from '../models';
+import type {
+  SuggestionAction,
+  Suggestion,
+  SuggestionInput,
+} from '@package-inspector/core';
+import {
+  getBreadcrumb,
+  getDirectorySize,
+  humanFileSize,
+} from '@package-inspector/core';
 
 /**
  * What dependencies you are bringing in that don't absorb into

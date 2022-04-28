@@ -1,10 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 
-import type { SuggestionInput } from '../types';
-import type { SuggestionAction, Suggestion } from '../models';
+import type { SuggestionInput } from '@package-inspector/core';
+import type { SuggestionAction, Suggestion } from '@package-inspector/core';
 
-import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
+import {
+  getBreadcrumb,
+  getDirectorySize,
+  humanFileSize,
+} from '@package-inspector/core';
 
 /**
  * // docs/ or tests/ is published to npm - how do you NOT publish them

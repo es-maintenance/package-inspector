@@ -7,12 +7,6 @@ import {
   getLatestPackages,
   stripPathOnDisk,
 } from '../package';
-import {
-  nestedDependencyFreshness,
-  notBeingAbsorbedByTopLevel,
-  packagesWithExtraArtifacts,
-  topLevelDepsFreshness,
-} from '../suggestors';
 
 import { Report, Suggestion } from '../models';
 
@@ -145,14 +139,7 @@ export async function generateReport(
     }
   }
 
-  report.suggestions = [
-    ...suggestionsFromPlugins,
-
-    await packagesWithExtraArtifacts(suggestionInput),
-    await notBeingAbsorbedByTopLevel(suggestionInput),
-    await nestedDependencyFreshness(suggestionInput),
-    await topLevelDepsFreshness(suggestionInput),
-  ];
+  report.suggestions = [...suggestionsFromPlugins];
 
   return report;
 }
