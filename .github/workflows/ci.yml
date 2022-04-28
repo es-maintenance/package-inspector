@@ -35,5 +35,7 @@ jobs:
         uses: volta-cli/action@v1.7.0
       - name: Install Dependencies
         run: yarn install
+      - name: Build Workspaces
+        run: yarn workspaces run build
       - name: Test Workspaces
         run: yarn workspaces run test:ci
