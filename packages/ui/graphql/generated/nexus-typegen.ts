@@ -32,7 +32,6 @@ export interface NexusGenObjects {
     funding?: string | null; // String
     homepage?: string | null; // String
     id: string; // ID!
-    metadata?: NexusGenRootTypes['PackageMetadata'] | null; // PackageMetadata
     name: string; // String!
     type?: string | null; // String
     version: string; // String!
