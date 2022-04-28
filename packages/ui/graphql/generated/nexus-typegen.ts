@@ -52,6 +52,17 @@ export interface NexusGenObjects {
     files?: number | null; // Int
     physical?: number | null; // Int
   };
+  Suggestion: {
+    // root type
+    id: string; // ID!
+    message: string; // String!
+    name: string; // String!
+  };
+  SuggestionAction: {
+    // root type
+    message: string; // String!
+    targetPackage?: NexusGenRootTypes['Package'] | null; // Package
+  };
 }
 
 export interface NexusGenInterfaces {}
@@ -94,12 +105,25 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     latestPackages: Array<NexusGenRootTypes['MiniPackage'] | null>; // [MiniPackage]!
     root: NexusGenRootTypes['Package']; // Package!
+    suggestions: Array<NexusGenRootTypes['Suggestion'] | null>; // [Suggestion]!
     summary: string; // String!
   };
   SizeInfo: {
     // field return type
     files: number | null; // Int
     physical: number | null; // Int
+  };
+  Suggestion: {
+    // field return type
+    actions: Array<NexusGenRootTypes['SuggestionAction'] | null>; // [SuggestionAction]!
+    id: string; // ID!
+    message: string; // String!
+    name: string; // String!
+  };
+  SuggestionAction: {
+    // field return type
+    message: string; // String!
+    targetPackage: NexusGenRootTypes['Package'] | null; // Package
   };
 }
 
@@ -135,12 +159,25 @@ export interface NexusGenFieldTypeNames {
     id: 'ID';
     latestPackages: 'MiniPackage';
     root: 'Package';
+    suggestions: 'Suggestion';
     summary: 'String';
   };
   SizeInfo: {
     // field return type name
     files: 'Int';
     physical: 'Int';
+  };
+  Suggestion: {
+    // field return type name
+    actions: 'SuggestionAction';
+    id: 'ID';
+    message: 'String';
+    name: 'String';
+  };
+  SuggestionAction: {
+    // field return type name
+    message: 'String';
+    targetPackage: 'Package';
   };
 }
 

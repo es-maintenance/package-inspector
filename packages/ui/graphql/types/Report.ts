@@ -3,6 +3,7 @@ import { humanFileSize } from '../../lib/utils';
 import { getPackageID } from '../utils';
 
 import { MiniPackage, Package } from './Package';
+import { Suggestion } from './Suggestion';
 
 export const Report = objectType({
   name: 'Report',
@@ -34,8 +35,14 @@ export const Report = objectType({
       },
     });
     t.nonNull.field('root', { type: Package });
+    t.nonNull.list.field('suggestions', {
+      type: Suggestion,
+      resolve(_, __, ctx) {
+        return ctx.report.suggestions;
+      },
+    });
     t.nonNull.string('summary', {
-      resolve: (parent, __, ctx) => {
+      resolve(parent, _, ctx) {
         const directDeps = ctx.report.root.dependencies;
         const allDeps = Object.keys(ctx.report.dependencies);
         const suggestionCount = ctx.report.suggestions
@@ -77,14 +84,6 @@ export const ReportQuery = extendType({
           root: {
             ...ctx.report.root,
             id: `${ctx.report.root.name}@${ctx.report.root.version}`,
-            dependencies: ctx.report.root.dependencies.map((depID) => {
-              const pkg = ctx.report.dependencies[depID];
-              return {
-                id: getPackageID(pkg),
-                name: pkg.name,
-                version: pkg.version,
-              };
-            }),
           },
         };
       },

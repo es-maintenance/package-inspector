@@ -14,22 +14,3 @@ export const schema = makeSchema({
     export: 'Context',
   },
 });
-
-// export const typeDefs = gql`
-
-//   type SuggestionAction {
-//     message: String!
-//     targetPackage: String!
-//   }
-
-//   type Suggestion {
-//     id: String!
-//     name: String!
-//     message: String!
-//     actions: [SuggestionAction!]!
-//   }
-
-//   type Report {
-//     suggestions: [Suggestion]
-//   }
-// `;
