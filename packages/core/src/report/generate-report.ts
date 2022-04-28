@@ -14,7 +14,7 @@ import {
   topLevelDepsFreshness,
 } from '../suggestors';
 
-import { TestPlugin } from '@package-inspector/plugins/server';
+import { TestPlugin } from '@package-inspector/plugin/server';
 
 import { Report } from '../models';
 
