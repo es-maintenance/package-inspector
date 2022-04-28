@@ -1,4 +1,5 @@
 import { objectType } from 'nexus';
+import { getPackageID } from '../utils';
 
 export const MiniPackage = objectType({
   name: 'MiniPackage',
@@ -42,7 +43,7 @@ export const Package = objectType({
           ? pkg.dependencies.map((depID) => {
               const pkgDep = ctx.report.dependencies[depID];
               return {
-                id: `${pkgDep.name}@${pkgDep.version}`, // FIXME: need to encode the `dep.name` since packages can have special chars in them.
+                id: getPackageID(pkgDep),
                 name: pkgDep.name,
                 version: pkgDep.version,
               };

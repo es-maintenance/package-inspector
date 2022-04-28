@@ -1,5 +1,6 @@
 import { extendType, objectType } from 'nexus';
 import { humanFileSize } from '../../lib/utils';
+import { getPackageID } from '../utils';
 
 import { MiniPackage, Package } from './Package';
 
@@ -12,7 +13,7 @@ export const Report = objectType({
       resolve: (_, __, ctx) => {
         return Object.values(ctx.report.dependencies).map((dep) => {
           return {
-            id: `${dep.name}@${dep.version}`, // FIXME: need to encode the `dep.name` since packages can have special chars in them.
+            id: getPackageID(dep),
             name: dep.name,
             version: dep.version,
           };
@@ -32,7 +33,7 @@ export const Report = objectType({
         );
       },
     });
-    t.nonNull.field('root', { type: Package });
+    t.nonNull.field('root', { type: Package }); // FIXME: root.dependencies are not resolving
     t.nonNull.string('summary', {
       resolve: (parent, __, ctx) => {
         const directDeps = ctx.report.root.dependencies;
