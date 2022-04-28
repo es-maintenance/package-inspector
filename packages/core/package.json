@@ -10,7 +10,6 @@
     "watch": "tsc -p . --watch",
     "test": "vitest"
   },
-  "sideEffects": false,
   "dependencies": {
     "@npmcli/arborist": "^5.1.0"
   },
