@@ -1,7 +1,8 @@
-import type {
-  SuggestionAction,
-  Suggestion,
-  SuggestionInput,
+import {
+  type SuggestionAction,
+  type Suggestion,
+  type SuggestionInput,
+  getBreadcrumb,
 } from '@package-inspector/core';
 
 /**
@@ -11,8 +12,6 @@ import type {
 export async function packagesWithPinnedVersions({
   arboristValues,
 }: SuggestionInput): Promise<Suggestion> {
-  const { getBreadcrumb } = await import('@package-inspector/core');
-
   const packagedWithPinned: SuggestionAction[] = [];
 
   for (const node of arboristValues) {
