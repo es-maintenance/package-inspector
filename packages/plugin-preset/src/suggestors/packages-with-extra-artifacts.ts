@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
-import type { SuggestionInput } from '@package-inspector/core';
-import type { SuggestionAction, Suggestion } from '@package-inspector/core';
-
 import {
+  type SuggestionInput,
+  type SuggestionAction,
+  type Suggestion,
   getBreadcrumb,
   getDirectorySize,
   humanFileSize,

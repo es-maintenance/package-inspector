@@ -1,12 +1,10 @@
 import path from 'path';
 import debug from 'debug';
 
-import type {
-  SuggestionAction,
-  Suggestion,
-  SuggestionInput,
-} from '@package-inspector/core';
 import {
+  type SuggestionAction,
+  type Suggestion,
+  type SuggestionInput,
   getBreadcrumb,
   getDirectorySize,
   humanFileSize,

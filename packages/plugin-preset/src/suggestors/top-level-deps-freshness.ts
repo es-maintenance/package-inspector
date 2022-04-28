@@ -1,8 +1,12 @@
 import semverDiff from 'semver/functions/diff';
 
-import type { SuggestionInput } from '@package-inspector/core';
-import { getBreadcrumb, getLatestPackages } from '@package-inspector/core';
-import type { SuggestionAction, Suggestion } from '@package-inspector/core';
+import {
+  type SuggestionInput,
+  type SuggestionAction,
+  type Suggestion,
+  getBreadcrumb,
+  getLatestPackages,
+} from '@package-inspector/core';
 
 export async function topLevelDepsFreshness({
   rootArboristNode,

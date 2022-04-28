@@ -1,5 +1,8 @@
-import type { Suggestion } from '@package-inspector/core';
-import type { ServerPlugin, SuggestionInput } from '@package-inspector/core';
+import type {
+  Suggestion,
+  ServerPlugin,
+  SuggestionInput,
+} from '@package-inspector/core';
 
 import {
   nestedDependencyFreshness,
