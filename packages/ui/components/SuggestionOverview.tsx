@@ -1,9 +1,5 @@
 import React from 'react';
-import type {
-  Suggestion,
-  Package,
-  DependenciesMap,
-} from '@package-inspector/core';
+import type { Suggestion } from '@package-inspector/core';
 import Link from 'next/link';
 import { Grid, Link as LinkUI } from '@nextui-org/react';
 
