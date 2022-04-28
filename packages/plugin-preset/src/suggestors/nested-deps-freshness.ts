@@ -1,8 +1,15 @@
+import debug from 'debug';
 import semverDiff from 'semver/functions/diff';
-import { IArboristNode, SuggestionInput } from '@package-inspector/core';
-import { getBreadcrumb, getLatestPackages } from '@package-inspector/core';
+import {
+  type SuggestionAction,
+  type Suggestion,
+  type IArboristNode,
+  type SuggestionInput,
+  getBreadcrumb,
+  getLatestPackages,
+} from '@package-inspector/core';
 
-import type { SuggestionAction, Suggestion } from '@package-inspector/core';
+const logger = debug('pi-core:suggestor:nested-deps-freshness');
 
 /**
  * What percentage of your nested dependencies do you bring in that are out of date
@@ -37,7 +44,7 @@ export async function nestedDependencyFreshness({
       try {
         diff = semverDiff(node.version, latestPackages[node.name]);
       } catch (ex) {
-        console.log(
+        logger(
           `Could not get a diff for ${node.name} between (${node.version} <> ${
             latestPackages[node.name]
           }) (${node.isLink || node.isWorkspace})`
@@ -56,7 +63,7 @@ export async function nestedDependencyFreshness({
           break;
       }
     } catch (ex) {
-      console.log(ex);
+      logger(ex);
     }
   }
 

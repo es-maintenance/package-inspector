@@ -10,6 +10,8 @@ import {
   humanFileSize,
 } from '@package-inspector/core';
 
+const logger = debug('pi-core:suggestor:not-absorbed-by-top-level');
+
 /**
  * What dependencies you are bringing in that don't absorb into
  * the semver ranges at the top level
@@ -36,7 +38,7 @@ export function notBeingAbsorbedByTopLevel({
 
     // if there is no top level package there was no need to hoist it to deduplicate as there is only one package in the tree
     if (!topLevelPackage) {
-      debug(`No topLevelPackage for ${topLevelPath}`);
+      logger(`No topLevelPackage for ${topLevelPath}`);
       continue;
     }
 
