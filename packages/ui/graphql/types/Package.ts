@@ -49,6 +49,7 @@ export const Package = objectType({
                 id: getPackageID(pkgDep),
                 name: pkgDep.name,
                 version: pkgDep.version,
+                type: pkgDep.type,
               };
             })
           : [];

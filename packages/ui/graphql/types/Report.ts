@@ -17,6 +17,7 @@ export const Report = objectType({
             id: getPackageID(dep),
             name: dep.name,
             version: dep.version,
+            type: dep.type,
           };
         });
       },

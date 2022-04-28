@@ -1,36 +1,31 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { Grid, Link as LinkUI } from '@nextui-org/react';
+import { Grid, Link as LinkUI, Loading } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 import { ResponsiveTreeMap } from '@nivo/treemap';
-import type { Report as IReport } from '@package-inspector/core';
+
+import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 
 import styles from '../styles/Report.module.css';
-interface Report extends IReport {
-  summary: string;
-}
 
 interface ReportData {
-  report: Report;
+  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
+    root: NexusGenFieldTypes['Package'];
+  };
 }
 
 const ReportQuery = gql`
   query {
     report {
-      dependencies {
-        breadcrumb
-        name
-        type
-        size
-        version
-      }
-      package {
+      summary
+      root {
         name
         version
         dependencies {
+          id
           name
-          type
           version
+          type
         }
       }
     }
@@ -46,8 +41,9 @@ type NivoGraphNode = {
 const Report: NextPage = () => {
   const { data, loading, error } = useQuery<ReportData>(ReportQuery);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>Oh no... {error.message}</p>;
+  if (!data) return <p>Oh no... could not load data from query.</p>;
 
   const topLevelDepMap: { [name: string]: NivoGraphNode } = {};
 
@@ -80,7 +76,7 @@ const Report: NextPage = () => {
 
   return (
     <>
-      <h1>Report: {data?.report.root.name}</h1>
+      <h1>Report: {data.report.root.name}</h1>
       <h2>
         <Link href="/" passHref={true}>
           <LinkUI>Back to home</LinkUI>
@@ -116,12 +112,8 @@ const Report: NextPage = () => {
       </Grid.Container>
 
       <h2>Dependencies:</h2>
-      <p>
-        Dependency table is broken, fixing in
-        https://github.com/es-maintenance/package-inspector/issues/31
-      </p>
-      {/* FIXME: https://github.com/es-maintenance/package-inspector/issues/31 */}
-      {/* <table className={styles.packageTable}>
+
+      <table className={styles.packageTable}>
         <thead>
           <tr>
             <th>NAME</th>
@@ -130,8 +122,9 @@ const Report: NextPage = () => {
           </tr>
         </thead>
         <tbody>
-          {data?.report.package.dependencies.map(
+          {data.report.root.dependencies.map(
             (dep) =>
+              dep &&
               dep.name && (
                 <tr className={styles.packageTableRow} key={dep.name}>
                   <td>
@@ -148,7 +141,7 @@ const Report: NextPage = () => {
               )
           )}
         </tbody>
-      </table> */}
+      </table>
     </>
   );
 };

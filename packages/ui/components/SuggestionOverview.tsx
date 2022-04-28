@@ -1,11 +1,7 @@
 import React from 'react';
-import type {
-  Suggestion,
-  Package,
-  DependenciesMap,
-} from '@package-inspector/core';
 import Link from 'next/link';
 import { Grid, Link as LinkUI } from '@nextui-org/react';
+import type { Suggestion } from '@package-inspector/core';
 
 import { Report } from '../pages/index';
 
@@ -57,9 +53,8 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
   const { report } = props;
   // const { suggestions } = report;
 
-  // FIXME: needs to be this
-  // const directDeps = report.root.dependencies;
-  const directDeps = report.dependencies;
+  console.log(report);
+  const directDeps = report.root.dependencies;
 
   // FIXME: need to actually get costly packages
   // const heaviestDeps = getCostlyPackages(suggestions);
