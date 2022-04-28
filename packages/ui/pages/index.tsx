@@ -6,7 +6,7 @@ import { Card, Grid, Text } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 
 import type { Report as IReport } from '@package-inspector/core';
-import { TestPlugin } from '@package-inspector/plugin/browser';
+import { TestPlugin } from '@package-inspector/plugin-preset/browser';
 
 import SuggestionOverview from '../components/SuggestionOverview';
 
