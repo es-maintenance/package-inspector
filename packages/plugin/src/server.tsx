@@ -1,5 +1,5 @@
 import type { Suggestion } from '@package-inspector/core';
-import type { PluginServer, SuggestionInput } from '@package-inspector/core';
+import type { ServerPlugin, SuggestionInput } from '@package-inspector/core';
 
 import {
   nestedDependencyFreshness,
@@ -8,7 +8,7 @@ import {
   topLevelDepsFreshness,
   packagesWithPinnedVersions,
 } from './suggestors';
-export class TestPlugin implements PluginServer {
+export class TestPlugin implements ServerPlugin {
   name: string;
   version: string;
   pluginData: any;

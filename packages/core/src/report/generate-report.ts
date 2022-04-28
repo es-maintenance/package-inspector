@@ -1,7 +1,7 @@
 import path from 'path';
 import Arborist from '@npmcli/arborist';
 
-import { IArboristNode, PluginServer } from '../types';
+import { IArboristNode, ServerPlugin } from '../types';
 import {
   getDirectorySize,
   getLatestPackages,
@@ -17,15 +17,15 @@ function getValues(dependencyTree: IArboristNode) {
   );
 }
 
-function processPlugins(plugins: string[]): PluginServer[] {
-  const processedPlugins: PluginServer[] = [];
+function processPlugins(plugins: string[]): ServerPlugin[] {
+  const processedPlugins: ServerPlugin[] = [];
 
   plugins.forEach((pluginPath) => {
     // Waiting for Lewis to tell me this is a bad idea
-    const { PluginServer } = require(pluginPath);
+    const { ServerPlugin } = require(pluginPath);
 
-    if (PluginServer) {
-      processedPlugins.push(new PluginServer());
+    if (ServerPlugin) {
+      processedPlugins.push(new ServerPlugin());
     }
   });
 
@@ -40,7 +40,7 @@ export async function generateReport(
   cwd: string,
   options?: GenerateReportArgs
 ): Promise<Report> {
-  let processedPlugins: PluginServer[] = [];
+  let processedPlugins: ServerPlugin[] = [];
 
   if (options?.plugins) {
     processedPlugins = processPlugins(options.plugins);
@@ -135,7 +135,7 @@ export async function generateReport(
     if (plugin.getSuggestions) {
       const suggestions = await plugin?.getSuggestions(suggestionInput);
 
-      suggestionsFromPlugins = suggestionsFromPlugins.concat(suggestions);
+      suggestionsFromPlugins.push(...suggestions);
     }
   }
 

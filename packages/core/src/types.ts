@@ -59,11 +59,11 @@ export interface Plugin {
   suggestions: Suggestion[];
 }
 
-export interface PluginServer extends Plugin {
+export interface ServerPlugin extends Plugin {
   getSuggestions?(suggestionInput: SuggestionInput): Promise<Suggestion[]>;
 }
 
-export interface PluginBrowser extends Plugin {
+export interface BrowserPlugin extends Plugin {
   // View rendered as a block on the report page
   reportView?: React.FC;
   // Renders as a full page experience

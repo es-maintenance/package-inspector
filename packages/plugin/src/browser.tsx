@@ -1,9 +1,9 @@
-import type { PluginBrowser, Suggestion } from '@package-inspector/core';
+import type { BrowserPlugin, Suggestion } from '@package-inspector/core';
 import { Card, Grid, Text } from '@nextui-org/react';
 
 import React from 'react';
 
-export class TestPlugin implements PluginBrowser {
+export class TestPlugin implements BrowserPlugin {
   name: string;
   version: string;
   pluginData: any;
