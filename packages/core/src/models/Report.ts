@@ -1,5 +1,3 @@
-import fs from 'fs-extra';
-
 export type LatestPackages = Record<string, string>;
 export interface SizeInfo {
   files: number;
@@ -121,8 +119,10 @@ export class Report {
     this.pluginInfo = {};
   }
 
-  loadFromFile(jsonFilePath: string) {
-    const object = fs.readJSONSync(jsonFilePath);
+  async loadFromFile(jsonFilePath: string) {
+    const fs = await import('fs-extra');
+
+    const object = await fs.readJSON(jsonFilePath);
 
     this.root = object.root;
     this.dependencies = object.dependencies;

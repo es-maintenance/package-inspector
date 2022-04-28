@@ -3,7 +3,6 @@ import Arborist from '@npmcli/arborist';
 
 import { IArboristNode } from '../types';
 import {
-  getBreadcrumb,
   getDirectorySize,
   getLatestPackages,
   stripPathOnDisk,
@@ -12,9 +11,10 @@ import {
   nestedDependencyFreshness,
   notBeingAbsorbedByTopLevel,
   packagesWithExtraArtifacts,
-  packagesWithPinnedVersions,
   topLevelDepsFreshness,
 } from '../suggestors';
+
+import { TestPlugin } from '@package-inspector/plugins/server';
 
 import { Report } from '../models';
 
@@ -26,6 +26,8 @@ function getValues(dependencyTree: IArboristNode) {
 }
 
 export async function generateReport(cwd: string): Promise<Report> {
+  const testPlugin = new TestPlugin();
+
   const report = new Report();
 
   const arb = new Arborist({
@@ -107,19 +109,15 @@ export async function generateReport(cwd: string): Promise<Report> {
       }),
   };
 
+  const suggestionInput = { arboristValues, rootArboristNode };
+
   report.suggestions = [
-    await packagesWithPinnedVersions({ arboristValues }),
+    ...(await testPlugin.getSuggestions(suggestionInput)),
 
-    await packagesWithExtraArtifacts({ arboristValues }),
-
-    await notBeingAbsorbedByTopLevel({ rootArboristNode, arboristValues }),
-
-    await nestedDependencyFreshness({ rootArboristNode, arboristValues }),
-
-    await topLevelDepsFreshness({
-      rootArboristNode,
-      arboristValues,
-    }),
+    await packagesWithExtraArtifacts(suggestionInput),
+    await notBeingAbsorbedByTopLevel(suggestionInput),
+    await nestedDependencyFreshness(suggestionInput),
+    await topLevelDepsFreshness(suggestionInput),
   ];
 
   return report;

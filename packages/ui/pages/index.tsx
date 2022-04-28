@@ -6,6 +6,7 @@ import { Card, Grid, Text } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 
 import type { Report as IReport } from '@package-inspector/core';
+import { TestPlugin } from '@package-inspector/plugins/browser';
 
 import SuggestionOverview from '../components/SuggestionOverview';
 
@@ -45,13 +46,14 @@ const ReportQuery = gql`
 `;
 
 const Home: NextPage = () => {
+  const testPlugin = new TestPlugin();
+
   const { data, loading, error } = useQuery<ReportData>(ReportQuery);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load report</p>;
 
-  console.log(data.report.dependencies);
   return (
     <div className={styles.container}>
       <Head>
@@ -69,6 +71,10 @@ const Home: NextPage = () => {
         {/* <SuggestionOverview report={data.report} /> */}
 
         <Grid.Container gap={2} justify={'center'}>
+          <Grid sm={12} md={3}>
+            <testPlugin.cardView suggestions={data.report.suggestions} />
+          </Grid>
+
           {data &&
             data.report.suggestions.map((suggestion) => (
               <Grid sm={12} md={3} key={suggestion.id}>

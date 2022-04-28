@@ -1,2 +1,4 @@
 export { generateReport } from './report';
-export * from './models';
+export { Report, Package, Suggestion, SuggestionAction } from './models';
+export * from './types';
+export { getBreadcrumb } from './package/get-breadcrumb';
