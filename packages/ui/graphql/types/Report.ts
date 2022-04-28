@@ -1,6 +1,6 @@
 import { extendType, objectType } from 'nexus';
 
-import { Package } from './Package';
+import { MiniPackage, Package } from './Package';
 
 export const Report = objectType({
   name: 'Report',
@@ -9,6 +9,19 @@ export const Report = objectType({
     t.nonNull.list.field('dependencies', {
       type: Package,
       resolve: () => [],
+    });
+    t.nonNull.list.field('latestPackages', {
+      type: MiniPackage,
+      resolve(_, __, ctx) {
+        return Object.entries(ctx.report.latestPackages).map(
+          ([name, version]) => {
+            return {
+              name,
+              version,
+            };
+          }
+        );
+      },
     });
     t.nonNull.field('root', {
       // TODO: resolve this

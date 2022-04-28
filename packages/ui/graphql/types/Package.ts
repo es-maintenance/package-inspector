@@ -1,5 +1,13 @@
 import { objectType } from 'nexus';
 
+export const MiniPackage = objectType({
+  name: 'MiniPackage',
+  definition(t) {
+    t.nonNull.string('name');
+    t.nonNull.string('version');
+  },
+});
+
 export const SizeInfo = objectType({
   name: 'SizeInfo',
   definition(t) {

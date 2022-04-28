@@ -22,6 +22,11 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  MiniPackage: {
+    // root type
+    name: string; // String!
+    version: string; // String!
+  };
   Package: {
     // root type
     funding?: string | null; // String
@@ -59,6 +64,11 @@ export type NexusGenRootTypes = NexusGenObjects;
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 
 export interface NexusGenFieldTypes {
+  MiniPackage: {
+    // field return type
+    name: string; // String!
+    version: string; // String!
+  };
   Package: {
     // field return type
     dependencies: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
@@ -83,6 +93,7 @@ export interface NexusGenFieldTypes {
     // field return type
     dependencies: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
     id: string; // ID!
+    latestPackages: Array<NexusGenRootTypes['MiniPackage'] | null>; // [MiniPackage]!
     root: NexusGenRootTypes['Package']; // Package!
     summary: string; // String!
   };
@@ -94,6 +105,11 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  MiniPackage: {
+    // field return type name
+    name: 'String';
+    version: 'String';
+  };
   Package: {
     // field return type name
     dependencies: 'Package';
@@ -118,6 +134,7 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     dependencies: 'Package';
     id: 'ID';
+    latestPackages: 'MiniPackage';
     root: 'Package';
     summary: 'String';
   };

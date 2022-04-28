@@ -3,7 +3,7 @@ import { promisify } from 'util';
 
 const execPromise = promisify(exec);
 
-interface OutdatedData {
+export interface OutdatedData {
   [key: string]: {
     latest: string;
   };
