@@ -1,7 +1,7 @@
 import path from 'path';
 import Arborist from '@npmcli/arborist';
 
-import { IArboristNode } from '../types';
+import { IArboristNode, PluginServer } from '../types';
 import {
   getDirectorySize,
   getLatestPackages,
@@ -14,9 +14,7 @@ import {
   topLevelDepsFreshness,
 } from '../suggestors';
 
-import { TestPlugin } from '@package-inspector/plugin/server';
-
-import { Report } from '../models';
+import { Report, Suggestion } from '../models';
 
 function getValues(dependencyTree: IArboristNode) {
   // ignore the root node
@@ -25,8 +23,34 @@ function getValues(dependencyTree: IArboristNode) {
   );
 }
 
-export async function generateReport(cwd: string): Promise<Report> {
-  const testPlugin = new TestPlugin();
+function processPlugins(plugins: string[]): PluginServer[] {
+  const processedPlugins: PluginServer[] = [];
+
+  plugins.forEach((pluginPath) => {
+    // Waiting for Lewis to tell me this is a bad idea
+    const { PluginServer } = require(pluginPath);
+
+    if (PluginServer) {
+      processedPlugins.push(new PluginServer());
+    }
+  });
+
+  return processedPlugins;
+}
+
+interface GenerateReportArgs {
+  plugins?: string[];
+}
+
+export async function generateReport(
+  cwd: string,
+  options?: GenerateReportArgs
+): Promise<Report> {
+  let processedPlugins: PluginServer[] = [];
+
+  if (options?.plugins) {
+    processedPlugins = processPlugins(options.plugins);
+  }
 
   const report = new Report();
 
@@ -111,8 +135,18 @@ export async function generateReport(cwd: string): Promise<Report> {
 
   const suggestionInput = { arboristValues, rootArboristNode };
 
+  let suggestionsFromPlugins: Suggestion[] = [];
+
+  for (const plugin of processedPlugins) {
+    if (plugin.getSuggestions) {
+      const suggestions = await plugin?.getSuggestions(suggestionInput);
+
+      suggestionsFromPlugins = suggestionsFromPlugins.concat(suggestions);
+    }
+  }
+
   report.suggestions = [
-    ...(await testPlugin.getSuggestions(suggestionInput)),
+    ...suggestionsFromPlugins,
 
     await packagesWithExtraArtifacts(suggestionInput),
     await notBeingAbsorbedByTopLevel(suggestionInput),

@@ -1,2 +1,2 @@
-export { TestPlugin as TestPluginServer } from './server';
-export { TestPlugin as TestPluginBrowser } from './browser';
+export { TestPlugin as PluginServer } from './server';
+export { TestPlugin as PluginBrowser } from './browser';
