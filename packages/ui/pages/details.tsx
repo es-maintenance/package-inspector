@@ -48,12 +48,6 @@ const ReportQuery = gql`
   }
 `;
 
-type NivoGraphNode = {
-  name: string;
-  size?: number;
-  children: NivoGraphNode[];
-};
-
 const Report: NextPage = () => {
   const { data, loading, error } = useQuery<ReportData>(ReportQuery);
 
@@ -76,8 +70,6 @@ const Report: NextPage = () => {
       }
     ),
   };
-
-  console.log(nivoData);
 
   return (
     <Layout title={data.report.root.name}>
