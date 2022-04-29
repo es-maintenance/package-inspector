@@ -69,7 +69,6 @@ export const SuggestionQuery = extendType({
         );
         const suggestionModel = allSuggestions.find((s) => s.id === args.id);
 
-        console.log(suggestionModel);
         return suggestionModel
           ? {
               id: suggestionModel.id,
