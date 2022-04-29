@@ -2,6 +2,16 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { Link as LinkUI } from '@nextui-org/react';
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+import { Layout } from '../../components/Layout';
+
 import styles from './Packages.module.css';
 
 type ColumnKey = 'name' | 'version' | 'dep-count' | 'dev-dep-count';
@@ -38,6 +48,7 @@ const Packages: NextPage = () => {
       label: 'DEV DEPENDENCIES',
     },
   ];
+  // FIXME: should be passed in
   const rows: Row[] = [
     {
       key: '1',
@@ -70,32 +81,38 @@ const Packages: NextPage = () => {
   ];
 
   return (
-    <>
-      <h1>Packages</h1>
-      <h2>
-        <Link href="/" passHref={true}>
-          <LinkUI>Back to home</LinkUI>
-        </Link>
-      </h2>
-      <table className={styles.packageTable}>
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column.key}>{column.label}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr className={styles.packageTableRow} key={row.key}>
+    // FIXME: should be the name of the report
+    <Layout title="Packages">
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead>
+            <TableRow>
               {columns.map((column) => (
-                <td key={`${row.key}${column.key}`}>{row[column.key]}</td>
+                <TableCell key={column.key}>{column.label}</TableCell>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.key}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                {columns.map((column) => (
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    key={`${row.key}${column.key}`}
+                  >
+                    {row[column.key]}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Layout>
   );
 };
 

@@ -4,6 +4,14 @@ import { Grid, Link as LinkUI, Loading } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 import { ResponsiveTreeMap } from '@nivo/treemap';
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 import { Layout } from '../components/Layout';
 
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
@@ -108,35 +116,48 @@ const Report: NextPage = () => {
 
       <h2>Dependencies:</h2>
 
-      <table className={styles.packageTable}>
-        <thead>
-          <tr>
-            <th>NAME</th>
-            <th>VERSION</th>
-            <th>TYPE</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.report.root.dependencies.map(
-            (dep) =>
-              dep &&
-              dep.name && (
-                <tr className={styles.packageTableRow} key={dep.name}>
-                  <td>
-                    <Link
-                      href={`packages/${encodeURIComponent(dep.name)}`}
-                      passHref={true}
-                    >
-                      <LinkUI>{dep.name}</LinkUI>
-                    </Link>
-                  </td>
-                  <td>{dep.version}</td>
-                  <td>{dep.type}</td>
-                </tr>
-              )
-          )}
-        </tbody>
-      </table>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>NAME</TableCell>
+              <TableCell>VERSION</TableCell>
+              <TableCell>TYPE</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.report.root.dependencies.map(
+              (dep) =>
+                dep &&
+                dep.name && (
+                  <TableRow
+                    key={dep.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="td">
+                      <Link
+                        href={`packages/${encodeURIComponent(dep.name)}`}
+                        passHref={true}
+                      >
+                        <LinkUI>{dep.name}</LinkUI>
+                      </Link>
+                    </TableCell>
+                    <TableCell component="td">
+                      <Link
+                        href={`packages/${encodeURIComponent(dep.name)}`}
+                        passHref={true}
+                      >
+                        <LinkUI>{dep.name}</LinkUI>
+                      </Link>
+                    </TableCell>
+                    <TableCell component="td">{dep.version}</TableCell>
+                    <TableCell component="td">{dep.type}</TableCell>
+                  </TableRow>
+                )
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Layout>
   );
 };
