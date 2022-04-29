@@ -13,7 +13,7 @@ jobs:
   build:
     name: Verify Build
 
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, macos-11, macos-12]
 
     steps:
       - uses: actions/checkout@v3
