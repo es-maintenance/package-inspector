@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { Link as LinkUI } from '@nextui-org/react';
+import { Link as LinkUI, Loading } from '@nextui-org/react';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,6 +13,8 @@ import Paper from '@mui/material/Paper';
 import { Layout } from '../../components/Layout';
 
 import styles from './Packages.module.css';
+import { gql, useQuery } from '@apollo/client';
+import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
 
 type ColumnKey = 'name' | 'version' | 'dep-count' | 'dev-dep-count';
 
@@ -21,15 +23,29 @@ interface Column {
   label: string;
 }
 
-interface Row {
-  key: string;
-  name: string;
-  version: string;
-  'dep-count': number;
-  'dev-dep-count': number;
+interface PackageData {
+  packages: NexusGenFieldTypes['Package'][];
 }
 
+const PackagesQuery = gql`
+  query Packages {
+    packages {
+      name
+      version
+      dependencies {
+        name
+      }
+    }
+  }
+`;
+
 const Packages: NextPage = () => {
+  const { data, loading, error } = useQuery<PackageData>(PackagesQuery);
+
+  if (loading) return <Loading />;
+  if (error) return <p>Oh no... {error.message}</p>;
+  if (!data) return <p>Oh no... could not load package list</p>;
+
   const columns: Column[] = [
     {
       key: 'name',
@@ -42,41 +58,6 @@ const Packages: NextPage = () => {
     {
       key: 'dep-count',
       label: 'DEPENDENCIES',
-    },
-    {
-      key: 'dev-dep-count',
-      label: 'DEV DEPENDENCIES',
-    },
-  ];
-  // FIXME: should be passed in
-  const rows: Row[] = [
-    {
-      key: '1',
-      name: 'react',
-      version: '18.0.0',
-      'dep-count': 30,
-      'dev-dep-count': 50,
-    },
-    {
-      key: '2',
-      name: 'react-dom',
-      version: '18.0.0',
-      'dep-count': 23,
-      'dev-dep-count': 56,
-    },
-    {
-      key: '3',
-      name: 'tailwind',
-      version: '3.0.0',
-      'dep-count': 1,
-      'dev-dep-count': 3,
-    },
-    {
-      key: '4',
-      name: 'next',
-      version: '12.1.5',
-      'dep-count': 12,
-      'dev-dep-count': 40,
     },
   ];
 
@@ -93,22 +74,27 @@ const Packages: NextPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.key}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                {columns.map((column) => (
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    key={`${row.key}${column.key}`}
-                  >
-                    {row[column.key]}
+            {data.packages.map((dependency) => {
+              if (!dependency) return;
+
+              return (
+                <TableRow
+                  key={dependency.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {dependency.name}
                   </TableCell>
-                ))}
-              </TableRow>
-            ))}
+                  <TableCell component="th" scope="row">
+                    {dependency.version}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {/* FIXME: need to figure out why the types are not passing through */}
+                    {(dependency as any).dependencies?.length}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

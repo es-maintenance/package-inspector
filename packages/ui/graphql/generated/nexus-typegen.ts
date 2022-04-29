@@ -98,6 +98,7 @@ export interface NexusGenFieldTypes {
   };
   Query: {
     // field return type
+    packages: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
     report: NexusGenRootTypes['Report']; // Report!
     suggestion: NexusGenRootTypes['Suggestion'] | null; // Suggestion
   };
@@ -154,6 +155,7 @@ export interface NexusGenFieldTypeNames {
   };
   Query: {
     // field return type name
+    packages: 'Package';
     report: 'Report';
     suggestion: 'Suggestion';
   };
