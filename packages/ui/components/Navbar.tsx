@@ -85,7 +85,10 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
             >
               <MenuItem onClick={handleCloseNavMenu}>
                 <NextLink href="/details">
-                  <Typography textAlign="center">Report</Typography>
+                  <Typography textAlign="center">Details</Typography>
+                </NextLink>
+                <NextLink href="/packages">
+                  <Typography textAlign="center">Packages</Typography>
                 </NextLink>
               </MenuItem>
             </Menu>
@@ -101,7 +104,12 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button sx={{ my: 2, color: 'white', display: 'block' }}>
               <NextLink href="/details">
-                <Typography textAlign="center">Report</Typography>
+                <Typography textAlign="center">Details</Typography>
+              </NextLink>
+            </Button>
+            <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+              <NextLink href="/packages">
+                <Typography textAlign="center">Packages</Typography>
               </NextLink>
             </Button>
           </Box>
