@@ -36,17 +36,17 @@ const ReportQuery = gql`
           name
           version
           type
+          metadata {
+            size {
+              files
+              physical
+            }
+          }
         }
       }
     }
   }
 `;
-
-type NivoGraphNode = {
-  name: string;
-  size?: number;
-  children: NivoGraphNode[];
-};
 
 const Report: NextPage = () => {
   const { data, loading, error } = useQuery<ReportData>(ReportQuery);
@@ -55,33 +55,20 @@ const Report: NextPage = () => {
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load data from query.</p>;
 
-  const topLevelDepMap: { [name: string]: NivoGraphNode } = {};
-
-  // FIXME: https://github.com/es-maintenance/package-inspector/issues/31
-  // [...(data?.report?.dependencies || [])].forEach((dependency) => {
-  //   if (!dependency.name) return;
-
-  //   const topLevelDepName = dependency.breadcrumb.split('#')[0];
-
-  //   if (!topLevelDepMap[topLevelDepName]) {
-  //     topLevelDepMap[topLevelDepName] = {
-  //       name: topLevelDepName,
-  //       children: [],
-  //     };
-  //   }
-
-  //   topLevelDepMap[topLevelDepName].children.push({
-  //     name: dependency.name,
-  //     size: dependency.size,
-  //     children: [],
-  //   });
-  // });
-
   const nivoData = {
     name: 'dependencies',
-    children: Object.keys(topLevelDepMap).map((topLevelDepName) => {
-      return topLevelDepMap[topLevelDepName];
-    }),
+    children: [...(data?.report?.root?.dependencies || [])].map(
+      (dependency) => {
+        if (!dependency) return {};
+
+        return {
+          name: dependency.name,
+          // FIXME: what the heck is going on here
+          size: (dependency as any).metadata?.size?.physical,
+          children: [],
+        };
+      }
+    ),
   };
 
   return (
