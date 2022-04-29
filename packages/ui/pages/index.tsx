@@ -8,6 +8,7 @@ import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 
 import { Layout } from '../components/Layout';
 import SuggestionOverview from '../components/SuggestionOverview';
+import Link from 'next/link';
 
 export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
   root: NexusGenFieldTypes['Package'];
@@ -72,7 +73,9 @@ const Home: NextPage = () => {
               suggestion && (
                 <Grid sm={12} md={3} key={suggestion.id}>
                   <Card>
-                    <Text h4>{suggestion.name}</Text>
+                    <Link href={`/suggestions/${suggestion.id}`}>
+                      {suggestion.name}
+                    </Link>
                     <Text>{suggestion.message}</Text>
                     <Card.Footer>
                       {suggestion.actions.length} actions
