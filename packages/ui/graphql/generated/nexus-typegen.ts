@@ -57,6 +57,7 @@ export interface NexusGenObjects {
     id: string; // ID!
     message: string; // String!
     name: string; // String!
+    pluginTarget: string; // String!
   };
   SuggestionAction: {
     // root type
@@ -119,6 +120,7 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     message: string; // String!
     name: string; // String!
+    pluginTarget: string; // String!
   };
   SuggestionAction: {
     // field return type
@@ -173,6 +175,7 @@ export interface NexusGenFieldTypeNames {
     id: 'ID';
     message: 'String';
     name: 'String';
+    pluginTarget: 'String';
   };
   SuggestionAction: {
     // field return type name

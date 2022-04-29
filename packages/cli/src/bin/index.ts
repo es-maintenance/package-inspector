@@ -28,6 +28,11 @@ const argv = yargs
       default: path.resolve(process.cwd(), 'report'),
       type: 'string',
     },
+    plugins: {
+      describe: 'A comma separated list of plugins to include',
+      type: 'array',
+      default: [],
+    },
     help: {
       describe: 'Shows the help menu',
     },
@@ -47,7 +52,9 @@ const reportPath = argv.output.indexOf('.json')
 
 (async function main() {
   try {
-    const report = await generateReport(cwd);
+    const report = await generateReport(cwd, {
+      plugins: argv.plugins,
+    });
 
     try {
       fs.mkdirSync(path.dirname(reportPath), { recursive: true });

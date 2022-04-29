@@ -1,10 +1,13 @@
-import semverDiff from 'semver/functions/diff';
 import debug from 'debug';
-
-import { IArboristNode, SuggestionInput } from '../types';
-import { getBreadcrumb, getLatestPackages } from '../package';
-
-import type { SuggestionAction, Suggestion } from '../models';
+import semverDiff from 'semver/functions/diff';
+import {
+  type SuggestionAction,
+  type Suggestion,
+  type IArboristNode,
+  type SuggestionInput,
+  getBreadcrumb,
+  getLatestPackages,
+} from '@package-inspector/core';
 
 const logger = debug('pi-core:suggestor:nested-deps-freshness');
 
@@ -95,6 +98,7 @@ export async function nestedDependencyFreshness({
 
   return {
     id: 'nestedDependencyFreshness',
+    pluginTarget: '@package-inspector/plugin-preset',
     name: 'Nested Dependency Freshness',
     message: `Out of the total ${totalDeps} sub packages currently installed; ${
       outOfDate.major.length

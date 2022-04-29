@@ -1,10 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 
-import type { SuggestionInput } from '../types';
-import type { SuggestionAction, Suggestion } from '../models';
-
-import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
+import {
+  type SuggestionInput,
+  type SuggestionAction,
+  type Suggestion,
+  getBreadcrumb,
+  getDirectorySize,
+  humanFileSize,
+} from '@package-inspector/core';
 
 /**
  * // docs/ or tests/ is published to npm - how do you NOT publish them
@@ -63,6 +67,7 @@ export async function packagesWithExtraArtifacts({
    */
   return Promise.resolve({
     id: 'packagesWithExtraArtifacts',
+    pluginTarget: '@package-inspector/plugin-preset',
     name: 'Packages with extra artifacts',
     message: `There are currently ${extraArtifacts.length.toLocaleString()} extra artifacts`,
     actions: extraArtifacts,

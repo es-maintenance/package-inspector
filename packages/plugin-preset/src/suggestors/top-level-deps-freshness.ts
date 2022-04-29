@@ -1,9 +1,13 @@
 import semverDiff from 'semver/functions/diff';
 import debug from 'debug';
 
-import type { SuggestionInput } from '../types';
-import { getBreadcrumb, getLatestPackages } from '../package';
-import type { SuggestionAction, Suggestion } from '../models';
+import {
+  type SuggestionInput,
+  type SuggestionAction,
+  type Suggestion,
+  getBreadcrumb,
+  getLatestPackages,
+} from '@package-inspector/core';
 
 const logger = debug('pi-core:suggestor:top-level-deps-freshness');
 
@@ -22,6 +26,7 @@ export async function topLevelDepsFreshness({
     minor: string[];
     patch: string[];
   } = { major: [], minor: [], patch: [] };
+  // TODO: this should not be done in this package, it should be done at the top level core library
   const latestPackages = await getLatestPackages(arboristValues);
 
   for (const dependency in dependencies) {
@@ -102,6 +107,7 @@ export async function topLevelDepsFreshness({
 
   return {
     id: 'topLevelDepsFreshness',
+    pluginTarget: '@package-inspector/plugin-preset',
     name: 'Top Level Dependency Freshness',
     message: `Out of the total ${totalDeps} explicit dependencies defined in the package.json; ${
       outOfDate.major.length

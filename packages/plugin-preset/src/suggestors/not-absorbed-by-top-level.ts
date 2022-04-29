@@ -1,10 +1,14 @@
 import path from 'path';
 import debug from 'debug';
 
-import type { SuggestionInput } from '../types';
-import { getBreadcrumb, getDirectorySize, humanFileSize } from '../package';
-
-import type { SuggestionAction, Suggestion } from '../models';
+import {
+  type SuggestionAction,
+  type Suggestion,
+  type SuggestionInput,
+  getBreadcrumb,
+  getDirectorySize,
+  humanFileSize,
+} from '@package-inspector/core';
 
 const logger = debug('pi-core:suggestor:not-absorbed-by-top-level');
 
@@ -68,6 +72,7 @@ export function notBeingAbsorbedByTopLevel({
    */
   return Promise.resolve({
     id: 'notBeingAbsorbedByTopLevel',
+    pluginTarget: '@package-inspector/plugin-preset',
     name: 'Dependencies not being absorbed',
     message: `There are currently ${notAbsorbed.length.toLocaleString()} duplicate packages being installed on disk`,
     actions: notAbsorbed,

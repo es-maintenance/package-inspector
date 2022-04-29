@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { Card, Grid, Loading, Text } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 
+import { TestPlugin } from '@package-inspector/plugin-preset/browser';
+
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
+
+import Navbar from '../components/Navbar';
 import SuggestionOverview from '../components/SuggestionOverview';
 
 import styles from '../styles/Home.module.css';
@@ -32,6 +36,7 @@ const ReportQuery = gql`
       }
       suggestions {
         id
+        pluginTarget
         name
         message
         actions {
@@ -43,6 +48,8 @@ const ReportQuery = gql`
 `;
 
 const Home: NextPage = () => {
+  const testPlugin = new TestPlugin();
+
   const { data, loading, error } = useQuery<ReportData>(ReportQuery);
 
   if (loading) return <Loading />;
@@ -57,15 +64,22 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          <Link href="/details">{data.report.root.name}</Link>
-        </h1>
+      <Navbar title={data.report.root.name} />
 
+      <main className={styles.main}>
         {/* TODO: we need to talk about this */}
         <SuggestionOverview report={data.report} />
 
         <Grid.Container gap={2} justify={'center'}>
+          <Grid sm={12} md={3}>
+            <testPlugin.cardView
+              suggestions={data.report.suggestions.filter(
+                ({ pluginTarget }) =>
+                  pluginTarget === '@package-inspector/plugin-preset'
+              )}
+            />
+          </Grid>
+
           {data &&
             data.report.suggestions.map(
               (suggestion) =>
