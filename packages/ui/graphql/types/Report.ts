@@ -40,6 +40,7 @@ export const Report = objectType({
     t.nonNull.list.field('suggestions', {
       type: Suggestion,
       resolve(_, __, ctx) {
+        // FIXME: don't use `any` type
         const suggestions: any[] = [];
 
         Object.keys(ctx.report.suggestions).forEach((pluginName) => {
@@ -51,7 +52,7 @@ export const Report = objectType({
     });
     t.nonNull.string('summary', {
       resolve(parent, _, ctx) {
-        // Figure this out
+        // FIXME: don't use `any` type
         const suggestions: any[] = [];
 
         Object.keys(ctx.report.suggestions).forEach((pluginName) => {

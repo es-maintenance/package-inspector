@@ -21,6 +21,7 @@ export const Suggestion = objectType({
     t.nonNull.list.field('actions', {
       type: SuggestionAction,
       resolve(parent, __, ctx) {
+        // FIXME: don't use `any` type
         const suggestionsArray: any[] = [];
 
         Object.keys(ctx.report.suggestions).forEach((pluginName) => {
@@ -33,7 +34,7 @@ export const Suggestion = objectType({
           return [];
         }
 
-        // TODO: fix this
+        // FIXME: don't use `any` type
         return suggestion.actions.map((action: any) => {
           // Because we do not traverse the entire dependency graph to populate the report.json file
           // we sometimes do not have access to the target package, need to fix the graph traversal to get rid of this.
