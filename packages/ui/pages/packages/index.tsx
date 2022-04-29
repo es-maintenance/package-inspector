@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { Link as LinkUI } from '@nextui-org/react';
+import { Loading } from '@nextui-org/react';
 
+import { gql, useQuery } from '@apollo/client';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,7 +15,39 @@ import { Layout } from '../../components/Layout';
 
 import styles from './Packages.module.css';
 
+import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
+
 type ColumnKey = 'name' | 'version' | 'dep-count' | 'dev-dep-count';
+
+export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
+  root: NexusGenFieldTypes['Package'];
+  suggestions: NexusGenFieldTypes['Suggestion'][];
+};
+
+interface ReportData {
+  report: Report;
+}
+
+const ReportQuery = gql`
+  query {
+    report {
+      summary
+      root {
+        name
+        version
+        dependencies {
+          id
+          name
+          version
+          dependencies {
+            name
+            type
+          }
+        }
+      }
+    }
+  }
+`;
 
 interface Column {
   key: ColumnKey;
@@ -43,42 +76,19 @@ const Packages: NextPage = () => {
       key: 'dep-count',
       label: 'DEPENDENCIES',
     },
-    {
-      key: 'dev-dep-count',
-      label: 'DEV DEPENDENCIES',
-    },
+    // {
+    //   key: 'dev-dep-count',
+    //   label: 'DEV DEPENDENCIES',
+    // },
   ];
-  // FIXME: should be passed in
-  const rows: Row[] = [
-    {
-      key: '1',
-      name: 'react',
-      version: '18.0.0',
-      'dep-count': 30,
-      'dev-dep-count': 50,
-    },
-    {
-      key: '2',
-      name: 'react-dom',
-      version: '18.0.0',
-      'dep-count': 23,
-      'dev-dep-count': 56,
-    },
-    {
-      key: '3',
-      name: 'tailwind',
-      version: '3.0.0',
-      'dep-count': 1,
-      'dev-dep-count': 3,
-    },
-    {
-      key: '4',
-      name: 'next',
-      version: '12.1.5',
-      'dep-count': 12,
-      'dev-dep-count': 40,
-    },
-  ];
+
+  const { data, loading, error } = useQuery<ReportData>(ReportQuery);
+
+  if (loading) return <Loading />;
+  if (error) return <p>Oh no... {error.message}</p>;
+  if (!data) return <p>Oh no... could not load data from query.</p>;
+
+  console.log(data);
 
   return (
     // FIXME: should be the name of the report
@@ -93,22 +103,27 @@ const Packages: NextPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.key}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                {columns.map((column) => (
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    key={`${row.key}${column.key}`}
-                  >
-                    {row[column.key]}
+            {data.report.root.dependencies.map((dependency) => {
+              if (!dependency) return;
+
+              return (
+                <TableRow
+                  key={dependency.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {dependency.name}
                   </TableCell>
-                ))}
-              </TableRow>
-            ))}
+                  <TableCell component="th" scope="row">
+                    {dependency.version}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {/* FIXME: need to figure out why the types are not passing through */}
+                    {(dependency as any).dependencies?.length}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
