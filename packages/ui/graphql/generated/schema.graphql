@@ -23,6 +23,7 @@ type PackageMetadata {
 }
 
 type Query {
+  packages: [Package]!
   report: Report!
   suggestion(id: String!): Suggestion
 }

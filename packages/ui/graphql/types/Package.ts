@@ -1,4 +1,4 @@
-import { objectType } from 'nexus';
+import { extendType, objectType } from 'nexus';
 import { getPackageID } from '../utils';
 
 export const MiniPackage = objectType({
@@ -77,5 +77,23 @@ export const Package = objectType({
       },
     });
     t.string('type'); // TODO: look into this being an Enum instead
+  },
+});
+
+export const PackageQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.nonNull.list.field('packages', {
+      type: Package,
+      resolve(_, __, ctx) {
+        return Object.values(ctx.report.dependencies).map((dep) => {
+          return {
+            id: getPackageID(dep),
+            name: dep.name,
+            version: dep.version,
+          };
+        });
+      },
+    });
   },
 });
