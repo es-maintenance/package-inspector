@@ -14,6 +14,7 @@ const StyledNavMainContainer = styled('nav', {
   position: 'sticky',
   background: 'transparent',
   zIndex: '$max',
+  length: '',
 });
 
 const StyledNavContainer = styled('div', {
@@ -41,6 +42,7 @@ const StyledNavContainer = styled('div', {
       },
     },
   },
+  length: '',
 });
 
 export interface Props {
@@ -86,7 +88,9 @@ const Navbar: React.FC<Props> = ({ isHome, hasNotify, title }) => {
 
   return (
     <StyledNavMainContainer id="navbar-container">
-      <StyledNavContainer detached={detached} showBlur={showBlur}>
+      {/* Something is messed up where we can't pass types into the component we have defined no the styled component */}
+      {/* <StyledNavContainer detached={detached} showBlur={showBlur}> */}
+      <StyledNavContainer>
         <Container
           lg={true}
           as="nav"
