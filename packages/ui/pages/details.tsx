@@ -4,6 +4,8 @@ import { Grid, Link as LinkUI, Loading } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 import { ResponsiveTreeMap } from '@nivo/treemap';
 
+import { Layout } from '../components/Layout';
+
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 
 import styles from '../styles/Report.module.css';
@@ -75,14 +77,7 @@ const Report: NextPage = () => {
   };
 
   return (
-    <>
-      <h1>Report: {data.report.root.name}</h1>
-      <h2>
-        <Link href="/" passHref={true}>
-          <LinkUI>Back to home</LinkUI>
-        </Link>
-      </h2>
-
+    <Layout title={data.report.root.name}>
       <Grid.Container gap={2}>
         <Grid sm={12} md={12} style={{ height: '300px' }}>
           <ResponsiveTreeMap
@@ -142,7 +137,7 @@ const Report: NextPage = () => {
           )}
         </tbody>
       </table>
-    </>
+    </Layout>
   );
 };
 

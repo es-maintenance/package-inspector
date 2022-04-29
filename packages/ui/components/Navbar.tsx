@@ -12,7 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Report', 'Plugins'];
+import NextLink from 'next/link';
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = ({ title }: { title: string }) => {
@@ -42,14 +43,16 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-          >
-            {title}
-          </Typography>
+          <NextLink href="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            >
+              {title}
+            </Typography>
+          </NextLink>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -80,11 +83,11 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseNavMenu}>
+                <NextLink href="/details">
+                  <Typography textAlign="center">Report</Typography>
+                </NextLink>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -96,15 +99,11 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
             {title}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+              <NextLink href="/details">
+                <Typography textAlign="center">Report</Typography>
+              </NextLink>
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
