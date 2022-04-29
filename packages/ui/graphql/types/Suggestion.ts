@@ -64,6 +64,7 @@ export const SuggestionQuery = extendType({
         id: nonNull(stringArg()),
       },
       resolve(_, args, ctx) {
+        console.log(args.id);
         const allSuggestions = Object.keys(ctx.report.suggestions).flatMap(
           (pluginName) => ctx.report.suggestions[pluginName]
         );
