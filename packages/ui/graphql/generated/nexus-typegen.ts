@@ -99,6 +99,7 @@ export interface NexusGenFieldTypes {
   Query: {
     // field return type
     report: NexusGenRootTypes['Report']; // Report!
+    suggestion: NexusGenRootTypes['Suggestion'] | null; // Suggestion
   };
   Report: {
     // field return type
@@ -154,6 +155,7 @@ export interface NexusGenFieldTypeNames {
   Query: {
     // field return type name
     report: 'Report';
+    suggestion: 'Suggestion';
   };
   Report: {
     // field return type name
@@ -184,7 +186,14 @@ export interface NexusGenFieldTypeNames {
   };
 }
 
-export interface NexusGenArgTypes {}
+export interface NexusGenArgTypes {
+  Query: {
+    suggestion: {
+      // args
+      id: string; // String!
+    };
+  };
+}
 
 export interface NexusGenAbstractTypeMembers {}
 

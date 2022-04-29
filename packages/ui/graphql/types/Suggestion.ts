@@ -1,4 +1,4 @@
-import { objectType } from 'nexus';
+import { extendType, nonNull, objectType, stringArg } from 'nexus';
 import { getPackageID } from '../utils';
 
 import { Package } from './Package';
@@ -50,6 +50,34 @@ export const Suggestion = objectType({
               : null,
           };
         });
+      },
+    });
+  },
+});
+
+export const SuggestionQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.field('suggestion', {
+      type: Suggestion,
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve(_, args, ctx) {
+        const allSuggestions = Object.keys(ctx.report.suggestions).flatMap(
+          (pluginName) => ctx.report.suggestions[pluginName]
+        );
+        const suggestionModel = allSuggestions.find((s) => s.id === args.id);
+
+        console.log(suggestionModel);
+        return suggestionModel
+          ? {
+              id: suggestionModel.id,
+              name: suggestionModel.name,
+              message: suggestionModel.message,
+              pluginTarget: suggestionModel.pluginTarget,
+            }
+          : null;
       },
     });
   },

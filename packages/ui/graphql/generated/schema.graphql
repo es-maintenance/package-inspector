@@ -24,6 +24,7 @@ type PackageMetadata {
 
 type Query {
   report: Report!
+  suggestion(id: String!): Suggestion
 }
 
 type Report {
