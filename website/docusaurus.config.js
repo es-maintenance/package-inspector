@@ -9,7 +9,7 @@ const config = {
   title: 'package-inspector',
   tagline: 'Tooling for inspecting your package',
   url: 'https://es-maintenance.github.io/',
-  baseUrl: '/',
+  baseUrl: '/package-inspector/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',

@@ -2,7 +2,7 @@ import { Report } from '@package-inspector/core';
 
 const REPORT_LOCATION = process.env.REPORT_LOCATION;
 
-export async function getReport() {
+export function getReport() {
   if (!REPORT_LOCATION) {
     throw new Error(
       'Attempting to use use JSON report data but did not provide a REPORT_LOCATION entry via environment variables'
@@ -11,7 +11,7 @@ export async function getReport() {
 
   const report = new Report();
 
-  await report.loadFromFile(REPORT_LOCATION);
+  report.loadFromFile(REPORT_LOCATION);
 
   return report;
 }

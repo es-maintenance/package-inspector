@@ -39,7 +39,8 @@ export class TestPlugin implements BrowserPlugin {
   }
 
   // Renders the card view for a given suggestion
-  get cardView(): React.FC<{ suggestions: Suggestion[] }> {
+  // TODO: talk to lewis about how graphql types don't overlap with report types
+  get cardView(): React.FC<{ suggestions: Suggestion[] | any[] }> {
     return ({ suggestions }) => {
       console.log(suggestions);
 

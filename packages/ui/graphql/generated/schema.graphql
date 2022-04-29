@@ -45,6 +45,7 @@ type Suggestion {
   id: ID!
   message: String!
   name: String!
+  pluginTarget: String!
 }
 
 type SuggestionAction {

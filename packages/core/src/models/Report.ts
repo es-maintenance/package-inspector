@@ -153,7 +153,7 @@ export class Report {
 
   latestPackages: LatestPackages = {};
   dependencies: DependenciesMap = {};
-  suggestions: Suggestion[] = [];
+  suggestions: SuggestionMap = {};
   pluginInfo: PluginInfo = {};
 
   get id(): string {
@@ -168,8 +168,8 @@ export class Report {
     };
   }
 
-  async loadFromFile(jsonFilePath: string) {
-    const object = await fs.readJSON(jsonFilePath);
+  loadFromFile(jsonFilePath: string) {
+    const object = fs.readJSONSync(jsonFilePath);
 
     const serializedReport = serializeReport(object);
 

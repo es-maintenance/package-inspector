@@ -1,4 +1,5 @@
 import { extendType, objectType } from 'nexus';
+import { MaybePromise } from 'nexus/dist/core';
 import { humanFileSize } from '../../lib/utils';
 import { getPackageID } from '../utils';
 
@@ -39,14 +40,27 @@ export const Report = objectType({
     t.nonNull.list.field('suggestions', {
       type: Suggestion,
       resolve(_, __, ctx) {
-        return ctx.report.suggestions;
+        const suggestions: any[] = [];
+
+        Object.keys(ctx.report.suggestions).forEach((pluginName) => {
+          suggestions.push(...ctx.report.suggestions[pluginName]);
+        });
+
+        return suggestions;
       },
     });
     t.nonNull.string('summary', {
       resolve(parent, _, ctx) {
+        // Figure this out
+        const suggestions: any[] = [];
+
+        Object.keys(ctx.report.suggestions).forEach((pluginName) => {
+          suggestions.push(...ctx.report.suggestions[pluginName]);
+        });
+
         const directDeps = ctx.report.root.dependencies;
         const allDeps = Object.keys(ctx.report.dependencies);
-        const suggestionCount = ctx.report.suggestions
+        const suggestionCount = suggestions
           .map((suggestion) => suggestion.actions.length)
           .reduce((a, b) => a + b, 0)
           .toLocaleString();
