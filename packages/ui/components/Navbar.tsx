@@ -1,204 +1,144 @@
-import React, { useState, useEffect } from 'react';
-import { GithubIcon } from './icons';
-import cn from 'classnames';
-import NextLink from 'next/link';
-import { Row, Col, Spacer, Link, useBodyScroll } from '@nextui-org/react';
-import { Container } from '@nextui-org/react';
-import { useRouter } from 'next/router';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
 
-import { styled } from '@nextui-org/react';
+const pages = ['Report', 'Plugins'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const StyledNavMainContainer = styled('nav', {
-  top: 0,
-  height: '76px',
-  position: 'sticky',
-  background: 'transparent',
-  zIndex: '$max',
-  length: '',
-});
-
-const StyledNavContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  size: '100%',
-  '& .navbar__social-icon': {
-    fill: '$colors$headerIconColor',
-  },
-  variants: {
-    showBlur: {
-      true: {
-        background: '$headerBackground',
-      },
-    },
-    detached: {
-      true: {
-        backdropFilter: 'saturate(180%) blur(10px)',
-        boxShadow: '0px 5px 20px -5px rgba(2, 1, 1, 0.1)',
-      },
-      false: {
-        backdropFilter: 'none',
-        boxShadow: 'none',
-        background: 'transparent',
-      },
-    },
-  },
-  length: '',
-});
-
-export interface Props {
-  title: string;
-  hasNotify?: boolean;
-  isHome?: boolean;
-}
-
-const Navbar: React.FC<Props> = ({ isHome, hasNotify, title }) => {
-  const [expanded, setExpanded] = useState(false);
-  const router = useRouter();
-  const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true });
-  const [scrollPosition, setScrollPosition] = useState(
-    (typeof window !== 'undefined' && window.pageYOffset) || 0
+const ResponsiveAppBar = ({ title }: { title: string }) => {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
   );
 
-  const detached = hasNotify ? scrollPosition > 30 : scrollPosition > 0;
-
-  useEffect(() => {
-    window.addEventListener('scroll', onScroll.bind(this));
-    return () => {
-      window.removeEventListener('scroll', onScroll.bind(this));
-    };
-  }, []);
-
-  const onScroll = () => {
-    requestAnimationFrame(() => {
-      setScrollPosition(window.pageYOffset);
-    });
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
   };
 
-  useEffect(() => {
-    setExpanded(false);
-    setBodyHidden(false);
-  }, []);
-
-  const onToggleNavigation = () => {
-    setExpanded(!expanded);
-    setBodyHidden(!expanded);
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
   };
 
-  const showBlur = !!expanded || !!detached || isHome;
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   return (
-    <StyledNavMainContainer id="navbar-container">
-      {/* Something is messed up where we can't pass types into the component we have defined no the styled component */}
-      {/* <StyledNavContainer detached={detached} showBlur={showBlur}> */}
-      <StyledNavContainer>
-        <Container
-          lg={true}
-          as="nav"
-          display="flex"
-          wrap="nowrap"
-          alignItems="center"
-        >
-          <Col
-            className="navbar__logo-container"
-            css={{
-              '@mdMax': {
-                width: '100%',
-              },
-            }}
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            <Row justify="flex-start" align="center">
-              <NextLink href="/">
-                <Link href="/">{title}</Link>
-              </NextLink>
-            </Row>
-          </Col>
-          <Col
-            className="navbar__resources-container"
-            css={{ '@mdMax': { d: 'none' } }}
-          >
-            <Row justify="center" align="center">
-              <Spacer x={1} y={0} />
-              <NextLink href="/details">
-                <Link
-                  className={cn('navbar__link', {
-                    active: false,
-                  })}
-                  href="#"
-                  css={{
-                    color: '$text',
-                    '&.active': {
-                      fontWeight: '600',
-                      color: '$primary',
-                    },
-                  }}
-                >
-                  Report
-                </Link>
-              </NextLink>
-              <Spacer x={1} y={0} />
-              <Link
-                className="navbar__link"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="#"
-                css={{
-                  color: '$text',
-                }}
-              >
-                Plugins
-              </Link>
-            </Row>
-          </Col>
-          <Col className="navbar__search-container">
-            <Row
-              className="navbar__search-row"
-              justify="flex-end"
-              align="center"
-              css={{
-                position: 'initial',
-                '@mdMax': {
-                  jc: 'center',
-                },
+            {title}
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
               }}
             >
-              <Row
-                className="navbar__social-icons-container"
-                justify="flex-end"
-                align="center"
-                gap={1}
-                css={{
-                  width: 'initial',
-                  '@mdMax': {
-                    d: 'none',
-                  },
-                }}
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+          >
+            {title}
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link
-                  className="navbar__social-icon"
-                  href="https://github.com/nextui-org/nextui"
-                  target="_blank"
-                  rel="noreferrer"
-                  css={{
-                    m: '0 6px',
-                    '& svg': {
-                      transition: '$default',
-                    },
-                    '&:hover': {
-                      '& svg': {
-                        opacity: 0.7,
-                      },
-                    },
-                  }}
-                >
-                  <GithubIcon size={24} />
-                </Link>
-              </Row>
-            </Row>
-          </Col>
-        </Container>
-      </StyledNavContainer>
-    </StyledNavMainContainer>
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
-
-export default Navbar;
+export default ResponsiveAppBar;
