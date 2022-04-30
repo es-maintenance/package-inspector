@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { gql, useQuery } from '@apollo/client';
 
-import { Layout, LoadingView } from '../../components';
+import { Layout, LoadingView } from '../../../components';
 
-import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
+import { NexusGenFieldTypes } from '../../../graphql/generated/nexus-typegen';
 
 interface PackageData {
-  package: NexusGenFieldTypes['PackageCompound'][];
+  package: NexusGenFieldTypes['Package'][];
 }
 
 interface ReportData {
@@ -28,14 +28,19 @@ const ReportQuery = gql`
 `;
 
 const PackageQuery = gql`
-  query Package($packageName: String!) {
-    package(packageName: $packageName) {
+  query ($packageName: String!, $packageVersion: String!) {
+    packageByVersion(
+      packageName: $packageName
+      packageVersion: $packageVersion
+    ) {
+      id
       name
-      latest
-      variants {
-        id
-        version
-        name
+      version
+      metadata {
+        size {
+          physical
+          files
+        }
       }
     }
   }
@@ -43,7 +48,7 @@ const PackageQuery = gql`
 
 const Package: NextPage = () => {
   const router = useRouter();
-  let { name } = router.query;
+  let { name, version } = router.query;
 
   if (!name) {
     name = '';
@@ -51,9 +56,16 @@ const Package: NextPage = () => {
     name = name.join();
   }
 
+  if (!version) {
+    version = '';
+  } else if (Array.isArray(version)) {
+    version = version.join();
+  }
+
   const { data, loading, error } = useQuery<PackageData>(PackageQuery, {
     variables: {
       packageName: name,
+      packageVersion: version,
     },
   });
 
@@ -74,19 +86,7 @@ const Package: NextPage = () => {
   return (
     <Layout title={reportData.report.root.name}>
       <h1>Package: {name}</h1>
-      {/* Why aren't the types  */}
-      <h3>Versions:</h3>
-      <ul>
-        {(data.package as any).variants.map((variant: any) => {
-          return (
-            <li key={variant.id}>
-              <Link href={`/packages/${variant.name}/${variant.version}`}>
-                {variant.version}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+      <pre>{JSON.stringify(data.packageByVersion, null, 4)}</pre>
     </Layout>
   );
 };

@@ -36,6 +36,10 @@ export interface NexusGenObjects {
     type?: string | null; // String
     version: string; // String!
   };
+  PackageCompound: {
+    // root type
+    name: string; // String!
+  };
   PackageMetadata: {
     // root type
     pathsOnDisk?: Array<string | null> | null; // [String]
@@ -91,6 +95,12 @@ export interface NexusGenFieldTypes {
     type: string | null; // String
     version: string; // String!
   };
+  PackageCompound: {
+    // field return type
+    latest: string; // String!
+    name: string; // String!
+    variants: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
+  };
   PackageMetadata: {
     // field return type
     pathsOnDisk: Array<string | null> | null; // [String]
@@ -98,6 +108,8 @@ export interface NexusGenFieldTypes {
   };
   Query: {
     // field return type
+    package: NexusGenRootTypes['PackageCompound'] | null; // PackageCompound
+    packageByVersion: NexusGenRootTypes['Package'] | null; // Package
     packages: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
     report: NexusGenRootTypes['Report']; // Report!
     suggestion: NexusGenRootTypes['Suggestion'] | null; // Suggestion
@@ -148,6 +160,12 @@ export interface NexusGenFieldTypeNames {
     type: 'String';
     version: 'String';
   };
+  PackageCompound: {
+    // field return type name
+    latest: 'String';
+    name: 'String';
+    variants: 'Package';
+  };
   PackageMetadata: {
     // field return type name
     pathsOnDisk: 'String';
@@ -155,6 +173,8 @@ export interface NexusGenFieldTypeNames {
   };
   Query: {
     // field return type name
+    package: 'PackageCompound';
+    packageByVersion: 'Package';
     packages: 'Package';
     report: 'Report';
     suggestion: 'Suggestion';
@@ -190,6 +210,15 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Query: {
+    package: {
+      // args
+      packageName: string; // String!
+    };
+    packageByVersion: {
+      // args
+      packageName: string; // String!
+      packageVersion: string; // String!
+    };
     suggestion: {
       // args
       id: string; // String!

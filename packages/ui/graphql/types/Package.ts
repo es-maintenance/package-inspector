@@ -1,4 +1,4 @@
-import { extendType, objectType } from 'nexus';
+import { extendType, nonNull, objectType, stringArg } from 'nexus';
 import { getPackageID } from '../utils';
 
 export const MiniPackage = objectType({
@@ -23,6 +23,37 @@ export const PackageMetadata = objectType({
     t.list.string('pathsOnDisk');
     t.field('size', {
       type: SizeInfo,
+    });
+  },
+});
+
+// This is a top level package that contains all the iterations of itself
+export const PackageCompound = objectType({
+  name: 'PackageCompound',
+  definition(t) {
+    t.nonNull.string('name');
+    t.nonNull.string('latest', {
+      resolve(me, _, ctx) {
+        const name = me.name;
+
+        return ctx.report.latestPackages[name];
+      },
+    });
+    t.nonNull.list.field('variants', {
+      type: Package,
+      resolve(me, __, ctx) {
+        return me.variants
+          ? me.variants.map((depID: string) => {
+              const pkgDep = ctx.report.dependencies[depID];
+              return {
+                id: getPackageID(pkgDep),
+                name: pkgDep.name,
+                version: pkgDep.version,
+                type: pkgDep.type,
+              };
+            })
+          : [];
+      },
     });
   },
 });
@@ -80,7 +111,7 @@ export const Package = objectType({
   },
 });
 
-export const PackageQuery = extendType({
+export const PackagesQuery = extendType({
   type: 'Query',
   definition(t) {
     t.nonNull.list.field('packages', {
@@ -93,6 +124,59 @@ export const PackageQuery = extendType({
             version: dep.version,
           };
         });
+      },
+    });
+  },
+});
+
+export const PackageByVersionQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.field('packageByVersion', {
+      type: Package,
+      args: {
+        packageName: nonNull(stringArg()),
+        packageVersion: nonNull(stringArg()),
+      },
+      resolve(_, args, ctx) {
+        const packageModel =
+          ctx.report.dependencies[`${args.packageName}@${args.packageVersion}`];
+        console.log(packageModel);
+        return packageModel
+          ? {
+              id: getPackageID(packageModel),
+              ...packageModel,
+            }
+          : null;
+      },
+    });
+  },
+});
+
+export const PackageQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.field('package', {
+      type: PackageCompound,
+      args: {
+        packageName: nonNull(stringArg()),
+      },
+      resolve(_, args, ctx) {
+        const { packageName } = args;
+        const variants = Object.keys(ctx.report.dependencies).filter(
+          (dependencyKey) => {
+            // FIXME: we need to account for names with @ in them, we should have a util to break up the key
+            return packageName === dependencyKey.split('@')[0];
+          }
+        );
+        console.log(variants);
+
+        return variants
+          ? {
+              name: packageName,
+              variants,
+            }
+          : null;
       },
     });
   },

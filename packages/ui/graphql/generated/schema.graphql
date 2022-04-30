@@ -17,12 +17,20 @@ type Package {
   version: String!
 }
 
+type PackageCompound {
+  latest: String!
+  name: String!
+  variants: [Package]!
+}
+
 type PackageMetadata {
   pathsOnDisk: [String]
   size: SizeInfo
 }
 
 type Query {
+  package(packageName: String!): PackageCompound
+  packageByVersion(packageName: String!, packageVersion: String!): Package
   packages: [Package]!
   report: Report!
   suggestion(id: String!): Suggestion
