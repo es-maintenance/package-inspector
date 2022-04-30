@@ -1,4 +1,6 @@
+import { parseDependencyKey } from '@package-inspector/core';
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
+
 import { getPackageID } from '../utils';
 
 export const MiniPackage = objectType({
@@ -165,8 +167,7 @@ export const PackageQuery = extendType({
         const { packageName } = args;
         const variants = Object.keys(ctx.report.dependencies).filter(
           (dependencyKey) => {
-            // FIXME: we need to account for names with @ in them, we should have a util to break up the key
-            return packageName === dependencyKey.split('@')[0];
+            return packageName === parseDependencyKey(dependencyKey).name;
           }
         );
         console.log(variants);

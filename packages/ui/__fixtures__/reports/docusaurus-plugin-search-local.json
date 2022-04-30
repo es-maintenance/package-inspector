@@ -302,8 +302,8 @@
     "@svgr/plugin-jsx": "6.2.1",
     "@svgr/plugin-svgo": "6.2.0",
     "@svgr/webpack": "6.2.1",
-    "@swc/core": "1.2.173",
-    "@swc/core-darwin-x64": "1.2.173",
+    "@swc/core": "1.2.174",
+    "@swc/core-darwin-x64": "1.2.174",
     "@swc/helpers": "0.3.8",
     "@swc/jest": "0.2.20",
     "@szmarczak/http-timer": "5.0.1",
@@ -985,7 +985,7 @@
     "loose-envify": "1.4.0",
     "lower-case": "2.0.2",
     "lowercase-keys": "3.0.0",
-    "lru-cache": "7.8.2",
+    "lru-cache": "7.9.0",
     "lunr": "2.3.9",
     "lz-string": "1.4.4",
     "macos-release": "3.0.1",
@@ -30357,7 +30357,7 @@
             "targetPackage": "lowercase-keys@1.0.1"
           },
           {
-            "message": "\"lru-cache@6.0.0\" is required at \"@commitlint/cli#@commitlint/lint#@commitlint/is-ignored#semver#lru-cache\", the latest is 7.8.2. This is a major version out of date.",
+            "message": "\"lru-cache@6.0.0\" is required at \"@commitlint/cli#@commitlint/lint#@commitlint/is-ignored#semver#lru-cache\", the latest is 7.9.0. This is a major version out of date.",
             "targetPackage": "lru-cache@6.0.0"
           },
           {
@@ -31589,7 +31589,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-content-blog#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-content-blog#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -31597,7 +31597,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-content-docs#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-content-docs#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -31605,7 +31605,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-content-pages#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-content-pages#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -31613,7 +31613,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-debug#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-debug#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -31621,7 +31621,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-google-analytics#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-google-analytics#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -31629,7 +31629,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-google-gtag#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-google-gtag#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -31637,7 +31637,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-sitemap#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/plugin-sitemap#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -31645,7 +31645,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -31653,7 +31653,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/theme-classic#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/theme-classic#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -31661,7 +31661,7 @@
             "targetPackage": "source-map@0.6.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/theme-search-algolia#@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/preset-classic#@docusaurus/theme-search-algolia#@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -32105,7 +32105,7 @@
             "targetPackage": "core-js-pure@3.21.1"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/core#css-loader#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/core#css-loader#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -32533,7 +32533,7 @@
             "targetPackage": "acorn-import-assertions@1.7.6"
           },
           {
-            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/core#semver#lru-cache\", the latest is 7.8.2. This is a minor version out of date.",
+            "message": "\"lru-cache@7.7.3\" is required at \"@docusaurus/core#semver#lru-cache\", the latest is 7.9.0. This is a minor version out of date.",
             "targetPackage": "lru-cache@7.7.3"
           },
           {
@@ -32765,11 +32765,11 @@
             "targetPackage": "@sideway/address@4.1.3"
           },
           {
-            "message": "\"@swc/core@1.2.144\" is required at \"@swc/jest#@swc/core\", the latest is 1.2.173. This is a patch version out of date.",
+            "message": "\"@swc/core@1.2.144\" is required at \"@swc/jest#@swc/core\", the latest is 1.2.174. This is a patch version out of date.",
             "targetPackage": "@swc/core@1.2.144"
           },
           {
-            "message": "\"@swc/core-darwin-x64@1.2.144\" is required at \"@swc/jest#@swc/core#@swc/core-darwin-x64\", the latest is 1.2.173. This is a patch version out of date.",
+            "message": "\"@swc/core-darwin-x64@1.2.144\" is required at \"@swc/jest#@swc/core#@swc/core-darwin-x64\", the latest is 1.2.174. This is a patch version out of date.",
             "targetPackage": "@swc/core-darwin-x64@1.2.144"
           },
           {
@@ -38441,15 +38441,15 @@
         "message": "Out of the total 64 explicit dependencies defined in the package.json; 9 major versions out of date (14.06%), 16 minor versions out of date (25.00%), 15 patch versions out of date (23.44%)",
         "actions": [
           {
-            "message": "\"@testing-library/react@12.1.2\" is required as a direct dependency, the latest is undefined. This is a major version out of date.",
+            "message": "\"@testing-library/react@12.1.2\" is required as a direct dependency, the latest is 13.1.1. This is a major version out of date.",
             "targetPackage": "@testing-library/react@12.1.2"
           },
           {
-            "message": "\"@types/react@17.0.24\" is required as a direct dependency, the latest is undefined. This is a major version out of date.",
+            "message": "\"@types/react@17.0.24\" is required as a direct dependency, the latest is 18.0.8. This is a major version out of date.",
             "targetPackage": "@types/react@17.0.24"
           },
           {
-            "message": "\"@types/react-dom@17.0.9\" is required as a direct dependency, the latest is undefined. This is a major version out of date.",
+            "message": "\"@types/react-dom@17.0.9\" is required as a direct dependency, the latest is 18.0.3. This is a major version out of date.",
             "targetPackage": "@types/react-dom@17.0.9"
           },
           {
@@ -38465,7 +38465,7 @@
             "targetPackage": "jest@27.2.2"
           },
           {
-            "message": "\"@braintree/sanitize-url@5.0.2\" is required as a direct dependency, the latest is undefined. This is a major version out of date.",
+            "message": "\"@braintree/sanitize-url@5.0.2\" is required as a direct dependency, the latest is 6.0.0. This is a major version out of date.",
             "targetPackage": "@braintree/sanitize-url@5.0.2"
           },
           {
@@ -38477,27 +38477,27 @@
             "targetPackage": "react-dom@17.0.2"
           },
           {
-            "message": "\"@babel/preset-env@7.16.11\" is required as a direct dependency, the latest is undefined. This is a minor version out of date.",
+            "message": "\"@babel/preset-env@7.16.11\" is required as a direct dependency, the latest is 7.17.10. This is a minor version out of date.",
             "targetPackage": "@babel/preset-env@7.16.11"
           },
           {
-            "message": "\"@parcel/css@1.3.2\" is required as a direct dependency, the latest is undefined. This is a minor version out of date.",
+            "message": "\"@parcel/css@1.3.2\" is required as a direct dependency, the latest is 1.8.1. This is a minor version out of date.",
             "targetPackage": "@parcel/css@1.3.2"
           },
           {
-            "message": "\"@parcel/css-cli@1.3.2\" is required as a direct dependency, the latest is undefined. This is a minor version out of date.",
+            "message": "\"@parcel/css-cli@1.3.2\" is required as a direct dependency, the latest is 1.8.1. This is a minor version out of date.",
             "targetPackage": "@parcel/css-cli@1.3.2"
           },
           {
-            "message": "\"@release-it/conventional-changelog@4.1.0\" is required as a direct dependency, the latest is undefined. This is a minor version out of date.",
+            "message": "\"@release-it/conventional-changelog@4.1.0\" is required as a direct dependency, the latest is 4.3.0. This is a minor version out of date.",
             "targetPackage": "@release-it/conventional-changelog@4.1.0"
           },
           {
-            "message": "\"@typescript-eslint/eslint-plugin@5.13.0\" is required as a direct dependency, the latest is undefined. This is a minor version out of date.",
+            "message": "\"@typescript-eslint/eslint-plugin@5.13.0\" is required as a direct dependency, the latest is 5.21.0. This is a minor version out of date.",
             "targetPackage": "@typescript-eslint/eslint-plugin@5.13.0"
           },
           {
-            "message": "\"@typescript-eslint/parser@5.13.0\" is required as a direct dependency, the latest is undefined. This is a minor version out of date.",
+            "message": "\"@typescript-eslint/parser@5.13.0\" is required as a direct dependency, the latest is 5.21.0. This is a minor version out of date.",
             "targetPackage": "@typescript-eslint/parser@5.13.0"
           },
           {
@@ -38541,47 +38541,47 @@
             "targetPackage": "fs-extra@10.0.1"
           },
           {
-            "message": "\"@babel/core@7.17.9\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@babel/core@7.17.9\" is required as a direct dependency, the latest is 7.17.10. This is a patch version out of date.",
             "targetPackage": "@babel/core@7.17.9"
           },
           {
-            "message": "\"@commitlint/cli@16.2.1\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@commitlint/cli@16.2.1\" is required as a direct dependency, the latest is 16.2.4. This is a patch version out of date.",
             "targetPackage": "@commitlint/cli@16.2.1"
           },
           {
-            "message": "\"@commitlint/config-conventional@16.2.1\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@commitlint/config-conventional@16.2.1\" is required as a direct dependency, the latest is 16.2.4. This is a patch version out of date.",
             "targetPackage": "@commitlint/config-conventional@16.2.1"
           },
           {
-            "message": "\"@commitlint/prompt-cli@16.2.1\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@commitlint/prompt-cli@16.2.1\" is required as a direct dependency, the latest is 16.2.4. This is a patch version out of date.",
             "targetPackage": "@commitlint/prompt-cli@16.2.1"
           },
           {
-            "message": "\"@swc/jest@0.2.17\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@swc/jest@0.2.17\" is required as a direct dependency, the latest is 0.2.20. This is a patch version out of date.",
             "targetPackage": "@swc/jest@0.2.17"
           },
           {
-            "message": "\"@testing-library/jest-dom@5.16.2\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@testing-library/jest-dom@5.16.2\" is required as a direct dependency, the latest is 5.16.4. This is a patch version out of date.",
             "targetPackage": "@testing-library/jest-dom@5.16.2"
           },
           {
-            "message": "\"@tsconfig/docusaurus@1.0.4\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@tsconfig/docusaurus@1.0.4\" is required as a direct dependency, the latest is 1.0.5. This is a patch version out of date.",
             "targetPackage": "@tsconfig/docusaurus@1.0.4"
           },
           {
-            "message": "\"@types/cheerio@0.22.30\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@types/cheerio@0.22.30\" is required as a direct dependency, the latest is 0.22.31. This is a patch version out of date.",
             "targetPackage": "@types/cheerio@0.22.30"
           },
           {
-            "message": "\"@types/jest@27.4.0\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@types/jest@27.4.0\" is required as a direct dependency, the latest is 27.4.1. This is a patch version out of date.",
             "targetPackage": "@types/jest@27.4.0"
           },
           {
-            "message": "\"@types/react-helmet@6.1.2\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@types/react-helmet@6.1.2\" is required as a direct dependency, the latest is 6.1.5. This is a patch version out of date.",
             "targetPackage": "@types/react-helmet@6.1.2"
           },
           {
-            "message": "\"@types/react-router-dom@5.3.0\" is required as a direct dependency, the latest is undefined. This is a patch version out of date.",
+            "message": "\"@types/react-router-dom@5.3.0\" is required as a direct dependency, the latest is 5.3.3. This is a patch version out of date.",
             "targetPackage": "@types/react-router-dom@5.3.0"
           },
           {
