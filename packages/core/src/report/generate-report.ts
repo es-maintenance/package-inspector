@@ -22,7 +22,8 @@ function processPlugins(plugins: string[]): ServerPlugin[] {
 
   plugins.forEach((pluginPath) => {
     // FIXME: need to have a try catch for this
-    const { ServerPlugin } = require(`${pluginPath}/server`);
+    // FIXME: we need to have a test for this code, easily breakable
+    const ServerPlugin = require(`${pluginPath}/server`)?.default;
 
     if (ServerPlugin) {
       processedPlugins.push(new ServerPlugin());
