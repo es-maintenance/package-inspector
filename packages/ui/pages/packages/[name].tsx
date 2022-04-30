@@ -86,7 +86,11 @@ const Package: NextPage = () => {
       {(data.package as any).variants.map((variant: any) => {
         return (
           <div key={variant.id}>
-            <Link href={`/packages/${variant.name}/${variant.version}`}>
+            <Link
+              href={`/packages/${encodeURIComponent(variant.name)}/${
+                variant.version
+              }`}
+            >
               {variant.version}
             </Link>
 
