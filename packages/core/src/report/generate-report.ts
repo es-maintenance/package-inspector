@@ -21,8 +21,8 @@ function processPlugins(plugins: string[]): ServerPlugin[] {
   const processedPlugins: ServerPlugin[] = [];
 
   plugins.forEach((pluginPath) => {
-    // Waiting for Lewis to tell me this is a bad idea
-    const { ServerPlugin } = require(pluginPath);
+    // FIXME: need to have a try catch for this
+    const { ServerPlugin } = require(`${pluginPath}/server`);
 
     if (ServerPlugin) {
       processedPlugins.push(new ServerPlugin());
@@ -74,7 +74,7 @@ export async function generateReport(
         homepage: depNode.homepage,
         name: depNode.name,
         version: depNode.version,
-        type: edge?.type,
+        type: edge?.type || (depNode.isWorkspace ? 'workspace' : undefined),
         metadata: {
           size: getDirectorySize({
             directory: depNode.path,
@@ -128,8 +128,6 @@ export async function generateReport(
   };
 
   const suggestionInput = { arboristValues, rootArboristNode };
-
-  let suggestionsFromPlugins: Suggestion[] = [];
 
   for (const plugin of processedPlugins) {
     if (plugin.getSuggestions) {
