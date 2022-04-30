@@ -27074,755 +27074,755 @@
         "actions": [
           {
             "message": "\"regjsparser\" (@docusaurus/core#@babel/preset-env#@babel/plugin-proposal-unicode-property-regex#@babel/helper-create-regexp-features-plugin#regexpu-core#regjsparser) has a pinned version for jsesc@~0.5.0 that will never collapse.",
-            "targetPackage": "regjsparser@~0.5.0"
+            "targetPackage": "regjsparser@0.8.4"
           },
           {
             "message": "\"color-convert\" (@commitlint/cli#@commitlint/format#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@commitlint/cli#@commitlint/load#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@commitlint/prompt-cli#@commitlint/prompt#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@commitlint/cli#@commitlint/types#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#@docusaurus/logger#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/plugin-content-blog#@docusaurus/mdx-loader#@docusaurus/logger#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/plugin-content-blog#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/plugin-content-docs#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/plugin-content-pages#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/plugin-debug#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/plugin-google-analytics#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/plugin-google-gtag#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/plugin-sitemap#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/theme-classic#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/preset-classic#@docusaurus/theme-search-algolia#@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#@docusaurus/utils-validation#@docusaurus/logger#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#@docusaurus/utils#@docusaurus/logger#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#@jest/console#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#@jest/reporters#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#@jest/transform#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#@jest/console#@jest/types#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (parcel#@parcel/config-default#@parcel/bundler-default#@parcel/utils#@parcel/codeframe#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (parcel#@parcel/config-default#@parcel/bundler-default#@parcel/utils#@parcel/markdown-ansi#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (parcel#@parcel/reporter-cli#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (parcel#@parcel/config-default#@parcel/bundler-default#@parcel/utils#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"cheerio\" (@docusaurus/core#@slorber/static-site-generator-webpack-plugin#cheerio) has a pinned version for css-select@~1.2.0 that will never collapse.",
-            "targetPackage": "cheerio@~1.2.0"
+            "targetPackage": "cheerio@0.22.0"
           },
           {
             "message": "\"cheerio\" (@docusaurus/core#@slorber/static-site-generator-webpack-plugin#cheerio) has a pinned version for dom-serializer@~0.1.0 that will never collapse.",
-            "targetPackage": "cheerio@~0.1.0"
+            "targetPackage": "cheerio@0.22.0"
           },
           {
             "message": "\"cheerio\" (@docusaurus/core#@slorber/static-site-generator-webpack-plugin#cheerio) has a pinned version for entities@~1.1.1 that will never collapse.",
-            "targetPackage": "cheerio@~1.1.1"
+            "targetPackage": "cheerio@0.22.0"
           },
           {
             "message": "\"css-select\" (@docusaurus/core#@slorber/static-site-generator-webpack-plugin#cheerio#css-select) has a pinned version for boolbase@~1.0.0 that will never collapse.",
-            "targetPackage": "css-select@~1.0.0"
+            "targetPackage": "css-select@1.2.0"
           },
           {
             "message": "\"css-select\" (@docusaurus/core#@slorber/static-site-generator-webpack-plugin#cheerio#css-select) has a pinned version for nth-check@~1.0.1 that will never collapse.",
-            "targetPackage": "css-select@~1.0.1"
+            "targetPackage": "css-select@1.2.0"
           },
           {
             "message": "\"nth-check\" (@docusaurus/core#@slorber/static-site-generator-webpack-plugin#cheerio#css-select#nth-check) has a pinned version for boolbase@~1.0.0 that will never collapse.",
-            "targetPackage": "nth-check@~1.0.0"
+            "targetPackage": "nth-check@1.0.2"
           },
           {
             "message": "\"string_decoder\" (@docusaurus/core#@slorber/static-site-generator-webpack-plugin#cheerio#htmlparser2#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.2.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.2.0"
+            "targetPackage": "string_decoder@1.3.0"
           },
           {
             "message": "\"webpack-sources\" (@docusaurus/core#@slorber/static-site-generator-webpack-plugin#webpack-sources) has a pinned version for source-map@~0.6.1 that will never collapse.",
-            "targetPackage": "webpack-sources@~0.6.1"
+            "targetPackage": "webpack-sources@1.4.3"
           },
           {
             "message": "\"color-convert\" (@testing-library/react#@testing-library/dom#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@testing-library/jest-dom#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"accepts\" (@docusaurus/core#webpack-dev-server#compression#accepts) has a pinned version for mime-types@~2.1.34 that will never collapse.",
-            "targetPackage": "accepts@~2.1.34"
+            "targetPackage": "accepts@1.3.8"
           },
           {
             "message": "\"argparse\" (@typescript-eslint/eslint-plugin#eslint#@eslint/eslintrc#js-yaml#argparse) has a pinned version for sprintf-js@~1.0.2 that will never collapse.",
-            "targetPackage": "argparse@~1.0.2"
+            "targetPackage": "argparse@1.0.10"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-config#babel-jest#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"string_decoder\" (msw#inquirer#ora#bl#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.2.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.2.0"
+            "targetPackage": "string_decoder@1.3.0"
           },
           {
             "message": "\"body-parser\" (@docusaurus/core#webpack-dev-server#express#body-parser) has a pinned version for content-type@~1.0.4 that will never collapse.",
-            "targetPackage": "body-parser@~1.0.4"
+            "targetPackage": "body-parser@1.19.2"
           },
           {
             "message": "\"body-parser\" (@docusaurus/core#webpack-dev-server#express#body-parser) has a pinned version for depd@~1.1.2 that will never collapse.",
-            "targetPackage": "body-parser@~1.1.2"
+            "targetPackage": "body-parser@1.19.2"
           },
           {
             "message": "\"body-parser\" (@docusaurus/core#webpack-dev-server#express#body-parser) has a pinned version for on-finished@~2.3.0 that will never collapse.",
-            "targetPackage": "body-parser@~2.3.0"
+            "targetPackage": "body-parser@1.19.2"
           },
           {
             "message": "\"body-parser\" (@docusaurus/core#webpack-dev-server#express#body-parser) has a pinned version for type-is@~1.6.18 that will never collapse.",
-            "targetPackage": "body-parser@~1.6.18"
+            "targetPackage": "body-parser@1.19.2"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#update-notifier#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"chokidar\" (@docusaurus/core#chokidar) has a pinned version for anymatch@~3.1.2 that will never collapse.",
-            "targetPackage": "chokidar@~3.1.2"
+            "targetPackage": "chokidar@3.5.3"
           },
           {
             "message": "\"chokidar\" (@docusaurus/core#chokidar) has a pinned version for braces@~3.0.2 that will never collapse.",
-            "targetPackage": "chokidar@~3.0.2"
+            "targetPackage": "chokidar@3.5.3"
           },
           {
             "message": "\"chokidar\" (@docusaurus/core#chokidar) has a pinned version for glob-parent@~5.1.2 that will never collapse.",
-            "targetPackage": "chokidar@~5.1.2"
+            "targetPackage": "chokidar@3.5.3"
           },
           {
             "message": "\"chokidar\" (@docusaurus/core#chokidar) has a pinned version for is-binary-path@~2.1.0 that will never collapse.",
-            "targetPackage": "chokidar@~2.1.0"
+            "targetPackage": "chokidar@3.5.3"
           },
           {
             "message": "\"chokidar\" (@docusaurus/core#chokidar) has a pinned version for is-glob@~4.0.1 that will never collapse.",
-            "targetPackage": "chokidar@~4.0.1"
+            "targetPackage": "chokidar@3.5.3"
           },
           {
             "message": "\"chokidar\" (@docusaurus/core#chokidar) has a pinned version for normalize-path@~3.0.0 that will never collapse.",
-            "targetPackage": "chokidar@~3.0.0"
+            "targetPackage": "chokidar@3.5.3"
           },
           {
             "message": "\"chokidar\" (@docusaurus/core#chokidar) has a pinned version for readdirp@~3.6.0 that will never collapse.",
-            "targetPackage": "chokidar@~3.6.0"
+            "targetPackage": "chokidar@3.5.3"
           },
           {
             "message": "\"clean-css\" (@docusaurus/core#clean-css) has a pinned version for source-map@~0.6.0 that will never collapse.",
-            "targetPackage": "clean-css@~0.6.0"
+            "targetPackage": "clean-css@5.2.4"
           },
           {
             "message": "\"combined-stream\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#form-data#combined-stream) has a pinned version for delayed-stream@~1.0.0 that will never collapse.",
-            "targetPackage": "combined-stream@~1.0.0"
+            "targetPackage": "combined-stream@1.0.8"
           },
           {
             "message": "\"compression\" (@docusaurus/core#webpack-dev-server#compression) has a pinned version for accepts@~1.3.5 that will never collapse.",
-            "targetPackage": "compression@~1.3.5"
+            "targetPackage": "compression@1.7.4"
           },
           {
             "message": "\"compression\" (@docusaurus/core#webpack-dev-server#compression) has a pinned version for compressible@~2.0.16 that will never collapse.",
-            "targetPackage": "compression@~2.0.16"
+            "targetPackage": "compression@1.7.4"
           },
           {
             "message": "\"compression\" (@docusaurus/core#webpack-dev-server#compression) has a pinned version for on-headers@~1.0.2 that will never collapse.",
-            "targetPackage": "compression@~1.0.2"
+            "targetPackage": "compression@1.7.4"
           },
           {
             "message": "\"compression\" (@docusaurus/core#webpack-dev-server#compression) has a pinned version for vary@~1.1.2 that will never collapse.",
-            "targetPackage": "compression@~1.1.2"
+            "targetPackage": "compression@1.7.4"
           },
           {
             "message": "\"string_decoder\" (@release-it/conventional-changelog#concat-stream#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.2.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.2.0"
+            "targetPackage": "string_decoder@1.3.0"
           },
           {
             "message": "\"string_decoder\" (@release-it/conventional-changelog#conventional-changelog#conventional-changelog-core#through2#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.2.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.2.0"
+            "targetPackage": "string_decoder@1.3.0"
           },
           {
             "message": "\"string_decoder\" (@release-it/conventional-changelog#conventional-changelog#conventional-changelog-core#conventional-changelog-writer#through2#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.2.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.2.0"
+            "targetPackage": "string_decoder@1.3.0"
           },
           {
             "message": "\"string_decoder\" (@commitlint/cli#@commitlint/lint#@commitlint/parse#conventional-commits-parser#through2#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.2.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.2.0"
+            "targetPackage": "string_decoder@1.3.0"
           },
           {
             "message": "\"convert-source-map\" (@babel/helper-compilation-targets#@babel/core#convert-source-map) has a pinned version for safe-buffer@~5.1.1 that will never collapse.",
-            "targetPackage": "convert-source-map@~5.1.1"
+            "targetPackage": "convert-source-map@1.8.0"
           },
           {
             "message": "\"cssstyle\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#cssstyle) has a pinned version for cssom@~0.3.6 that will never collapse.",
-            "targetPackage": "cssstyle@~0.3.6"
+            "targetPackage": "cssstyle@2.3.0"
           },
           {
             "message": "\"dom-converter\" (@docusaurus/core#html-webpack-plugin#pretty-error#renderkid#dom-converter) has a pinned version for utila@~0.4 that will never collapse.",
-            "targetPackage": "dom-converter@~0.4"
+            "targetPackage": "dom-converter@0.2.0"
           },
           {
             "message": "\"levn\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#escodegen#optionator#levn) has a pinned version for prelude-ls@~1.1.2 that will never collapse.",
-            "targetPackage": "levn@~1.1.2"
+            "targetPackage": "levn@0.3.0"
           },
           {
             "message": "\"levn\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#escodegen#optionator#levn) has a pinned version for type-check@~0.3.2 that will never collapse.",
-            "targetPackage": "levn@~0.3.2"
+            "targetPackage": "levn@0.3.0"
           },
           {
             "message": "\"optionator\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#escodegen#optionator) has a pinned version for deep-is@~0.1.3 that will never collapse.",
-            "targetPackage": "optionator@~0.1.3"
+            "targetPackage": "optionator@0.8.3"
           },
           {
             "message": "\"optionator\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#escodegen#optionator) has a pinned version for fast-levenshtein@~2.0.6 that will never collapse.",
-            "targetPackage": "optionator@~2.0.6"
+            "targetPackage": "optionator@0.8.3"
           },
           {
             "message": "\"optionator\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#escodegen#optionator) has a pinned version for levn@~0.3.0 that will never collapse.",
-            "targetPackage": "optionator@~0.3.0"
+            "targetPackage": "optionator@0.8.3"
           },
           {
             "message": "\"optionator\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#escodegen#optionator) has a pinned version for prelude-ls@~1.1.2 that will never collapse.",
-            "targetPackage": "optionator@~1.1.2"
+            "targetPackage": "optionator@0.8.3"
           },
           {
             "message": "\"optionator\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#escodegen#optionator) has a pinned version for type-check@~0.3.2 that will never collapse.",
-            "targetPackage": "optionator@~0.3.2"
+            "targetPackage": "optionator@0.8.3"
           },
           {
             "message": "\"optionator\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#escodegen#optionator) has a pinned version for word-wrap@~1.2.3 that will never collapse.",
-            "targetPackage": "optionator@~1.2.3"
+            "targetPackage": "optionator@0.8.3"
           },
           {
             "message": "\"type-check\" (ts-jest#jest#@jest/core#jest-config#jest-environment-jsdom#jsdom#escodegen#optionator#levn#type-check) has a pinned version for prelude-ls@~1.1.2 that will never collapse.",
-            "targetPackage": "type-check@~1.1.2"
+            "targetPackage": "type-check@0.3.2"
           },
           {
             "message": "\"color-convert\" (@typescript-eslint/eslint-plugin#eslint#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for accepts@~1.3.8 that will never collapse.",
-            "targetPackage": "express@~1.3.8"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for content-type@~1.0.4 that will never collapse.",
-            "targetPackage": "express@~1.0.4"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for depd@~1.1.2 that will never collapse.",
-            "targetPackage": "express@~1.1.2"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for encodeurl@~1.0.2 that will never collapse.",
-            "targetPackage": "express@~1.0.2"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for escape-html@~1.0.3 that will never collapse.",
-            "targetPackage": "express@~1.0.3"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for etag@~1.8.1 that will never collapse.",
-            "targetPackage": "express@~1.8.1"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for finalhandler@~1.1.2 that will never collapse.",
-            "targetPackage": "express@~1.1.2"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for methods@~1.1.2 that will never collapse.",
-            "targetPackage": "express@~1.1.2"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for on-finished@~2.3.0 that will never collapse.",
-            "targetPackage": "express@~2.3.0"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for parseurl@~1.3.3 that will never collapse.",
-            "targetPackage": "express@~1.3.3"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for proxy-addr@~2.0.7 that will never collapse.",
-            "targetPackage": "express@~2.0.7"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for range-parser@~1.2.1 that will never collapse.",
-            "targetPackage": "express@~1.2.1"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for statuses@~1.5.0 that will never collapse.",
-            "targetPackage": "express@~1.5.0"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for type-is@~1.6.18 that will never collapse.",
-            "targetPackage": "express@~1.6.18"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"express\" (@docusaurus/core#webpack-dev-server#express) has a pinned version for vary@~1.1.2 that will never collapse.",
-            "targetPackage": "express@~1.1.2"
+            "targetPackage": "express@4.17.3"
           },
           {
             "message": "\"tmp\" (@commitlint/prompt-cli#@commitlint/prompt#inquirer#external-editor#tmp) has a pinned version for os-tmpdir@~1.0.2 that will never collapse.",
-            "targetPackage": "tmp@~1.0.2"
+            "targetPackage": "tmp@0.0.33"
           },
           {
             "message": "\"finalhandler\" (@docusaurus/core#webpack-dev-server#express#finalhandler) has a pinned version for encodeurl@~1.0.2 that will never collapse.",
-            "targetPackage": "finalhandler@~1.0.2"
+            "targetPackage": "finalhandler@1.1.2"
           },
           {
             "message": "\"finalhandler\" (@docusaurus/core#webpack-dev-server#express#finalhandler) has a pinned version for escape-html@~1.0.3 that will never collapse.",
-            "targetPackage": "finalhandler@~1.0.3"
+            "targetPackage": "finalhandler@1.1.2"
           },
           {
             "message": "\"finalhandler\" (@docusaurus/core#webpack-dev-server#express#finalhandler) has a pinned version for on-finished@~2.3.0 that will never collapse.",
-            "targetPackage": "finalhandler@~2.3.0"
+            "targetPackage": "finalhandler@1.1.2"
           },
           {
             "message": "\"finalhandler\" (@docusaurus/core#webpack-dev-server#express#finalhandler) has a pinned version for parseurl@~1.3.3 that will never collapse.",
-            "targetPackage": "finalhandler@~1.3.3"
+            "targetPackage": "finalhandler@1.1.2"
           },
           {
             "message": "\"finalhandler\" (@docusaurus/core#webpack-dev-server#express#finalhandler) has a pinned version for statuses@~1.5.0 that will never collapse.",
-            "targetPackage": "finalhandler@~1.5.0"
+            "targetPackage": "finalhandler@1.1.2"
           },
           {
             "message": "\"finalhandler\" (@docusaurus/core#webpack-dev-server#express#finalhandler) has a pinned version for unpipe@~1.0.0 that will never collapse.",
-            "targetPackage": "finalhandler@~1.0.0"
+            "targetPackage": "finalhandler@1.1.2"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#react-dev-utils#fork-ts-checker-webpack-plugin#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"string_decoder\" (@commitlint/cli#@commitlint/read#git-raw-commits#through2#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.2.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.2.0"
+            "targetPackage": "string_decoder@1.3.0"
           },
           {
             "message": "\"readable-stream\" (@docusaurus/core#webpack-dev-server#spdy#spdy-transport#hpack.js#readable-stream) has a pinned version for core-util-is@~1.0.0 that will never collapse.",
-            "targetPackage": "readable-stream@~1.0.0"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (@docusaurus/core#webpack-dev-server#spdy#spdy-transport#hpack.js#readable-stream) has a pinned version for inherits@~2.0.3 that will never collapse.",
-            "targetPackage": "readable-stream@~2.0.3"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (@docusaurus/core#webpack-dev-server#spdy#spdy-transport#hpack.js#readable-stream) has a pinned version for isarray@~1.0.0 that will never collapse.",
-            "targetPackage": "readable-stream@~1.0.0"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (@docusaurus/core#webpack-dev-server#spdy#spdy-transport#hpack.js#readable-stream) has a pinned version for process-nextick-args@~2.0.0 that will never collapse.",
-            "targetPackage": "readable-stream@~2.0.0"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (@docusaurus/core#webpack-dev-server#spdy#spdy-transport#hpack.js#readable-stream) has a pinned version for safe-buffer@~5.1.1 that will never collapse.",
-            "targetPackage": "readable-stream@~5.1.1"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (@docusaurus/core#webpack-dev-server#spdy#spdy-transport#hpack.js#readable-stream) has a pinned version for string_decoder@~1.1.1 that will never collapse.",
-            "targetPackage": "readable-stream@~1.1.1"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (@docusaurus/core#webpack-dev-server#spdy#spdy-transport#hpack.js#readable-stream) has a pinned version for util-deprecate@~1.0.1 that will never collapse.",
-            "targetPackage": "readable-stream@~1.0.1"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"string_decoder\" (@docusaurus/core#webpack-dev-server#spdy#spdy-transport#hpack.js#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.1.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.1.0"
+            "targetPackage": "string_decoder@1.1.1"
           },
           {
             "message": "\"http-errors\" (@docusaurus/core#webpack-dev-server#express#body-parser#http-errors) has a pinned version for depd@~1.1.2 that will never collapse.",
-            "targetPackage": "http-errors@~1.1.2"
+            "targetPackage": "http-errors@1.8.1"
           },
           {
             "message": "\"color-convert\" (msw#inquirer#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-config#jest-circus#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#jest-cli#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-config#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@testing-library/jest-dom#@types/testing-library__jest-dom#@types/jest#jest-diff#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-config#jest-circus#jest-each#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-config#jest-jasmine2#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-runtime#@jest/globals#expect#jest-matcher-utils#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#@jest/console#jest-message-util#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-resolve#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-runner#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-runtime#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-snapshot#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#@jest/console#jest-util#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-validate#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (ts-jest#jest#@jest/core#jest-watcher#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"levn\" (@typescript-eslint/eslint-plugin#eslint#levn) has a pinned version for type-check@~0.4.0 that will never collapse.",
-            "targetPackage": "levn@~0.4.0"
+            "targetPackage": "levn@0.4.1"
           },
           {
             "message": "\"color-convert\" (lint-staged#listr2#cli-truncate#slice-ansi#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (msw#inquirer#ora#log-symbols#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (lint-staged#listr2#log-update#slice-ansi#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (msw#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"whatwg-url\" (@release-it/conventional-changelog#release-it#@octokit/rest#@octokit/plugin-paginate-rest#@octokit/core#@octokit/request#node-fetch#whatwg-url) has a pinned version for tr46@~0.0.3 that will never collapse.",
-            "targetPackage": "whatwg-url@~0.0.3"
+            "targetPackage": "whatwg-url@5.0.0"
           },
           {
             "message": "\"noms\" (copyfiles#noms) has a pinned version for readable-stream@~1.0.31 that will never collapse.",
-            "targetPackage": "noms@~1.0.31"
+            "targetPackage": "noms@0.0.0"
           },
           {
             "message": "\"color-convert\" (msw#inquirer#ora#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (parcel#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"promise\" (@docusaurus/preset-classic#@docusaurus/plugin-debug#react-json-view#flux#fbemitter#fbjs#promise) has a pinned version for asap@~2.0.3 that will never collapse.",
-            "targetPackage": "promise@~2.0.3"
+            "targetPackage": "promise@7.3.1"
           },
           {
             "message": "\"queue\" (@docusaurus/core#@docusaurus/mdx-loader#image-size#queue) has a pinned version for inherits@~2.0.3 that will never collapse.",
-            "targetPackage": "queue@~2.0.3"
+            "targetPackage": "queue@6.0.2"
           },
           {
             "message": "\"rc\" (@docusaurus/core#update-notifier#latest-version#package-json#registry-auth-token#rc) has a pinned version for ini@~1.3.0 that will never collapse.",
-            "targetPackage": "rc@~1.3.0"
+            "targetPackage": "rc@1.2.8"
           },
           {
             "message": "\"rc\" (@docusaurus/core#update-notifier#latest-version#package-json#registry-auth-token#rc) has a pinned version for strip-json-comments@~2.0.1 that will never collapse.",
-            "targetPackage": "rc@~2.0.1"
+            "targetPackage": "rc@1.2.8"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#react-dev-utils#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"readable-stream\" (copyfiles#noms#readable-stream) has a pinned version for core-util-is@~1.0.0 that will never collapse.",
-            "targetPackage": "readable-stream@~1.0.0"
+            "targetPackage": "readable-stream@1.0.34"
           },
           {
             "message": "\"readable-stream\" (copyfiles#noms#readable-stream) has a pinned version for inherits@~2.0.1 that will never collapse.",
-            "targetPackage": "readable-stream@~2.0.1"
+            "targetPackage": "readable-stream@1.0.34"
           },
           {
             "message": "\"readable-stream\" (copyfiles#noms#readable-stream) has a pinned version for string_decoder@~0.10.x that will never collapse.",
-            "targetPackage": "readable-stream@~0.10.x"
+            "targetPackage": "readable-stream@1.0.34"
           },
           {
             "message": "\"color-convert\" (@release-it/conventional-changelog#release-it#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"send\" (@docusaurus/core#webpack-dev-server#express#send) has a pinned version for depd@~1.1.2 that will never collapse.",
-            "targetPackage": "send@~1.1.2"
+            "targetPackage": "send@0.17.2"
           },
           {
             "message": "\"send\" (@docusaurus/core#webpack-dev-server#express#send) has a pinned version for destroy@~1.0.4 that will never collapse.",
-            "targetPackage": "send@~1.0.4"
+            "targetPackage": "send@0.17.2"
           },
           {
             "message": "\"send\" (@docusaurus/core#webpack-dev-server#express#send) has a pinned version for encodeurl@~1.0.2 that will never collapse.",
-            "targetPackage": "send@~1.0.2"
+            "targetPackage": "send@0.17.2"
           },
           {
             "message": "\"send\" (@docusaurus/core#webpack-dev-server#express#send) has a pinned version for escape-html@~1.0.3 that will never collapse.",
-            "targetPackage": "send@~1.0.3"
+            "targetPackage": "send@0.17.2"
           },
           {
             "message": "\"send\" (@docusaurus/core#webpack-dev-server#express#send) has a pinned version for etag@~1.8.1 that will never collapse.",
-            "targetPackage": "send@~1.8.1"
+            "targetPackage": "send@0.17.2"
           },
           {
             "message": "\"send\" (@docusaurus/core#webpack-dev-server#express#send) has a pinned version for on-finished@~2.3.0 that will never collapse.",
-            "targetPackage": "send@~2.3.0"
+            "targetPackage": "send@0.17.2"
           },
           {
             "message": "\"send\" (@docusaurus/core#webpack-dev-server#express#send) has a pinned version for range-parser@~1.2.1 that will never collapse.",
-            "targetPackage": "send@~1.2.1"
+            "targetPackage": "send@0.17.2"
           },
           {
             "message": "\"send\" (@docusaurus/core#webpack-dev-server#express#send) has a pinned version for statuses@~1.5.0 that will never collapse.",
-            "targetPackage": "send@~1.5.0"
+            "targetPackage": "send@0.17.2"
           },
           {
             "message": "\"mime-types\" (@docusaurus/core#serve-handler#mime-types) has a pinned version for mime-db@~1.33.0 that will never collapse.",
-            "targetPackage": "mime-types@~1.33.0"
+            "targetPackage": "mime-types@2.1.18"
           },
           {
             "message": "\"serve-index\" (@docusaurus/core#webpack-dev-server#serve-index) has a pinned version for accepts@~1.3.4 that will never collapse.",
-            "targetPackage": "serve-index@~1.3.4"
+            "targetPackage": "serve-index@1.9.1"
           },
           {
             "message": "\"serve-index\" (@docusaurus/core#webpack-dev-server#serve-index) has a pinned version for escape-html@~1.0.3 that will never collapse.",
-            "targetPackage": "serve-index@~1.0.3"
+            "targetPackage": "serve-index@1.9.1"
           },
           {
             "message": "\"serve-index\" (@docusaurus/core#webpack-dev-server#serve-index) has a pinned version for http-errors@~1.6.2 that will never collapse.",
-            "targetPackage": "serve-index@~1.6.2"
+            "targetPackage": "serve-index@1.9.1"
           },
           {
             "message": "\"serve-index\" (@docusaurus/core#webpack-dev-server#serve-index) has a pinned version for mime-types@~2.1.17 that will never collapse.",
-            "targetPackage": "serve-index@~2.1.17"
+            "targetPackage": "serve-index@1.9.1"
           },
           {
             "message": "\"serve-index\" (@docusaurus/core#webpack-dev-server#serve-index) has a pinned version for parseurl@~1.3.2 that will never collapse.",
-            "targetPackage": "serve-index@~1.3.2"
+            "targetPackage": "serve-index@1.9.1"
           },
           {
             "message": "\"http-errors\" (@docusaurus/core#webpack-dev-server#serve-index#http-errors) has a pinned version for depd@~1.1.2 that will never collapse.",
-            "targetPackage": "http-errors@~1.1.2"
+            "targetPackage": "http-errors@1.6.3"
           },
           {
             "message": "\"serve-static\" (@docusaurus/core#webpack-dev-server#express#serve-static) has a pinned version for encodeurl@~1.0.2 that will never collapse.",
-            "targetPackage": "serve-static@~1.0.2"
+            "targetPackage": "serve-static@1.14.2"
           },
           {
             "message": "\"serve-static\" (@docusaurus/core#webpack-dev-server#express#serve-static) has a pinned version for escape-html@~1.0.3 that will never collapse.",
-            "targetPackage": "serve-static@~1.0.3"
+            "targetPackage": "serve-static@1.14.2"
           },
           {
             "message": "\"serve-static\" (@docusaurus/core#webpack-dev-server#express#serve-static) has a pinned version for parseurl@~1.3.3 that will never collapse.",
-            "targetPackage": "serve-static@~1.3.3"
+            "targetPackage": "serve-static@1.14.2"
           },
           {
             "message": "\"string_decoder\" (@docusaurus/core#webpack-dev-server#spdy#spdy-transport#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.2.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.2.0"
+            "targetPackage": "string_decoder@1.3.0"
           },
           {
             "message": "\"string_decoder\" (@commitlint/cli#@commitlint/lint#@commitlint/parse#conventional-commits-parser#split2#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.2.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.2.0"
+            "targetPackage": "string_decoder@1.3.0"
           },
           {
             "message": "\"svgo\" (@svgr/webpack#@svgr/plugin-svgo#svgo) has a pinned version for mkdirp@~0.5.1 that will never collapse.",
-            "targetPackage": "svgo@~0.5.1"
+            "targetPackage": "svgo@1.3.2"
           },
           {
             "message": "\"svgo\" (@svgr/webpack#@svgr/plugin-svgo#svgo) has a pinned version for sax@~1.2.4 that will never collapse.",
-            "targetPackage": "svgo@~1.2.4"
+            "targetPackage": "svgo@1.3.2"
           },
           {
             "message": "\"svgo\" (@svgr/webpack#@svgr/plugin-svgo#svgo) has a pinned version for unquote@~1.1.1 that will never collapse.",
-            "targetPackage": "svgo@~1.1.1"
+            "targetPackage": "svgo@1.3.2"
           },
           {
             "message": "\"svgo\" (@svgr/webpack#@svgr/plugin-svgo#svgo) has a pinned version for util.promisify@~1.0.0 that will never collapse.",
-            "targetPackage": "svgo@~1.0.0"
+            "targetPackage": "svgo@1.3.2"
           },
           {
             "message": "\"nth-check\" (@svgr/webpack#@svgr/plugin-svgo#svgo#css-select#nth-check) has a pinned version for boolbase@~1.0.0 that will never collapse.",
-            "targetPackage": "nth-check@~1.0.0"
+            "targetPackage": "nth-check@1.0.2"
           },
           {
             "message": "\"color-convert\" (@typescript-eslint/eslint-plugin#eslint#table#slice-ansi#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"terser\" (parcel#@parcel/config-default#@parcel/optimizer-htmlnano#htmlnano#terser) has a pinned version for source-map@~0.7.2 that will never collapse.",
-            "targetPackage": "terser@~0.7.2"
+            "targetPackage": "terser@5.10.0"
           },
           {
             "message": "\"terser\" (parcel#@parcel/config-default#@parcel/optimizer-htmlnano#htmlnano#terser) has a pinned version for source-map-support@~0.5.20 that will never collapse.",
-            "targetPackage": "terser@~0.5.20"
+            "targetPackage": "terser@5.10.0"
           },
           {
             "message": "\"through2\" (copyfiles#through2) has a pinned version for readable-stream@~2.3.6 that will never collapse.",
-            "targetPackage": "through2@~2.3.6"
+            "targetPackage": "through2@2.0.5"
           },
           {
             "message": "\"through2\" (copyfiles#through2) has a pinned version for xtend@~4.0.1 that will never collapse.",
-            "targetPackage": "through2@~4.0.1"
+            "targetPackage": "through2@2.0.5"
           },
           {
             "message": "\"readable-stream\" (copyfiles#through2#readable-stream) has a pinned version for core-util-is@~1.0.0 that will never collapse.",
-            "targetPackage": "readable-stream@~1.0.0"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (copyfiles#through2#readable-stream) has a pinned version for inherits@~2.0.3 that will never collapse.",
-            "targetPackage": "readable-stream@~2.0.3"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (copyfiles#through2#readable-stream) has a pinned version for isarray@~1.0.0 that will never collapse.",
-            "targetPackage": "readable-stream@~1.0.0"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (copyfiles#through2#readable-stream) has a pinned version for process-nextick-args@~2.0.0 that will never collapse.",
-            "targetPackage": "readable-stream@~2.0.0"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (copyfiles#through2#readable-stream) has a pinned version for safe-buffer@~5.1.1 that will never collapse.",
-            "targetPackage": "readable-stream@~5.1.1"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (copyfiles#through2#readable-stream) has a pinned version for string_decoder@~1.1.1 that will never collapse.",
-            "targetPackage": "readable-stream@~1.1.1"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"readable-stream\" (copyfiles#through2#readable-stream) has a pinned version for util-deprecate@~1.0.1 that will never collapse.",
-            "targetPackage": "readable-stream@~1.0.1"
+            "targetPackage": "readable-stream@2.3.7"
           },
           {
             "message": "\"string_decoder\" (copyfiles#through2#readable-stream#string_decoder) has a pinned version for safe-buffer@~5.1.0 that will never collapse.",
-            "targetPackage": "string_decoder@~5.1.0"
+            "targetPackage": "string_decoder@1.1.1"
           },
           {
             "message": "\"type-is\" (@docusaurus/core#webpack-dev-server#express#body-parser#type-is) has a pinned version for mime-types@~2.1.24 that will never collapse.",
-            "targetPackage": "type-is@~2.1.24"
+            "targetPackage": "type-is@1.6.18"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#update-notifier#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#webpack-bundle-analyzer#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#webpackbar#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#update-notifier#boxen#wrap-ansi#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           },
           {
             "message": "\"color-convert\" (@docusaurus/core#boxen#chalk#ansi-styles#color-convert) has a pinned version for color-name@~1.1.4 that will never collapse.",
-            "targetPackage": "color-convert@~1.1.4"
+            "targetPackage": "color-convert@2.0.1"
           }
         ]
       },
