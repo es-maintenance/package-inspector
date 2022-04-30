@@ -54,7 +54,9 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
               component="div"
               sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
             >
-              {title}
+              <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                {title}
+              </Button>
             </Typography>
           </NextLink>
 
@@ -99,14 +101,18 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
               </MenuItem>
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            {title}
-          </Typography>
+          <NextLink href="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            >
+              <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                {title}
+              </Button>
+            </Typography>
+          </NextLink>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button sx={{ my: 2, color: 'white', display: 'block' }}>
               <NextLink href="/details">
