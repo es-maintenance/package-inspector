@@ -15,8 +15,6 @@ import NextLink from 'next/link';
 
 import { PluginProvider } from '../lib/PluginProvider';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 const ResponsiveAppBar = ({ title }: { title: string }) => {
   const pluginProvider = new PluginProvider();
 
@@ -89,6 +87,8 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
                 <NextLink href="/details">
                   <Typography textAlign="center">Details</Typography>
                 </NextLink>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
                 <NextLink href="/packages">
                   <Typography textAlign="center">Packages</Typography>
                 </NextLink>

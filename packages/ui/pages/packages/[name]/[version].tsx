@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { gql, useQuery } from '@apollo/client';
 
 import { Layout, LoadingView } from '../../../components';
@@ -86,7 +85,7 @@ const Package: NextPage = () => {
   return (
     <Layout title={reportData.report.root.name}>
       <h1>Package: {name}</h1>
-      <pre>{JSON.stringify(data.packageByVersion, null, 4)}</pre>
+      <pre>{JSON.stringify((data as any).packageByVersion, null, 4)}</pre>
     </Layout>
   );
 };

@@ -129,14 +129,6 @@ const Report: NextPage = () => {
                         <LinkUI>{dep.name}</LinkUI>
                       </Link>
                     </TableCell>
-                    <TableCell component="td">
-                      <Link
-                        href={`packages/${encodeURIComponent(dep.name)}`}
-                        passHref={true}
-                      >
-                        <LinkUI>{dep.name}</LinkUI>
-                      </Link>
-                    </TableCell>
                     <TableCell component="td">{dep.version}</TableCell>
                     <TableCell component="td">{dep.type}</TableCell>
                   </TableRow>
