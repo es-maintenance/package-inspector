@@ -20,6 +20,22 @@ interface Column {
   label: string;
 }
 
+interface ReportData {
+  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
+    root: NexusGenFieldTypes['Package'];
+  };
+}
+
+const ReportQuery = gql`
+  query {
+    report {
+      root {
+        name
+      }
+    }
+  }
+`;
+
 interface PackageData {
   packages: NexusGenFieldTypes['Package'][];
 }
@@ -39,9 +55,19 @@ const PackagesQuery = gql`
 const Packages: NextPage = () => {
   const { data, loading, error } = useQuery<PackageData>(PackagesQuery);
 
+  const {
+    data: reportData,
+    loading: loadingReport,
+    error: reportError,
+  } = useQuery<ReportData>(ReportQuery);
+
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load package list</p>;
+
+  if (loadingReport) return <LoadingView />;
+  if (reportError) return <p>Oh no... {reportError.message}</p>;
+  if (!reportData) return <p>Oh no... could not load Report</p>;
 
   const columns: Column[] = [
     {
@@ -59,8 +85,7 @@ const Packages: NextPage = () => {
   ];
 
   return (
-    // FIXME: should be the name of the report
-    <Layout title="Packages">
+    <Layout title={reportData.report.root.name}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
