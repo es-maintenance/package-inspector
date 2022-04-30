@@ -73,6 +73,10 @@ const Report: NextPage = () => {
 
   return (
     <Layout title={data.report.root.name}>
+      <h1> Details </h1>
+
+      <h2>Dependency Map:</h2>
+
       <Grid.Container gap={2}>
         <Grid sm={12} md={12} style={{ height: '300px' }}>
           <ResponsiveTreeMap

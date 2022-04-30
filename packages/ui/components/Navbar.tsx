@@ -140,7 +140,11 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
             >
               {pluginProvider.hasReportView().map((pluginTarget) => (
                 <MenuItem key={pluginTarget} onClick={handleClosePluginMenu}>
-                  <Typography textAlign="center">{pluginTarget}</Typography>
+                  <NextLink
+                    href={`/plugin/${encodeURIComponent(pluginTarget)}`}
+                  >
+                    <Typography textAlign="center">{pluginTarget}</Typography>
+                  </NextLink>
                 </MenuItem>
               ))}
             </Menu>

@@ -28,7 +28,11 @@ export class TestPlugin implements BrowserPlugin {
   // // Renders as a full page experience
   get pluginPageView(): React.FC {
     return () => {
-      return <div style={{ border: '1px solid purple' }}>Plugin Page View</div>;
+      return (
+        <div style={{ border: '1px solid purple' }}>
+          Plugin Page View for Plugin Preset
+        </div>
+      );
     };
   }
 

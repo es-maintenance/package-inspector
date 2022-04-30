@@ -23,6 +23,16 @@ export class PluginProvider {
     return pluginsWithReportPages;
   }
 
+  pluginPageView(pluginName: string): React.FC | undefined {
+    const found = this.plugins.find((plugin) => {
+      return plugin.name === pluginName;
+    });
+
+    if (found && found.pluginPageView) return found.pluginPageView;
+
+    return;
+  }
+
   cardView(
     pluginName: string
   ): React.FC<{ suggestion: Suggestion | any }> | undefined {
