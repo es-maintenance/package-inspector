@@ -1,6 +1,4 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
-import { Link as LinkUI, Loading } from '@nextui-org/react';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,11 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
-import { Layout } from '../../components/Layout';
+import { gql, useQuery } from '@apollo/client';
 
 import styles from './Packages.module.css';
-import { gql, useQuery } from '@apollo/client';
+import { Layout, LoadingView } from '../../components';
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
 
 type ColumnKey = 'name' | 'version' | 'dep-count' | 'dev-dep-count';
@@ -42,7 +39,7 @@ const PackagesQuery = gql`
 const Packages: NextPage = () => {
   const { data, loading, error } = useQuery<PackageData>(PackagesQuery);
 
-  if (loading) return <Loading />;
+  if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load package list</p>;
 

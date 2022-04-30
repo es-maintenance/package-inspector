@@ -49,7 +49,9 @@ interface SuggestionOverviewProps {
   report: Report;
 }
 
-const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
+export const SuggestionOverview: React.FC<SuggestionOverviewProps> = (
+  props
+) => {
   const { report } = props;
   // const { suggestions } = report;
 
@@ -99,5 +101,3 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
     </section>
   );
 };
-
-export default SuggestionOverview;

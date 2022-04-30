@@ -24,7 +24,6 @@
     "@nivo/core": "^0.79.0",
     "@nivo/treemap": "^0.79.1",
     "@package-inspector/core": "*",
-    "@package-inspector/plugin-preset": "*",
     "apollo-server-micro": "^3.6.7",
     "classnames": "^2.3.1",
     "graphql": "^16.4.0",

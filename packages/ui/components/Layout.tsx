@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
+import Link from 'next/link';
 
 // FIXME: this should be the layout styles
 import styles from '../styles/Home.module.css';
@@ -32,16 +32,12 @@ export const Layout = ({
       </Container>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        Powered by &nbsp;
+        <span>
+          <Link href="https://github.com/es-maintenance/package-inspector">
+            es-maintenance@package-inspector
+          </Link>
+        </span>
       </footer>
     </div>
   );
