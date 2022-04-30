@@ -36,6 +36,11 @@ const PackageQuery = gql`
         id
         version
         name
+        parent {
+          id
+          name
+          version
+        }
       }
     }
   }
@@ -71,22 +76,47 @@ const Package: NextPage = () => {
   if (reportError) return <p>Oh no... {reportError.message}</p>;
   if (!reportData) return <p>Oh no... could not load Report</p>;
 
+  console.log(data);
+
   return (
     <Layout title={reportData.report.root.name}>
       <h1>Package: {name}</h1>
       {/* Why aren't the types  */}
       <h3>Versions:</h3>
-      <ul>
-        {(data.package as any).variants.map((variant: any) => {
-          return (
-            <li key={variant.id}>
-              <Link href={`/packages/${variant.name}/${variant.version}`}>
-                {variant.version}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+      {(data.package as any).variants.map((variant: any) => {
+        return (
+          <div key={variant.id}>
+            <Link href={`/packages/${variant.name}/${variant.version}`}>
+              {variant.version}
+            </Link>
+
+            {variant.parent.length > 0 ? (
+              <>
+                <h3>Packages that depend on this</h3>
+                <ul>
+                  {/* FIXME: why don't the types pass down */}
+                  {variant.parent.map((parent: any) => {
+                    return (
+                      <li key={parent.id}>
+                        <Link
+                          href={`/packages/${encodeURIComponent(parent.name)}/${
+                            parent.version
+                          }`}
+                        >
+                          {`${parent.name}@${parent.version}`}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
+            ) : (
+              <i>This is a top level dependency</i>
+            )}
+            <hr />
+          </div>
+        );
+      })}
     </Layout>
   );
 };

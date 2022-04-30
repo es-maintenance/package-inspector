@@ -89,6 +89,26 @@ export const Package = objectType({
       },
     });
 
+    // This is the list of parents that bring in this dependency
+    t.nonNull.list.field('parent', {
+      type: Package,
+      resolve(me, __, ctx) {
+        // This is going to give us the packageKey
+        const id = me.id;
+
+        return Object.keys(ctx.report.dependencies)
+          .filter((depId) => {
+            return ctx.report.dependencies[depId].dependencies.indexOf(id) > -1;
+          })
+          .map((depId) => {
+            return {
+              id: getPackageID(ctx.report.dependencies[depId]),
+              ...ctx.report.dependencies[depId],
+            };
+          });
+      },
+    });
+
     t.string('funding');
     t.string('homepage');
     t.field('metadata', {

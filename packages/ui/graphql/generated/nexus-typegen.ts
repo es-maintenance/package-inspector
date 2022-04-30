@@ -92,6 +92,7 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     metadata: NexusGenRootTypes['PackageMetadata'] | null; // PackageMetadata
     name: string; // String!
+    parent: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
     type: string | null; // String
     version: string; // String!
   };
@@ -157,6 +158,7 @@ export interface NexusGenFieldTypeNames {
     id: 'ID';
     metadata: 'PackageMetadata';
     name: 'String';
+    parent: 'Package';
     type: 'String';
     version: 'String';
   };

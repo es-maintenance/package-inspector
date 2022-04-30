@@ -13,6 +13,7 @@ type Package {
   id: ID!
   metadata: PackageMetadata
   name: String!
+  parent: [Package]!
   type: String
   version: String!
 }
