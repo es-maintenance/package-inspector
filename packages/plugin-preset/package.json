@@ -1,0 +1,40 @@
+{
+  "name": "@package-inspector/plugin-preset",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index",
+  "exports": {
+    ".": "./dist/index.js",
+    "./server": "./dist/server.js",
+    "./browser": "./dist/browser.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/index.d.ts"
+      ],
+      "browser": [
+        "./dist/browser.d.ts"
+      ],
+      "server": [
+        "./dist/server.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -p . --watch"
+  },
+  "dependencies": {
+    "@package-inspector/core": "*"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.27",
+    "typescript": "4.6.3"
+  },
+  "volta": {
+    "node": "16.15.0",
+    "yarn": "1.22.10"
+  }
+}

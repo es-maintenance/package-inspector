@@ -27,11 +27,12 @@ export interface Package {
 
 export interface SuggestionAction {
   message: string;
-  targetPackage: string;
+  targetPackageId: string;
 }
 
 export interface Suggestion {
   id: string;
+  pluginTarget: string;
   name: string;
   message: string;
   actions: SuggestionAction[];
@@ -94,7 +95,7 @@ export interface PluginInfo {
         "message": "There are currently 38 packages with pinned versions which will never collapse those dependencies causing an additional 5.5 MiB",
         "actions": [{
             "message": "\"terser\" (parcel#@parcel/config-default#@parcel/optimizer-htmlnano#htmlnano#terser) has a pinned version for source-map-support@~0.5.20 that will never collapse.",
-            "targetPackage": "package@version" // type PackageKey
+            "targetPackageId": "package@version" // type PackageKey
         }]
     }],
     "pluginInfo": {

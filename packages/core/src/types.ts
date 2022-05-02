@@ -1,4 +1,6 @@
-import { IDependencyMap, IPackageJson } from 'package-json-type';
+import type { IDependencyMap, IPackageJson } from 'package-json-type';
+import type { Suggestion } from './models/Report';
+
 export interface IArboristEdge {
   type: string;
   name: string;
@@ -47,4 +49,27 @@ export interface SuggestionInput {
   rootArboristNode?: IArboristNode;
   arboristValues: IArboristNode[];
   latestPackages?: IDependencyMap;
+}
+
+export interface Plugin {
+  name: string;
+  version: string;
+  // Plugin data is serialized to the report and available during render time
+  pluginData: any;
+  suggestions: Suggestion[];
+}
+
+export interface ServerPlugin extends Plugin {
+  getSuggestions?(suggestionInput: SuggestionInput): Promise<Suggestion[]>;
+}
+
+export interface BrowserPlugin extends Plugin {
+  // View rendered as a block on the report page
+  reportView?: React.FC;
+  // Renders as a full page experience
+  pluginPageView?: React.FC;
+  // Renders on the package page
+  packageView?: React.FC;
+  // Renders the card view for a given suggestion
+  cardView?: React.FC<{ suggestion: Suggestion }>;
 }

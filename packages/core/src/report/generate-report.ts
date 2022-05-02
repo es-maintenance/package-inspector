@@ -1,20 +1,12 @@
 import path from 'path';
 import Arborist from '@npmcli/arborist';
 
-import { IArboristNode } from '../types';
+import { IArboristNode, ServerPlugin } from '../types';
 import {
-  getBreadcrumb,
   getDirectorySize,
   getLatestPackages,
   stripPathOnDisk,
 } from '../package';
-import {
-  nestedDependencyFreshness,
-  notBeingAbsorbedByTopLevel,
-  packagesWithExtraArtifacts,
-  packagesWithPinnedVersions,
-  topLevelDepsFreshness,
-} from '../suggestors';
 
 import { Report } from '../models';
 
@@ -25,7 +17,36 @@ function getValues(dependencyTree: IArboristNode) {
   );
 }
 
-export async function generateReport(cwd: string): Promise<Report> {
+function processPlugins(plugins: string[]): ServerPlugin[] {
+  const processedPlugins: ServerPlugin[] = [];
+
+  plugins.forEach((pluginPath) => {
+    // FIXME: need to have a try catch for this
+    // FIXME: we need to have a test for this code, easily breakable
+    const ServerPlugin = require(`${pluginPath}/server`)?.default;
+
+    if (ServerPlugin) {
+      processedPlugins.push(new ServerPlugin());
+    }
+  });
+
+  return processedPlugins;
+}
+
+interface GenerateReportArgs {
+  plugins?: string[];
+}
+
+export async function generateReport(
+  cwd: string,
+  options?: GenerateReportArgs
+): Promise<Report> {
+  let processedPlugins: ServerPlugin[] = [];
+
+  if (options?.plugins) {
+    processedPlugins = processPlugins(options.plugins);
+  }
+
   const report = new Report();
 
   const arb = new Arborist({
@@ -54,7 +75,7 @@ export async function generateReport(cwd: string): Promise<Report> {
         homepage: depNode.homepage,
         name: depNode.name,
         version: depNode.version,
-        type: edge?.type,
+        type: edge?.type || (depNode.isWorkspace ? 'workspace' : undefined),
         metadata: {
           size: getDirectorySize({
             directory: depNode.path,
@@ -107,20 +128,15 @@ export async function generateReport(cwd: string): Promise<Report> {
       }),
   };
 
-  report.suggestions = [
-    await packagesWithPinnedVersions({ arboristValues }),
+  const suggestionInput = { arboristValues, rootArboristNode };
 
-    await packagesWithExtraArtifacts({ arboristValues }),
+  for (const plugin of processedPlugins) {
+    if (plugin.getSuggestions) {
+      const suggestions = await plugin?.getSuggestions(suggestionInput);
 
-    await notBeingAbsorbedByTopLevel({ rootArboristNode, arboristValues }),
-
-    await nestedDependencyFreshness({ rootArboristNode, arboristValues }),
-
-    await topLevelDepsFreshness({
-      rootArboristNode,
-      arboristValues,
-    }),
-  ];
+      report.suggestions.push(...suggestions);
+    }
+  }
 
   return report;
 }

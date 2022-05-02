@@ -36,6 +36,10 @@ export interface NexusGenObjects {
     type?: string | null; // String
     version: string; // String!
   };
+  PackageCompound: {
+    // root type
+    name: string; // String!
+  };
   PackageMetadata: {
     // root type
     pathsOnDisk?: Array<string | null> | null; // [String]
@@ -46,6 +50,7 @@ export interface NexusGenObjects {
     // root type
     id: string; // ID!
     root: NexusGenRootTypes['Package']; // Package!
+    suggestions: Array<NexusGenRootTypes['Suggestion'] | null>; // [Suggestion]!
   };
   SizeInfo: {
     // root type
@@ -54,14 +59,16 @@ export interface NexusGenObjects {
   };
   Suggestion: {
     // root type
+    actions: Array<NexusGenRootTypes['SuggestionAction'] | null>; // [SuggestionAction]!
     id: string; // ID!
     message: string; // String!
     name: string; // String!
+    pluginTarget: string; // String!
   };
   SuggestionAction: {
     // root type
     message: string; // String!
-    targetPackage?: NexusGenRootTypes['Package'] | null; // Package
+    targetPackageId: string; // String!
   };
 }
 
@@ -87,8 +94,16 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     metadata: NexusGenRootTypes['PackageMetadata'] | null; // PackageMetadata
     name: string; // String!
+    parent: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
+    suggestions: Array<NexusGenRootTypes['Suggestion'] | null>; // [Suggestion]!
     type: string | null; // String
     version: string; // String!
+  };
+  PackageCompound: {
+    // field return type
+    latest: string; // String!
+    name: string; // String!
+    variants: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
   };
   PackageMetadata: {
     // field return type
@@ -97,7 +112,11 @@ export interface NexusGenFieldTypes {
   };
   Query: {
     // field return type
+    package: NexusGenRootTypes['PackageCompound'] | null; // PackageCompound
+    packageByVersion: NexusGenRootTypes['Package'] | null; // Package
+    packages: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
     report: NexusGenRootTypes['Report']; // Report!
+    suggestion: NexusGenRootTypes['Suggestion'] | null; // Suggestion
   };
   Report: {
     // field return type
@@ -119,11 +138,13 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     message: string; // String!
     name: string; // String!
+    pluginTarget: string; // String!
   };
   SuggestionAction: {
     // field return type
     message: string; // String!
     targetPackage: NexusGenRootTypes['Package'] | null; // Package
+    targetPackageId: string; // String!
   };
 }
 
@@ -141,8 +162,16 @@ export interface NexusGenFieldTypeNames {
     id: 'ID';
     metadata: 'PackageMetadata';
     name: 'String';
+    parent: 'Package';
+    suggestions: 'Suggestion';
     type: 'String';
     version: 'String';
+  };
+  PackageCompound: {
+    // field return type name
+    latest: 'String';
+    name: 'String';
+    variants: 'Package';
   };
   PackageMetadata: {
     // field return type name
@@ -151,7 +180,11 @@ export interface NexusGenFieldTypeNames {
   };
   Query: {
     // field return type name
+    package: 'PackageCompound';
+    packageByVersion: 'Package';
+    packages: 'Package';
     report: 'Report';
+    suggestion: 'Suggestion';
   };
   Report: {
     // field return type name
@@ -173,15 +206,33 @@ export interface NexusGenFieldTypeNames {
     id: 'ID';
     message: 'String';
     name: 'String';
+    pluginTarget: 'String';
   };
   SuggestionAction: {
     // field return type name
     message: 'String';
     targetPackage: 'Package';
+    targetPackageId: 'String';
   };
 }
 
-export interface NexusGenArgTypes {}
+export interface NexusGenArgTypes {
+  Query: {
+    package: {
+      // args
+      packageName: string; // String!
+    };
+    packageByVersion: {
+      // args
+      packageName: string; // String!
+      packageVersion: string; // String!
+    };
+    suggestion: {
+      // args
+      id: string; // String!
+    };
+  };
+}
 
 export interface NexusGenAbstractTypeMembers {}
 

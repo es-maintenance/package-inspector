@@ -1,8 +1,17 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
-import { Link as LinkUI } from '@nextui-org/react';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { gql, useQuery } from '@apollo/client';
 
 import styles from './Packages.module.css';
+import { Layout, LoadingView } from '../../components';
+import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
 
 type ColumnKey = 'name' | 'version' | 'dep-count' | 'dev-dep-count';
 
@@ -11,15 +20,55 @@ interface Column {
   label: string;
 }
 
-interface Row {
-  key: string;
-  name: string;
-  version: string;
-  'dep-count': number;
-  'dev-dep-count': number;
+interface ReportData {
+  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
+    root: NexusGenFieldTypes['Package'];
+  };
 }
 
+const ReportQuery = gql`
+  query {
+    report {
+      root {
+        name
+      }
+    }
+  }
+`;
+
+interface PackageData {
+  packages: NexusGenFieldTypes['Package'][];
+}
+
+const PackagesQuery = gql`
+  query Packages {
+    packages {
+      name
+      version
+      dependencies {
+        name
+      }
+    }
+  }
+`;
+
 const Packages: NextPage = () => {
+  const { data, loading, error } = useQuery<PackageData>(PackagesQuery);
+
+  const {
+    data: reportData,
+    loading: loadingReport,
+    error: reportError,
+  } = useQuery<ReportData>(ReportQuery);
+
+  if (loading) return <LoadingView />;
+  if (error) return <p>Oh no... {error.message}</p>;
+  if (!data) return <p>Oh no... could not load package list</p>;
+
+  if (loadingReport) return <LoadingView />;
+  if (reportError) return <p>Oh no... {reportError.message}</p>;
+  if (!reportData) return <p>Oh no... could not load Report</p>;
+
   const columns: Column[] = [
     {
       key: 'name',
@@ -33,69 +82,45 @@ const Packages: NextPage = () => {
       key: 'dep-count',
       label: 'DEPENDENCIES',
     },
-    {
-      key: 'dev-dep-count',
-      label: 'DEV DEPENDENCIES',
-    },
-  ];
-  const rows: Row[] = [
-    {
-      key: '1',
-      name: 'react',
-      version: '18.0.0',
-      'dep-count': 30,
-      'dev-dep-count': 50,
-    },
-    {
-      key: '2',
-      name: 'react-dom',
-      version: '18.0.0',
-      'dep-count': 23,
-      'dev-dep-count': 56,
-    },
-    {
-      key: '3',
-      name: 'tailwind',
-      version: '3.0.0',
-      'dep-count': 1,
-      'dev-dep-count': 3,
-    },
-    {
-      key: '4',
-      name: 'next',
-      version: '12.1.5',
-      'dep-count': 12,
-      'dev-dep-count': 40,
-    },
   ];
 
   return (
-    <>
-      <h1>Packages</h1>
-      <h2>
-        <Link href="/" passHref={true}>
-          <LinkUI>Back to home</LinkUI>
-        </Link>
-      </h2>
-      <table className={styles.packageTable}>
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column.key}>{column.label}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr className={styles.packageTableRow} key={row.key}>
+    <Layout title={reportData.report.root.name}>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead>
+            <TableRow>
               {columns.map((column) => (
-                <td key={`${row.key}${column.key}`}>{row[column.key]}</td>
+                <TableCell key={column.key}>{column.label}</TableCell>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.packages.map((dependency) => {
+              if (!dependency) return;
+
+              return (
+                <TableRow
+                  key={dependency.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {dependency.name}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {dependency.version}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {/* FIXME: need to figure out why the types are not passing through */}
+                    {(dependency as any).dependencies?.length}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Layout>
   );
 };
 

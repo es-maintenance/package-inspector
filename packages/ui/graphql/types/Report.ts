@@ -36,12 +36,7 @@ export const Report = objectType({
       },
     });
     t.nonNull.field('root', { type: Package });
-    t.nonNull.list.field('suggestions', {
-      type: Suggestion,
-      resolve(_, __, ctx) {
-        return ctx.report.suggestions;
-      },
-    });
+    t.nonNull.list.field('suggestions', { type: Suggestion });
     t.nonNull.string('summary', {
       resolve(parent, _, ctx) {
         const directDeps = ctx.report.root.dependencies;
@@ -86,6 +81,7 @@ export const ReportQuery = extendType({
             ...ctx.report.root,
             id: `${ctx.report.root.name}@${ctx.report.root.version}`,
           },
+          suggestions: ctx.report.suggestions,
         };
       },
     });

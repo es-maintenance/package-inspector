@@ -1,8 +1,18 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { Grid, Link as LinkUI, Loading } from '@nextui-org/react';
+import { Grid, Link as LinkUI } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 import { ResponsiveTreeMap } from '@nivo/treemap';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+import { LoadingView, Layout } from '../components';
 
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 
@@ -26,62 +36,46 @@ const ReportQuery = gql`
           name
           version
           type
+          metadata {
+            size {
+              files
+              physical
+            }
+          }
         }
       }
     }
   }
 `;
 
-type NivoGraphNode = {
-  name: string;
-  size?: number;
-  children: NivoGraphNode[];
-};
-
 const Report: NextPage = () => {
   const { data, loading, error } = useQuery<ReportData>(ReportQuery);
 
-  if (loading) return <Loading />;
+  if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load data from query.</p>;
 
-  const topLevelDepMap: { [name: string]: NivoGraphNode } = {};
-
-  // FIXME: https://github.com/es-maintenance/package-inspector/issues/31
-  // [...(data?.report?.dependencies || [])].forEach((dependency) => {
-  //   if (!dependency.name) return;
-
-  //   const topLevelDepName = dependency.breadcrumb.split('#')[0];
-
-  //   if (!topLevelDepMap[topLevelDepName]) {
-  //     topLevelDepMap[topLevelDepName] = {
-  //       name: topLevelDepName,
-  //       children: [],
-  //     };
-  //   }
-
-  //   topLevelDepMap[topLevelDepName].children.push({
-  //     name: dependency.name,
-  //     size: dependency.size,
-  //     children: [],
-  //   });
-  // });
-
   const nivoData = {
     name: 'dependencies',
-    children: Object.keys(topLevelDepMap).map((topLevelDepName) => {
-      return topLevelDepMap[topLevelDepName];
-    }),
+    children: [...(data?.report?.root?.dependencies || [])].map(
+      (dependency) => {
+        if (!dependency) return {};
+
+        return {
+          name: dependency.name,
+          // FIXME: what the heck is going on here
+          size: (dependency as any).metadata?.size?.physical,
+          children: [],
+        };
+      }
+    ),
   };
 
   return (
-    <>
-      <h1>Report: {data.report.root.name}</h1>
-      <h2>
-        <Link href="/" passHref={true}>
-          <LinkUI>Back to home</LinkUI>
-        </Link>
-      </h2>
+    <Layout title={data.report.root.name}>
+      <h1> Details </h1>
+
+      <h2>Dependency Map:</h2>
 
       <Grid.Container gap={2}>
         <Grid sm={12} md={12} style={{ height: '300px' }}>
@@ -113,36 +107,41 @@ const Report: NextPage = () => {
 
       <h2>Dependencies:</h2>
 
-      <table className={styles.packageTable}>
-        <thead>
-          <tr>
-            <th>NAME</th>
-            <th>VERSION</th>
-            <th>TYPE</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.report.root.dependencies.map(
-            (dep) =>
-              dep &&
-              dep.name && (
-                <tr className={styles.packageTableRow} key={dep.name}>
-                  <td>
-                    <Link
-                      href={`packages/${encodeURIComponent(dep.name)}`}
-                      passHref={true}
-                    >
-                      <LinkUI>{dep.name}</LinkUI>
-                    </Link>
-                  </td>
-                  <td>{dep.version}</td>
-                  <td>{dep.type}</td>
-                </tr>
-              )
-          )}
-        </tbody>
-      </table>
-    </>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>NAME</TableCell>
+              <TableCell>VERSION</TableCell>
+              <TableCell>TYPE</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.report.root.dependencies.map(
+              (dep) =>
+                dep &&
+                dep.name && (
+                  <TableRow
+                    key={dep.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="td">
+                      <Link
+                        href={`packages/${encodeURIComponent(dep.name)}`}
+                        passHref={true}
+                      >
+                        <LinkUI>{dep.name}</LinkUI>
+                      </Link>
+                    </TableCell>
+                    <TableCell component="td">{dep.version}</TableCell>
+                    <TableCell component="td">{dep.type}</TableCell>
+                  </TableRow>
+                )
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Layout>
   );
 };
 
