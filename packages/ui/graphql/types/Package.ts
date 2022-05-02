@@ -45,8 +45,16 @@ export const PackageCompound = objectType({
     t.nonNull.list.field('variants', {
       type: Package,
       resolve(me, __, ctx) {
-        return me.variants
-          ? me.variants.map((depID: string) => {
+        const packageName = me.name;
+
+        const variants = Object.keys(ctx.report.dependencies).filter(
+          (dependencyKey) => {
+            return packageName === parseDependencyKey(dependencyKey).name;
+          }
+        );
+
+        return variants
+          ? variants.map((depID: string) => {
               const pkgDep = ctx.report.dependencies[depID];
               return {
                 id: getPackageID(pkgDep),
