@@ -1,7 +1,18 @@
-import { beforeAll, describe, expect, SpyInstance, test, vi } from 'vitest';
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  SpyInstance,
+  test,
+  vi,
+} from 'vitest';
 import fixturify, { type DirJSON } from 'fixturify';
 import fs from 'fs';
 import tmp from 'tmp';
+import path from 'path';
+import createDebug from 'debug';
 
 import * as GetOutdatedModule from '../../package/get-outdated';
 import { Report, serializeReport } from '../Report';
@@ -9,19 +20,39 @@ import { Report, serializeReport } from '../Report';
 import NO_NODE_MODULES from '../../__tests__/__fixtures__/no-node-modules.json';
 import MIN_NODE_MODULES from '../../__tests__/__fixtures__/min-node-modules.json';
 import { generateReport } from '../../report';
-import path from 'path';
 
 describe('Report', () => {
+  const logger = createDebug('pi-core:Report:Test');
+
+  let cleanupTmpDir = () => {};
   let getOutdatedSpy: SpyInstance;
+  let tmpLocation: string;
+  let _tmpDir: string;
 
   beforeAll(() => {
     tmp.setGracefulCleanup();
+
+    _tmpDir = path.join(__dirname, '__tmp__');
+
+    logger(`Using tmpDir: ${_tmpDir}`);
+  });
+
+  beforeEach(() => {
+    const tmpObject = tmp.dirSync({
+      tmpdir: _tmpDir,
+      unsafeCleanup: true,
+    });
+
+    tmpLocation = tmpObject.name;
+    cleanupTmpDir = tmpObject.removeCallback;
+  });
+
+  afterEach(() => {
+    cleanupTmpDir();
   });
 
   describe('loadFromFile', () => {
     test('it should load a simple json report', async () => {
-      const { name: tmpLocation } = tmp.dirSync();
-
       // Write a dummy project structure
       fixturify.writeSync(tmpLocation, NO_NODE_MODULES as DirJSON);
 
@@ -51,8 +82,6 @@ describe('Report', () => {
     });
 
     test('it should load a json report with minimal node modules', async () => {
-      const { name: tmpLocation } = tmp.dirSync();
-
       // Write a dummy project structure
       fixturify.writeSync(tmpLocation, MIN_NODE_MODULES as DirJSON);
 
@@ -84,8 +113,6 @@ describe('Report', () => {
 
   describe('serializeReport', () => {
     test('it should serialize a serialize a simple report', async () => {
-      const { name: tmpLocation } = tmp.dirSync();
-
       // Write a dummy project structure
       fixturify.writeSync(tmpLocation, NO_NODE_MODULES as DirJSON);
 
@@ -112,8 +139,6 @@ describe('Report', () => {
     });
 
     test('it should serialize a project with minimal node modules', async () => {
-      const { name: tmpLocation } = tmp.dirSync();
-
       // Write a dummy project structure
       fixturify.writeSync(tmpLocation, MIN_NODE_MODULES as DirJSON);
 
@@ -140,8 +165,6 @@ describe('Report', () => {
     });
 
     test('it should serialize "latestPackages"', async () => {
-      const { name: tmpLocation } = tmp.dirSync();
-
       // Write a dummy project structure
       fixturify.writeSync(tmpLocation, NO_NODE_MODULES as DirJSON);
 
