@@ -22,7 +22,7 @@ jobs:
       - name: Install Dependencies
         run: yarn install
       - name: Build Workspaces
-        run: yarn workspaces run build
+        run: yarn build
 
   test:
     name: Run Tests
@@ -36,6 +36,6 @@ jobs:
       - name: Install Dependencies
         run: yarn install
       - name: Build Workspaces
-        run: yarn workspaces run build
+        run: yarn build
       - name: Test Workspaces
-        run: yarn workspaces run test:ci
+        run: yarn test:ci
