@@ -1,7 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
 import {
-  Card,
-  CardContent,
   Container,
   Paper,
   Table,
@@ -10,18 +8,29 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from '@mui/material';
-import { Loading } from '@nextui-org/react';
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Layout } from '../../components/Layout';
 
-import Navbar from '../../components/Navbar';
+import { Layout, LoadingView } from '../../components';
 
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
+interface ReportData {
+  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
+    root: NexusGenFieldTypes['Package'];
+  };
+}
+
+const ReportQuery = gql`
+  query {
+    report {
+      root {
+        name
+      }
+    }
+  }
+`;
 
 interface SuggestionData {
   suggestion: NexusGenFieldTypes['Suggestion'];
@@ -59,12 +68,22 @@ const Suggestion: NextPage = () => {
     { suggestionId: string }
   >(SuggestionQuery, { variables: { suggestionId: id } });
 
-  if (loading) return <Loading />;
+  const {
+    data: reportData,
+    loading: loadingReport,
+    error: reportError,
+  } = useQuery<ReportData>(ReportQuery);
+
+  if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load Suggestion</p>;
 
+  if (loadingReport) return <LoadingView />;
+  if (reportError) return <p>Oh no... {reportError.message}</p>;
+  if (!reportData) return <p>Oh no... could not load Report</p>;
+
   return (
-    <Layout title={data.suggestion.name}>
+    <Layout title={reportData.report.root.name}>
       <Container sx={{ py: 8 }} maxWidth="md">
         {data.suggestion.message}
         <br />
@@ -81,29 +100,35 @@ const Suggestion: NextPage = () => {
             <TableBody>
               {data.suggestion.actions
                 .filter((a) => a !== null)
-                .map((action, idx) => (
-                  <TableRow
-                    key={idx}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {action?.message}
-                    </TableCell>
-                    <TableCell align="right">
-                      {action?.targetPackage?.name ? (
-                        <Link
-                          href={`/packages/${encodeURIComponent(
-                            action.targetPackage.name
-                          )}`}
-                        >
-                          {action.targetPackage.name}
-                        </Link>
-                      ) : (
-                        'None'
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                .map((_action, idx) => {
+                  // FIXME: we shouldn't have to do this.
+                  const action =
+                    _action as NexusGenFieldTypes['SuggestionAction'];
+
+                  return (
+                    <TableRow
+                      key={idx}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {action?.message}
+                      </TableCell>
+                      <TableCell align="right">
+                        {action?.targetPackage?.name ? (
+                          <Link
+                            href={`/packages/${encodeURIComponent(
+                              action.targetPackage.name
+                            )}`}
+                          >
+                            {action.targetPackage.name}
+                          </Link>
+                        ) : (
+                          'None'
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>

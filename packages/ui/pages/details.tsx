@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { Grid, Link as LinkUI, Loading } from '@nextui-org/react';
+import { Grid, Link as LinkUI } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 import { ResponsiveTreeMap } from '@nivo/treemap';
 
@@ -12,7 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import { Layout } from '../components/Layout';
+import { LoadingView, Layout } from '../components';
 
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 
@@ -51,7 +51,7 @@ const ReportQuery = gql`
 const Report: NextPage = () => {
   const { data, loading, error } = useQuery<ReportData>(ReportQuery);
 
-  if (loading) return <Loading />;
+  if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load data from query.</p>;
 
@@ -73,6 +73,10 @@ const Report: NextPage = () => {
 
   return (
     <Layout title={data.report.root.name}>
+      <h1> Details </h1>
+
+      <h2>Dependency Map:</h2>
+
       <Grid.Container gap={2}>
         <Grid sm={12} md={12} style={{ height: '300px' }}>
           <ResponsiveTreeMap
@@ -121,14 +125,6 @@ const Report: NextPage = () => {
                     key={dep.name}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell component="td">
-                      <Link
-                        href={`packages/${encodeURIComponent(dep.name)}`}
-                        passHref={true}
-                      >
-                        <LinkUI>{dep.name}</LinkUI>
-                      </Link>
-                    </TableCell>
                     <TableCell component="td">
                       <Link
                         href={`packages/${encodeURIComponent(dep.name)}`}

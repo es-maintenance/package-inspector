@@ -74,7 +74,7 @@ export async function nestedDependencyFreshness({
     const breadcrumb = getBreadcrumb(node);
     actions.push({
       message: `"${name}@${version}" is required at "${breadcrumb}", the latest is ${latestPackages[name]}. This is a major version out of date.`,
-      targetPackage: `${name}@${version}`,
+      targetPackageId: `${name}@${version}`,
     });
   });
 
@@ -83,7 +83,7 @@ export async function nestedDependencyFreshness({
     const breadcrumb = getBreadcrumb(node);
     actions.push({
       message: `"${name}@${version}" is required at "${breadcrumb}", the latest is ${latestPackages[name]}. This is a minor version out of date.`,
-      targetPackage: `${name}@${version}`,
+      targetPackageId: `${name}@${version}`,
     });
   });
 
@@ -92,7 +92,7 @@ export async function nestedDependencyFreshness({
     const breadcrumb = getBreadcrumb(node);
     actions.push({
       message: `"${name}@${version}" is required at "${breadcrumb}", the latest is ${latestPackages[name]}. This is a patch version out of date.`,
-      targetPackage: `${name}@${version}`,
+      targetPackageId: `${name}@${version}`,
     });
   });
 

@@ -31,7 +31,7 @@ export async function packagesWithPinnedVersions({
       ) {
         packagedWithPinned.push({
           message: `"${node.name}" (${breadcrumb}) has a pinned version for ${dependencyName}@${version} that will never collapse.`,
-          targetPackage: `${node.name}@${version}`,
+          targetPackageId: `${node.name}@${node.version}`,
         });
       }
     }

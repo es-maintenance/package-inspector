@@ -7,6 +7,7 @@ import {
   type Suggestion,
   getBreadcrumb,
   getLatestPackages,
+  parseDependencyKey,
 } from '@package-inspector/core';
 
 const logger = debug('pi-core:suggestor:top-level-deps-freshness');
@@ -81,27 +82,27 @@ export async function topLevelDepsFreshness({
   outOfDate.major.forEach((dependencyKey) => {
     actions.push({
       message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
-        latestPackages[dependencyKey.split('@')[0]]
+        latestPackages[parseDependencyKey(dependencyKey).name]
       }. This is a major version out of date.`,
-      targetPackage: dependencyKey,
+      targetPackageId: dependencyKey,
     });
   });
 
   outOfDate.minor.forEach((dependencyKey) => {
     actions.push({
       message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
-        latestPackages[dependencyKey.split('@')[0]]
+        latestPackages[parseDependencyKey(dependencyKey).name]
       }. This is a minor version out of date.`,
-      targetPackage: dependencyKey,
+      targetPackageId: dependencyKey,
     });
   });
 
   outOfDate.patch.forEach((dependencyKey) => {
     actions.push({
       message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
-        latestPackages[dependencyKey.split('@')[0]]
+        latestPackages[parseDependencyKey(dependencyKey).name]
       }. This is a patch version out of date.`,
-      targetPackage: dependencyKey,
+      targetPackageId: dependencyKey,
     });
   });
 

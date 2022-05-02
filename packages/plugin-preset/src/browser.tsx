@@ -2,7 +2,8 @@ import type { BrowserPlugin, Suggestion } from '@package-inspector/core';
 import { Card, Grid, Text } from '@nextui-org/react';
 
 import React from 'react';
-
+// FIXME: should expose this nicer
+import { CardView } from '@package-inspector/ui/components/CardView';
 export class TestPlugin implements BrowserPlugin {
   name: string;
   version: string;
@@ -10,7 +11,7 @@ export class TestPlugin implements BrowserPlugin {
   suggestions: Suggestion[];
 
   constructor() {
-    this.name = 'Test Plugin';
+    this.name = '@package-inspector/plugin-preset';
     this.version = '0.0.1';
 
     this.suggestions = [];
@@ -27,7 +28,11 @@ export class TestPlugin implements BrowserPlugin {
   // // Renders as a full page experience
   get pluginPageView(): React.FC {
     return () => {
-      return <div style={{ border: '1px solid purple' }}>Plugin Page View</div>;
+      return (
+        <div style={{ border: '1px solid purple' }}>
+          Plugin Page View for Plugin Preset
+        </div>
+      );
     };
   }
 
@@ -40,30 +45,11 @@ export class TestPlugin implements BrowserPlugin {
 
   // Renders the card view for a given suggestion
   // TODO: talk to lewis about how graphql types don't overlap with report types
-  get cardView(): React.FC<{ suggestions: Suggestion[] | any[] }> {
-    return ({ suggestions }) => {
-      console.log(suggestions);
-
-      return (
-        <div>
-          {suggestions
-            .filter((suggestion) => {
-              return suggestion.id === 'packagesWithPinnedVersions';
-            })
-            .map((suggestion) => {
-              return (
-                <Card>
-                  <Text h4>{suggestion.name}</Text>
-                  <Text>{suggestion.message}</Text>
-                  <Card.Footer>
-                    {suggestion.actions.length} actions &nbsp;
-                    <b>Rendered by plugin</b>
-                  </Card.Footer>
-                </Card>
-              );
-            })}
-        </div>
-      );
+  get cardView(): React.FC<{ suggestion: Suggestion }> {
+    return ({ suggestion }) => {
+      return <CardView suggestion={suggestion} />;
     };
   }
 }
+
+export default TestPlugin;

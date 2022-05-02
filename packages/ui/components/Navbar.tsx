@@ -1,33 +1,37 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  Tooltip,
+  MenuItem,
+} from '@mui/material';
+
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 
 import NextLink from 'next/link';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { PluginProvider } from '../lib/PluginProvider';
 
 const ResponsiveAppBar = ({ title }: { title: string }) => {
+  const pluginProvider = new PluginProvider();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElPluginMenu, setAnchorElUser] =
+    React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPluginMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -35,7 +39,7 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleClosePluginMenu = () => {
     setAnchorElUser(null);
   };
 
@@ -50,7 +54,9 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
               component="div"
               sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
             >
-              {title}
+              <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                {title}
+              </Button>
             </Typography>
           </NextLink>
 
@@ -87,20 +93,26 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
                 <NextLink href="/details">
                   <Typography textAlign="center">Details</Typography>
                 </NextLink>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
                 <NextLink href="/packages">
                   <Typography textAlign="center">Packages</Typography>
                 </NextLink>
               </MenuItem>
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            {title}
-          </Typography>
+          <NextLink href="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            >
+              <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                {title}
+              </Button>
+            </Typography>
+          </NextLink>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button sx={{ my: 2, color: 'white', display: 'block' }}>
               <NextLink href="/details">
@@ -115,15 +127,15 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            <Button onClick={handleOpenPluginMenu} color="inherit">
+              <Tooltip title="Open Plugin Menu">
+                <Typography textAlign="center">Plugins</Typography>
+              </Tooltip>
+            </Button>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
-              anchorEl={anchorElUser}
+              anchorEl={anchorElPluginMenu}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -133,12 +145,16 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              open={Boolean(anchorElPluginMenu)}
+              onClose={handleClosePluginMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {pluginProvider.hasReportView().map((pluginTarget) => (
+                <MenuItem key={pluginTarget} onClick={handleClosePluginMenu}>
+                  <NextLink
+                    href={`/plugin/${encodeURIComponent(pluginTarget)}`}
+                  >
+                    <Typography textAlign="center">{pluginTarget}</Typography>
+                  </NextLink>
                 </MenuItem>
               ))}
             </Menu>

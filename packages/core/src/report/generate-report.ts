@@ -8,7 +8,7 @@ import {
   stripPathOnDisk,
 } from '../package';
 
-import { Report, Suggestion } from '../models';
+import { Report } from '../models';
 
 function getValues(dependencyTree: IArboristNode) {
   // ignore the root node
@@ -21,8 +21,9 @@ function processPlugins(plugins: string[]): ServerPlugin[] {
   const processedPlugins: ServerPlugin[] = [];
 
   plugins.forEach((pluginPath) => {
-    // Waiting for Lewis to tell me this is a bad idea
-    const { ServerPlugin } = require(pluginPath);
+    // FIXME: need to have a try catch for this
+    // FIXME: we need to have a test for this code, easily breakable
+    const ServerPlugin = require(`${pluginPath}/server`)?.default;
 
     if (ServerPlugin) {
       processedPlugins.push(new ServerPlugin());
@@ -74,7 +75,7 @@ export async function generateReport(
         homepage: depNode.homepage,
         name: depNode.name,
         version: depNode.version,
-        type: edge?.type,
+        type: edge?.type || (depNode.isWorkspace ? 'workspace' : undefined),
         metadata: {
           size: getDirectorySize({
             directory: depNode.path,
@@ -129,14 +130,11 @@ export async function generateReport(
 
   const suggestionInput = { arboristValues, rootArboristNode };
 
-  let suggestionsFromPlugins: Suggestion[] = [];
-
   for (const plugin of processedPlugins) {
     if (plugin.getSuggestions) {
       const suggestions = await plugin?.getSuggestions(suggestionInput);
 
-      // TODO: this should be a plugin id not just the name
-      report.suggestions[plugin.name] = [...suggestions];
+      report.suggestions.push(...suggestions);
     }
   }
 

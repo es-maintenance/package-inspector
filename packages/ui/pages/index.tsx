@@ -2,13 +2,16 @@ import type { NextPage } from 'next';
 import { Card, Grid, Loading, Text } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
 
-import { TestPlugin } from '@package-inspector/plugin-preset/browser';
+import { PluginProvider } from '../lib/PluginProvider';
 
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 
-import { Layout } from '../components/Layout';
-import SuggestionOverview from '../components/SuggestionOverview';
-import Link from 'next/link';
+import {
+  LoadingView,
+  Layout,
+  SuggestionOverview,
+  CardView,
+} from '../components';
 
 export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
   root: NexusGenFieldTypes['Package'];
@@ -44,46 +47,31 @@ const ReportQuery = gql`
 `;
 
 const Home: NextPage = () => {
-  const testPlugin = new TestPlugin();
+  // TODO: talk to Lewis about making this a hook?
+  const pluginProvider = new PluginProvider();
 
   const { data, loading, error } = useQuery<ReportData>(ReportQuery);
 
-  if (loading) return <Loading />;
+  if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load report</p>;
 
   return (
     <Layout title={data.report.root.name}>
-      {/* TODO: we need to talk about this */}
       <SuggestionOverview report={data.report} />
 
       <Grid.Container gap={2} justify={'center'}>
-        <Grid sm={12} md={3}>
-          <testPlugin.cardView
-            suggestions={data.report.suggestions.filter(
-              ({ pluginTarget }) =>
-                pluginTarget === '@package-inspector/plugin-preset'
-            )}
-          />
-        </Grid>
-
         {data &&
-          data.report.suggestions.map(
-            (suggestion) =>
-              suggestion && (
-                <Grid sm={12} md={3} key={suggestion.id}>
-                  <Card>
-                    <Link href={`/suggestions/${suggestion.id}`}>
-                      {suggestion.name}
-                    </Link>
-                    <Text>{suggestion.message}</Text>
-                    <Card.Footer>
-                      {suggestion.actions.length} actions
-                    </Card.Footer>
-                  </Card>
-                </Grid>
-              )
-          )}
+          data.report.suggestions.map((suggestion) => {
+            const CustomCardView = pluginProvider.cardView(
+              suggestion.pluginTarget
+            );
+            if (CustomCardView) {
+              return <CustomCardView suggestion={suggestion} />;
+            } else {
+              return <CardView suggestion={suggestion} />;
+            }
+          })}
       </Grid.Container>
     </Layout>
   );

@@ -34,7 +34,7 @@ export async function packagesWithExtraArtifacts({
           }" (${breadcrumb}) has a "docs" folder which is not necessary for production usage ${humanFileSize(
             size.physical
           )}.`,
-          targetPackage: `${node.name}@${node.version}`,
+          targetPackageId: `${node.name}@${node.version}`,
         });
       }
     }
@@ -51,7 +51,7 @@ export async function packagesWithExtraArtifacts({
           }" (${breadcrumb}) has a "tests" folder which is not necessary for production usage ${humanFileSize(
             size.physical
           )}.`,
-          targetPackage: `${node.name}@${node.version}`,
+          targetPackageId: `${node.name}@${node.version}`,
         });
       }
     }
