@@ -84,7 +84,7 @@ export async function topLevelDepsFreshness({
       message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
         latestPackages[parseDependencyKey(dependencyKey).name]
       }. This is a major version out of date.`,
-      targetPackage: dependencyKey,
+      targetPackageId: dependencyKey,
     });
   });
 
@@ -93,7 +93,7 @@ export async function topLevelDepsFreshness({
       message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
         latestPackages[parseDependencyKey(dependencyKey).name]
       }. This is a minor version out of date.`,
-      targetPackage: dependencyKey,
+      targetPackageId: dependencyKey,
     });
   });
 
@@ -102,7 +102,7 @@ export async function topLevelDepsFreshness({
       message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
         latestPackages[parseDependencyKey(dependencyKey).name]
       }. This is a patch version out of date.`,
-      targetPackage: dependencyKey,
+      targetPackageId: dependencyKey,
     });
   });
 

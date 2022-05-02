@@ -14,6 +14,7 @@ type Package {
   metadata: PackageMetadata
   name: String!
   parent: [Package]!
+  suggestions: [Suggestion]!
   type: String
   version: String!
 }
@@ -62,4 +63,5 @@ type Suggestion {
 type SuggestionAction {
   message: String!
   targetPackage: Package
+  targetPackageId: String!
 }

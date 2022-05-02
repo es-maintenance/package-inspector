@@ -41,6 +41,16 @@ const PackageQuery = gql`
           files
         }
       }
+      suggestions {
+        id
+        message
+        actions {
+          message
+          targetPackage {
+            id
+          }
+        }
+      }
     }
   }
 `;

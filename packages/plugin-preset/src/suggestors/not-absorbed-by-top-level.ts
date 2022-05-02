@@ -57,7 +57,7 @@ export function notBeingAbsorbedByTopLevel({
         }" and this is "${
           node.version
         }". This takes up an additional ${humanFileSize(size.physical)}.`,
-        targetPackage: `${node.name}@${node.version}`,
+        targetPackageId: `${node.name}@${node.version}`,
       });
     }
   }

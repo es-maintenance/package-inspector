@@ -8,7 +8,7 @@ import {
   stripPathOnDisk,
 } from '../package';
 
-import { Report, Suggestion } from '../models';
+import { Report } from '../models';
 
 function getValues(dependencyTree: IArboristNode) {
   // ignore the root node
@@ -134,8 +134,7 @@ export async function generateReport(
     if (plugin.getSuggestions) {
       const suggestions = await plugin?.getSuggestions(suggestionInput);
 
-      // TODO: this should be a plugin id not just the name
-      report.suggestions[plugin.name] = [...suggestions];
+      report.suggestions.push(...suggestions);
     }
   }
 

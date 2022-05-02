@@ -2,6 +2,7 @@ import { parseDependencyKey } from '@package-inspector/core';
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
 
 import { getPackageID } from '../utils';
+import { Suggestion } from './Suggestion';
 
 export const MiniPackage = objectType({
   name: 'MiniPackage',
@@ -109,6 +110,28 @@ export const Package = objectType({
       },
     });
 
+    t.nonNull.list.field('suggestions', {
+      type: Suggestion,
+      resolve(me, __, ctx) {
+        // This is going to give us the packageKey
+        const id = me.id;
+
+        return ctx.report.suggestions
+          .map((suggestion) => {
+            return {
+              ...suggestion,
+              actions: suggestion.actions.filter((action) => {
+                return action.targetPackageId === id;
+              }),
+            };
+          })
+          .filter((suggestion) => {
+            // only return suggestions that have suggestions that have actions
+            return suggestion?.actions.length > 0;
+          });
+      },
+    });
+
     t.string('funding');
     t.string('homepage');
     t.field('metadata', {
@@ -163,11 +186,13 @@ export const PackageByVersionQuery = extendType({
       resolve(_, args, ctx) {
         const packageModel =
           ctx.report.dependencies[`${args.packageName}@${args.packageVersion}`];
-        console.log(packageModel);
+
         return packageModel
           ? {
               id: getPackageID(packageModel),
-              ...packageModel,
+              name: packageModel.name,
+              type: packageModel.type,
+              version: packageModel.version,
             }
           : null;
       },
@@ -190,7 +215,6 @@ export const PackageQuery = extendType({
             return packageName === parseDependencyKey(dependencyKey).name;
           }
         );
-        console.log(variants);
 
         return variants
           ? {
