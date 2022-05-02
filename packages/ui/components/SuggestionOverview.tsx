@@ -1,9 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { Grid, Link as LinkUI } from '@nextui-org/react';
-import type { Suggestion } from '@package-inspector/core';
 
 import { Report } from '../pages/index';
+
+import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 
 import styles from '../styles/SuggestionOverview.module.css';
 
@@ -13,7 +14,7 @@ interface SuggestionCount {
 }
 
 function getCostlyPackages(
-  suggestions: Suggestion[],
+  suggestions: NexusGenFieldTypes['Suggestion'][],
   count = 5
 ): SuggestionCount[] {
   const countMap: Record<string, SuggestionCount> = {};
@@ -23,8 +24,7 @@ function getCostlyPackages(
 
   suggestions.forEach((suggestion) => {
     suggestion.actions.forEach((action) => {
-      const node = action.targetPackage;
-
+      // const node = action.targetPackage;
       // if (parts.length) {
       //   const associatedActionPackageName = parts[0];
       //   if (!countMap[associatedActionPackageName]) {
