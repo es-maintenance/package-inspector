@@ -69,7 +69,7 @@ const Home: NextPage = () => {
             if (CustomCardView) {
               return <CustomCardView suggestion={suggestion} />;
             } else {
-              return <CardView suggestion={CardView} />;
+              return <CardView suggestion={suggestion} />;
             }
           })}
       </Grid.Container>

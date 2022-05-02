@@ -100,29 +100,35 @@ const Suggestion: NextPage = () => {
             <TableBody>
               {data.suggestion.actions
                 .filter((a) => a !== null)
-                .map((action, idx) => (
-                  <TableRow
-                    key={idx}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {action?.message}
-                    </TableCell>
-                    <TableCell align="right">
-                      {action?.targetPackage?.name ? (
-                        <Link
-                          href={`/packages/${encodeURIComponent(
-                            action.targetPackage.name
-                          )}`}
-                        >
-                          {action.targetPackage.name}
-                        </Link>
-                      ) : (
-                        'None'
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                .map((_action, idx) => {
+                  // FIXME: we shouldn't have to do this.
+                  const action =
+                    _action as NexusGenFieldTypes['SuggestionAction'];
+
+                  return (
+                    <TableRow
+                      key={idx}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {action?.message}
+                      </TableCell>
+                      <TableCell align="right">
+                        {action?.targetPackage?.name ? (
+                          <Link
+                            href={`/packages/${encodeURIComponent(
+                              action.targetPackage.name
+                            )}`}
+                          >
+                            {action.targetPackage.name}
+                          </Link>
+                        ) : (
+                          'None'
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>

@@ -50,6 +50,7 @@ export interface NexusGenObjects {
     // root type
     id: string; // ID!
     root: NexusGenRootTypes['Package']; // Package!
+    suggestions: Array<NexusGenRootTypes['Suggestion'] | null>; // [Suggestion]!
   };
   SizeInfo: {
     // root type
