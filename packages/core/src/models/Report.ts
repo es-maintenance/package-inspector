@@ -1,28 +1,10 @@
 import fs from 'fs-extra';
+import { IPackage } from './Package';
 
 export type LatestPackages = Record<string, string>;
-export interface SizeInfo {
-  files: number;
-  physical: number;
-}
-
-export interface PackageMetadata {
-  size?: SizeInfo;
-  pathsOnDisk: string[];
-}
 
 export interface DependenciesMap {
-  [dependencyName: string]: Package;
-}
-
-export interface Package {
-  name: string;
-  version: string;
-  metadata?: PackageMetadata;
-  funding?: string;
-  homepage?: string;
-  dependencies: string[];
-  type?: string;
+  [dependencyName: string]: IPackage;
 }
 
 export interface SuggestionMap {
@@ -149,7 +131,7 @@ export function serializeReport(jsonReport: any): SerializedReport {
 }
 
 export class Report {
-  root: Package;
+  root: IPackage;
 
   latestPackages: LatestPackages = {};
   dependencies: DependenciesMap = {};
