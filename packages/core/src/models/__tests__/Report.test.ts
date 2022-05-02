@@ -9,7 +9,7 @@ import {
   vi,
 } from 'vitest';
 import fixturify, { type DirJSON } from 'fixturify';
-import fs from 'fs';
+import fse from 'fs-extra';
 import tmp from 'tmp';
 import path from 'path';
 import createDebug from 'debug';
@@ -27,19 +27,21 @@ describe('Report', () => {
   let cleanupTmpDir = () => {};
   let getOutdatedSpy: SpyInstance;
   let tmpLocation: string;
-  let _tmpDir: string;
+  let __tmp_dir__: string;
 
   beforeAll(() => {
     tmp.setGracefulCleanup();
 
-    _tmpDir = path.join(__dirname, '__tmp__');
+    __tmp_dir__ = path.join(__dirname, '__tmp__');
 
-    logger(`Using tmpDir: ${_tmpDir}`);
+    fse.ensureDirSync(__tmp_dir__);
+
+    logger(`Using tmpDir: ${__tmp_dir__}`);
   });
 
   beforeEach(() => {
     const tmpObject = tmp.dirSync({
-      tmpdir: _tmpDir,
+      tmpdir: __tmp_dir__,
       unsafeCleanup: true,
     });
 
@@ -66,7 +68,7 @@ describe('Report', () => {
 
       // Write the report to disk
       const reportPath = path.join(tmpLocation, 'report.json');
-      fs.writeFileSync(reportPath, JSON.stringify(generatedReport));
+      fse.writeFileSync(reportPath, JSON.stringify(generatedReport));
 
       // Create a new Report instance.
       const report = new Report();
@@ -95,7 +97,7 @@ describe('Report', () => {
 
       // Write the report to disk
       const reportPath = path.join(tmpLocation, 'report.json');
-      fs.writeFileSync(reportPath, JSON.stringify(generatedReport));
+      fse.writeFileSync(reportPath, JSON.stringify(generatedReport));
 
       // Create a new Report instance.
       const report = new Report();
@@ -126,10 +128,10 @@ describe('Report', () => {
 
       // Write the report to disk
       const reportPath = path.join(tmpLocation, 'report.json');
-      fs.writeFileSync(reportPath, JSON.stringify(generatedReport));
+      fse.writeFileSync(reportPath, JSON.stringify(generatedReport));
 
       // Read report from disk
-      const jsonReport = JSON.parse(fs.readFileSync(reportPath, 'utf-8'));
+      const jsonReport = JSON.parse(fse.readFileSync(reportPath, 'utf-8'));
 
       // Create a serialized Report;
       const report = serializeReport(jsonReport);
@@ -152,10 +154,10 @@ describe('Report', () => {
 
       // Write the report to disk
       const reportPath = path.join(tmpLocation, 'report.json');
-      fs.writeFileSync(reportPath, JSON.stringify(generatedReport));
+      fse.writeFileSync(reportPath, JSON.stringify(generatedReport));
 
       // Read report from disk
-      const jsonReport = JSON.parse(fs.readFileSync(reportPath, 'utf-8'));
+      const jsonReport = JSON.parse(fse.readFileSync(reportPath, 'utf-8'));
 
       // Create a serialized Report;
       const report = serializeReport(jsonReport);
@@ -185,10 +187,10 @@ describe('Report', () => {
 
       // Write the report to disk
       const reportPath = path.join(tmpLocation, 'report.json');
-      fs.writeFileSync(reportPath, JSON.stringify(generatedReport));
+      fse.writeFileSync(reportPath, JSON.stringify(generatedReport));
 
       // Read report from disk
-      const jsonReport = JSON.parse(fs.readFileSync(reportPath, 'utf-8'));
+      const jsonReport = JSON.parse(fse.readFileSync(reportPath, 'utf-8'));
 
       // Create a serialized Report;
       const report = serializeReport(jsonReport);
