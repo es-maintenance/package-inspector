@@ -22,21 +22,22 @@ function getCostlyPackages(
 
   suggestions.forEach((suggestion) => {
     suggestion.actions.forEach((action) => {
-      // const node = action.targetPackage;
-      // if (parts.length) {
-      //   const associatedActionPackageName = parts[0];
-      //   if (!countMap[associatedActionPackageName]) {
-      //     console.log(`Missed: ${associatedActionPackageName}`);
-      //     const suggestionCount = {
-      //       packageName: associatedActionPackageName,
-      //       count: 1,
-      //     };
-      //     countMap[associatedActionPackageName] = suggestionCount;
-      //     counts.push(suggestionCount);
-      //   } else {
-      //     countMap[associatedActionPackageName].count++;
-      //   }
-      // }
+      // FIXME: again not sure why this is not getting the right type information
+      const id = (action as any).targetPackage.id;
+
+      if (id) {
+        if (!countMap[id]) {
+          console.log(`Missed: ${id}`);
+          const suggestionCount = {
+            packageName: id,
+            count: 1,
+          };
+          countMap[id] = suggestionCount;
+          counts.push(suggestionCount);
+        } else {
+          countMap[id].count++;
+        }
+      }
     });
   });
 
@@ -51,14 +52,9 @@ export const SuggestionOverview: React.FC<SuggestionOverviewProps> = (
   props
 ) => {
   const { report } = props;
-  // const { suggestions } = report;
+  const { suggestions } = report;
 
-  console.log(report);
-  const directDeps = report.root.dependencies;
-
-  // FIXME: need to actually get costly packages
-  // const heaviestDeps = getCostlyPackages(suggestions);
-  const heaviestDeps = getCostlyPackages([]);
+  const heaviestDeps = getCostlyPackages(suggestions);
 
   return (
     <section>
@@ -75,9 +71,8 @@ export const SuggestionOverview: React.FC<SuggestionOverviewProps> = (
           }}
         >
           <p>
-            Out of the {directDeps.length.toLocaleString()} top level
-            dependencies. The top {heaviestDeps.length.toLocaleString()} with
-            the most suggestions are:
+            The top {heaviestDeps.length.toLocaleString()} with the most
+            suggestions are:
           </p>
           <ul className={styles.suggestionOverviewCostlyDepsList}>
             {heaviestDeps.map((dep, i) => {
