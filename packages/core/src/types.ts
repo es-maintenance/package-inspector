@@ -71,5 +71,6 @@ export interface BrowserPlugin extends Plugin {
   // Renders on the package page
   packageView?: React.FC;
   // Renders the card view for a given suggestion
-  cardView?: React.FC<{ suggestion: Suggestion }>;
+  // FIXME: This needs to come from the UI code, not okay to use any
+  cardView?: React.FC<{ suggestion: any }>;
 }
