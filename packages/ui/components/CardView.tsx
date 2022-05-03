@@ -7,7 +7,6 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import { Text } from '@nextui-org/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -33,7 +32,7 @@ export const CardView: React.FC<{
             <Link href={`/suggestions/${suggestion.id}`}>
               {suggestion.name}
             </Link>
-            <Text>{suggestion.message}</Text>
+            <Typography>{suggestion.message}</Typography>
           </CardContent>
           <CardActions
             style={{

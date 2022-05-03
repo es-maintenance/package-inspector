@@ -1,5 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import {
+  Container,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -8,10 +10,9 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { Grid, Link as LinkUI } from '@nextui-org/react';
 import { ResponsiveTreeMap } from '@nivo/treemap';
 import type { NextPage } from 'next';
-import Link from 'next/link';
+import NextLink from 'next/link';
 
 import { Layout, LoadingView } from '../components';
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
@@ -68,39 +69,43 @@ const Report: NextPage = () => {
     ),
   };
 
+  const nivoContainerStyles = { height: '300px' };
+
   return (
     <Layout title={data.report.root.name}>
       <h1> Details </h1>
 
       <h2>Dependency Map:</h2>
 
-      <Grid.Container gap={2}>
-        <Grid sm={12} md={12} style={{ height: '300px' }}>
-          <ResponsiveTreeMap
-            data={nivoData}
-            onClick={(ev) => console.log(ev)}
-            identity="name"
-            value="size"
-            valueFormat=">-.0s"
-            margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
-            label="name"
-            labelSkipSize={12}
-            labelTextColor={{
-              from: 'color',
-              modifiers: [['darker', 1.2]],
-            }}
-            parentLabelPosition="left"
-            parentLabelTextColor={{
-              from: 'color',
-              modifiers: [['darker', 2]],
-            }}
-            borderColor={{
-              from: 'color',
-              modifiers: [['darker', 0.1]],
-            }}
-          />
-        </Grid>
-      </Grid.Container>
+      <Container
+        disableGutters={true}
+        maxWidth={false}
+        style={nivoContainerStyles}
+      >
+        <ResponsiveTreeMap
+          data={nivoData}
+          onClick={(ev) => console.log(ev)}
+          identity="name"
+          value="size"
+          valueFormat=">-.0s"
+          margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+          label="name"
+          labelSkipSize={12}
+          labelTextColor={{
+            from: 'color',
+            modifiers: [['darker', 1.2]],
+          }}
+          parentLabelPosition="left"
+          parentLabelTextColor={{
+            from: 'color',
+            modifiers: [['darker', 2]],
+          }}
+          borderColor={{
+            from: 'color',
+            modifiers: [['darker', 0.1]],
+          }}
+        />
+      </Container>
 
       <h2>Dependencies:</h2>
 
@@ -123,12 +128,12 @@ const Report: NextPage = () => {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell component="td">
-                      <Link
+                      <NextLink
                         href={`packages/${encodeURIComponent(dep.name)}`}
                         passHref={true}
                       >
-                        <LinkUI>{dep.name}</LinkUI>
-                      </Link>
+                        <Link>{dep.name}</Link>
+                      </NextLink>
                     </TableCell>
                     <TableCell component="td">{dep.version}</TableCell>
                     <TableCell component="td">{dep.type}</TableCell>

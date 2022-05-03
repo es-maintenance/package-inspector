@@ -28,7 +28,7 @@ export class TestPlugin implements BrowserPlugin {
     };
   }
 
-  // // Renders as a full page experience
+  // Renders as a full page experience
   get pluginPageView(): React.FC {
     return () => {
       return (
