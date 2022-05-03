@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import { Card, Grid, Loading, Text } from '@nextui-org/react';
+import { Grid } from '@nextui-org/react';
 import type { NextPage } from 'next';
 
 import {

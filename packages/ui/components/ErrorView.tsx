@@ -1,8 +1,7 @@
-import { Loading } from '@nextui-org/react';
 import * as React from 'react';
 
-import styles from '../styles/ErrorView.module.css';
 import { Layout } from './';
+import styles from './ErrorView.module.css';
 
 interface ErrorViewProps {
   title: string;

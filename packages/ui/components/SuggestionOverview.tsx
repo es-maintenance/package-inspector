@@ -4,7 +4,7 @@ import React from 'react';
 
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 import { Report } from '../pages/index';
-import styles from '../styles/SuggestionOverview.module.css';
+import styles from './SuggestionOverview.module.css';
 
 interface SuggestionCount {
   packageName: string;
