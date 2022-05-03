@@ -10,6 +10,7 @@ import styles from './Layout.module.css';
 interface LayoutProps {
   title: string;
   hero?: React.FC;
+  children: any;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ title, hero, children }) => {
