@@ -104,7 +104,7 @@ const Home: NextPage = () => {
   return (
     <Layout
       title={data.report.root.name}
-      belowNavbarArea={
+      hero={
         <Paper variant="outlined" square={true}>
           <Container maxWidth="lg">
             <br />

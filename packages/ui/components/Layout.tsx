@@ -12,11 +12,7 @@ interface LayoutProps {
   hero?: React.FC;
 }
 
-export const Layout: React.FC<LayoutProps> = ({
-  title,
-  hero,
-  children,
-}) => {
+export const Layout: React.FC<LayoutProps> = ({ title, hero, children }) => {
   return (
     <div>
       <Head>
@@ -27,7 +23,7 @@ export const Layout: React.FC<LayoutProps> = ({
 
       <Navbar title={title} />
 
-      {belowNavbarArea ? belowNavbarArea : null}
+      {hero ? hero : null}
 
       <Container sx={{ py: 8, backgroundColor: 'grey.100' }} maxWidth={false}>
         {children}
