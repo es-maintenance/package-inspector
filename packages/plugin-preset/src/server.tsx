@@ -37,3 +37,5 @@ export class TestPlugin implements ServerPlugin {
     return this.suggestions;
   }
 }
+
+export default TestPlugin;

@@ -6,4 +6,5 @@ export {
   humanFileSize,
   getDirectorySize,
   getLatestPackages,
+  parseDependencyKey,
 } from './package';

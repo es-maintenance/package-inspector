@@ -7,7 +7,8 @@
     "build": "tsc --project tsconfig.json",
     "watch": "tsc --project tsconfig.json --watch",
     "docs": "./bin/index.js --report --outputDir=../../docs",
-    "test": "echo 'NO TEST COMMAND YET'"
+    "test": "echo 'NO TEST COMMAND YET'",
+    "test:ci": "echo 'NO TEST COMMAND YET'"
   },
   "bin": {
     "detective": "./bin/index.js"
@@ -40,7 +41,7 @@
     "typescript": "4.6.3"
   },
   "volta": {
-    "node": "16.14.2",
+    "node": "16.15.0",
     "yarn": "1.22.10"
   }
 }

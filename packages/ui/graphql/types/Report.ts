@@ -1,5 +1,4 @@
 import { extendType, objectType } from 'nexus';
-import { MaybePromise } from 'nexus/dist/core';
 import { humanFileSize } from '../../lib/utils';
 import { getPackageID } from '../utils';
 
@@ -37,31 +36,12 @@ export const Report = objectType({
       },
     });
     t.nonNull.field('root', { type: Package });
-    t.nonNull.list.field('suggestions', {
-      type: Suggestion,
-      resolve(_, __, ctx) {
-        // FIXME: don't use `any` type
-        const suggestions: any[] = [];
-
-        Object.keys(ctx.report.suggestions).forEach((pluginName) => {
-          suggestions.push(...ctx.report.suggestions[pluginName]);
-        });
-
-        return suggestions;
-      },
-    });
+    t.nonNull.list.field('suggestions', { type: Suggestion });
     t.nonNull.string('summary', {
       resolve(parent, _, ctx) {
-        // FIXME: don't use `any` type
-        const suggestions: any[] = [];
-
-        Object.keys(ctx.report.suggestions).forEach((pluginName) => {
-          suggestions.push(...ctx.report.suggestions[pluginName]);
-        });
-
         const directDeps = ctx.report.root.dependencies;
         const allDeps = Object.keys(ctx.report.dependencies);
-        const suggestionCount = suggestions
+        const suggestionCount = ctx.report.suggestions
           .map((suggestion) => suggestion.actions.length)
           .reduce((a, b) => a + b, 0)
           .toLocaleString();
@@ -101,6 +81,7 @@ export const ReportQuery = extendType({
             ...ctx.report.root,
             id: `${ctx.report.root.name}@${ctx.report.root.version}`,
           },
+          suggestions: ctx.report.suggestions,
         };
       },
     });

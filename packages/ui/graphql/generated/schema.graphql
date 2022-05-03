@@ -13,8 +13,16 @@ type Package {
   id: ID!
   metadata: PackageMetadata
   name: String!
+  parent: [Package]!
+  suggestions: [Suggestion]!
   type: String
   version: String!
+}
+
+type PackageCompound {
+  latest: String!
+  name: String!
+  variants: [Package]!
 }
 
 type PackageMetadata {
@@ -23,6 +31,8 @@ type PackageMetadata {
 }
 
 type Query {
+  package(packageName: String!): PackageCompound
+  packageByVersion(packageName: String!, packageVersion: String!): Package
   packages: [Package]!
   report: Report!
   suggestion(id: String!): Suggestion
@@ -53,4 +63,5 @@ type Suggestion {
 type SuggestionAction {
   message: String!
   targetPackage: Package
+  targetPackageId: String!
 }

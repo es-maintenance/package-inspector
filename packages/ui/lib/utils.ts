@@ -1,5 +1,3 @@
-import type { Package } from '@package-inspector/core';
-
 export function humanFileSize(bytes: number, si = false, dp = 1) {
   const thresh = si ? 1000 : 1024;
 

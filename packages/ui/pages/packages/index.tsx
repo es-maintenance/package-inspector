@@ -1,6 +1,4 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
-import { Link as LinkUI, Loading } from '@nextui-org/react';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,11 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
-import { Layout } from '../../components/Layout';
+import { gql, useQuery } from '@apollo/client';
 
 import styles from './Packages.module.css';
-import { gql, useQuery } from '@apollo/client';
+import { Layout, LoadingView } from '../../components';
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
 
 type ColumnKey = 'name' | 'version' | 'dep-count' | 'dev-dep-count';
@@ -22,6 +19,22 @@ interface Column {
   key: ColumnKey;
   label: string;
 }
+
+interface ReportData {
+  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
+    root: NexusGenFieldTypes['Package'];
+  };
+}
+
+const ReportQuery = gql`
+  query {
+    report {
+      root {
+        name
+      }
+    }
+  }
+`;
 
 interface PackageData {
   packages: NexusGenFieldTypes['Package'][];
@@ -42,9 +55,19 @@ const PackagesQuery = gql`
 const Packages: NextPage = () => {
   const { data, loading, error } = useQuery<PackageData>(PackagesQuery);
 
-  if (loading) return <Loading />;
+  const {
+    data: reportData,
+    loading: loadingReport,
+    error: reportError,
+  } = useQuery<ReportData>(ReportQuery);
+
+  if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load package list</p>;
+
+  if (loadingReport) return <LoadingView />;
+  if (reportError) return <p>Oh no... {reportError.message}</p>;
+  if (!reportData) return <p>Oh no... could not load Report</p>;
 
   const columns: Column[] = [
     {
@@ -62,8 +85,7 @@ const Packages: NextPage = () => {
   ];
 
   return (
-    // FIXME: should be the name of the report
-    <Layout title="Packages">
+    <Layout title={reportData.report.root.name}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
