@@ -7,14 +7,15 @@ import Navbar from '../components/Navbar';
 import styles from './Layout.module.css';
 
 // FIXME: needs to extend from base props correctly
-export const Layout = ({
-  title,
-  belowNavbarArea, // FIXME: this needs to have a better name
-  children,
-}: {
+interface LayoutProps {
   title: string;
-  belowNavbarArea?: any;
-  children: any;
+  hero?: React.FC;
+}
+
+export const Layout: React.FC<LayoutProps> = ({
+  title,
+  hero,
+  children,
 }) => {
   return (
     <div>
