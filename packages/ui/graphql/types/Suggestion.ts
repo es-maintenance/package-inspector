@@ -32,6 +32,13 @@ export const Suggestion = objectType({
     t.nonNull.string('name');
     t.nonNull.string('pluginTarget');
     t.nonNull.string('message');
+    t.nonNull.int('count', {
+      resolve(me, args, ctx) {
+        const actions = me.actions;
+
+        return actions.length;
+      },
+    });
     t.nonNull.list.field('actions', { type: SuggestionAction });
   },
 });

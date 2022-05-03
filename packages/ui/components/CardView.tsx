@@ -12,7 +12,7 @@ export const CardView: React.FC<{
       <Card>
         <Link href={`/suggestions/${suggestion.id}`}>{suggestion.name}</Link>
         <Text>{suggestion.message}</Text>
-        <Card.Footer>{suggestion.actions.length} actions</Card.Footer>
+        <Card.Footer>{suggestion.count.toLocaleString()} actions</Card.Footer>
       </Card>
     </Grid>
   );

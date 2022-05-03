@@ -13,6 +13,7 @@ import { PluginProvider } from '../lib/PluginProvider';
 
 export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
   root: NexusGenFieldTypes['Package'];
+  top: NexusGenFieldTypes['Top'][];
   suggestions: NexusGenFieldTypes['Suggestion'][];
 };
 
@@ -31,19 +32,19 @@ const ReportQuery = gql`
           id
         }
       }
+      top {
+        count
+        package {
+          id
+          name
+        }
+      }
       suggestions {
         id
         pluginTarget
         name
         message
-        actions {
-          message
-          targetPackage {
-            id
-            name
-            version
-          }
-        }
+        count
       }
     }
   }
@@ -61,7 +62,7 @@ const Home: NextPage = () => {
 
   return (
     <Layout title={data.report.root.name}>
-      <SuggestionOverview report={data.report} />
+      <SuggestionOverview summary={data.report.summary} top={data.report.top} />
 
       <Grid.Container gap={2} justify={'center'}>
         {data &&
