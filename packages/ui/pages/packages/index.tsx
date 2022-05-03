@@ -1,15 +1,17 @@
+import { gql, useQuery } from '@apollo/client';
+import {
+  Link,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
+import { Link as LinkUI } from '@nextui-org/react';
 import type { NextPage } from 'next';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { gql, useQuery } from '@apollo/client';
-
-import styles from './Packages.module.css';
 import { Layout, LoadingView } from '../../components';
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
 
@@ -105,7 +107,11 @@ const Packages: NextPage = () => {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {dependency.name}
+                    <Link
+                      href={`packages/${encodeURIComponent(dependency.name)}`}
+                    >
+                      <LinkUI>{dependency.name}</LinkUI>
+                    </Link>
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {dependency.version}

@@ -1,9 +1,17 @@
 import { extendType, objectType } from 'nexus';
+
 import { humanFileSize } from '../../lib/utils';
 import { getPackageID } from '../utils';
-
 import { MiniPackage, Package } from './Package';
 import { Suggestion } from './Suggestion';
+
+export const TopSuggestions = objectType({
+  name: 'TopSuggestions',
+  definition(t) {
+    t.nonNull.field('package', { type: Package });
+    t.nonNull.int('count');
+  },
+});
 
 export const Report = objectType({
   name: 'Report',
@@ -37,6 +45,7 @@ export const Report = objectType({
     });
     t.nonNull.field('root', { type: Package });
     t.nonNull.list.field('suggestions', { type: Suggestion });
+
     t.nonNull.string('summary', {
       resolve(parent, _, ctx) {
         const directDeps = ctx.report.root.dependencies;
@@ -64,6 +73,49 @@ export const Report = objectType({
           `There are a total of ${suggestionCount} suggestions. ` +
           `The size currently taken up by the dependencies is ${fileSize}`
         );
+      },
+    });
+
+    t.nonNull.list.field('topSuggestions', {
+      type: TopSuggestions,
+      resolve(parent, _, ctx) {
+        // FIXME: this should be passed in from the query with a decorator
+        const limit = 5;
+
+        const tempMap: any = {};
+
+        const suggestions = ctx.report.suggestions;
+
+        suggestions.forEach((suggestion) => {
+          suggestion.actions.forEach((action) => {
+            const id = action.targetPackageId;
+            const target = ctx.report.dependencies[id];
+            const { version, name } = target;
+
+            if (id) {
+              if (!tempMap[id]) {
+                const suggestionCount = {
+                  package: {
+                    id,
+                    name,
+                    version,
+                  },
+                  count: 1,
+                };
+                tempMap[id] = suggestionCount;
+              } else {
+                tempMap[id].count++;
+              }
+            }
+          });
+        });
+
+        return Object.keys(tempMap)
+          .map((key) => {
+            return tempMap[key];
+          })
+          .sort((a, b) => b.count - a.count)
+          .slice(0, limit);
       },
     });
   },

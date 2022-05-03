@@ -1,12 +1,10 @@
+import { gql, useQuery } from '@apollo/client';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
 
-import { PluginProvider } from '../../lib/PluginProvider';
-
-import { Layout, LoadingView } from '../../components';
-
+import { ErrorView, Layout, LoadingView } from '../../components';
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
+import { PluginProvider } from '../../lib/PluginProvider';
 
 interface ReportData {
   report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
@@ -48,9 +46,13 @@ const Package: NextPage = () => {
 
   const PluginPageView = pluginProvider.pluginPageView(name);
 
-  // FIXME: make an error page
   if (!PluginPageView) {
-    return <div>Plugin does not have a page view</div>;
+    return (
+      <ErrorView
+        title="Plugin Page Error"
+        message="Plugin does not have a page view"
+      />
+    );
   }
 
   // FIXME: Talk to Lewis about how to get data into the plugin page view

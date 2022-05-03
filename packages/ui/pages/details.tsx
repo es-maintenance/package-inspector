@@ -1,23 +1,20 @@
+import { gql, useQuery } from '@apollo/client';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
+import { Grid, Link as LinkUI } from '@nextui-org/react';
+import { ResponsiveTreeMap } from '@nivo/treemap';
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { Grid, Link as LinkUI } from '@nextui-org/react';
-import { gql, useQuery } from '@apollo/client';
-import { ResponsiveTreeMap } from '@nivo/treemap';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
-import { LoadingView, Layout } from '../components';
-
+import { Layout, LoadingView } from '../components';
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
-
-import styles from '../styles/Report.module.css';
-
 interface ReportData {
   report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
     root: NexusGenFieldTypes['Package'];

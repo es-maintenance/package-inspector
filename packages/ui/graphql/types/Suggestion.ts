@@ -1,6 +1,6 @@
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
-import { getPackageID } from '../utils';
 
+import { getPackageID } from '../utils';
 import { Package } from './Package';
 
 export const SuggestionAction = objectType({
@@ -32,6 +32,13 @@ export const Suggestion = objectType({
     t.nonNull.string('name');
     t.nonNull.string('pluginTarget');
     t.nonNull.string('message');
+    t.nonNull.int('count', {
+      resolve(me, args, ctx) {
+        const actions = me.actions;
+
+        return actions.length;
+      },
+    });
     t.nonNull.list.field('actions', { type: SuggestionAction });
   },
 });

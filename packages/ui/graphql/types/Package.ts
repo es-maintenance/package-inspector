@@ -37,7 +37,7 @@ export const PackageCompound = objectType({
     t.nonNull.string('name');
     t.nonNull.string('latest', {
       resolve(me, _, ctx) {
-        const name = me.name;
+        const { name } = parseDependencyKey(me.name);
 
         return ctx.report.latestPackages[name];
       },

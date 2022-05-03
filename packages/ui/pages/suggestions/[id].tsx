@@ -14,7 +14,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { Layout, LoadingView } from '../../components';
-
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
 interface ReportData {
   report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
