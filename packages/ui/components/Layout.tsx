@@ -24,7 +24,7 @@ export const Layout = ({
 
       <Navbar title={title} />
 
-      <Container sx={{ py: 8 }} maxWidth="md">
+      <Container sx={{ py: 8 }} maxWidth="xl">
         {children}
       </Container>
 
