@@ -1,6 +1,6 @@
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
-import { getPackageID } from '../utils';
 
+import { getPackageID } from '../utils';
 import { Package } from './Package';
 
 export const SuggestionAction = objectType({

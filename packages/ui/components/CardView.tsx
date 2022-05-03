@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import { Card, Grid, Text } from '@nextui-org/react';
 import Link from 'next/link';
+import * as React from 'react';
 
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 

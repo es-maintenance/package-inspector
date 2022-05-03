@@ -1,14 +1,15 @@
-import * as React from 'react';
+import createEmotionServer from '@emotion/server/create-instance';
 import Document, {
-  Html,
+  DocumentContext,
   Head,
+  Html,
   Main,
   NextScript,
-  DocumentContext,
 } from 'next/document';
-import createEmotionServer from '@emotion/server/create-instance';
-import theme from '../styles/theme';
+import * as React from 'react';
+
 import createEmotionCache from '../styles/createEmotionCache';
+import theme from '../styles/theme';
 interface MyDocumentProps {
   emotionStyleTags: JSX.Element[];
 }

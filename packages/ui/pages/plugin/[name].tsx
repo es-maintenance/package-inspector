@@ -1,12 +1,10 @@
+import { gql, useQuery } from '@apollo/client';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
-
-import { PluginProvider } from '../../lib/PluginProvider';
 
 import { Layout, LoadingView } from '../../components';
-
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
+import { PluginProvider } from '../../lib/PluginProvider';
 
 interface ReportData {
   report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {

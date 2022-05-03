@@ -1,13 +1,11 @@
-import * as React from 'react';
+import { Container } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
-
-// FIXME: this should be the layout styles
-import styles from '../styles/Home.module.css';
-
-import { Container } from '@mui/material';
+import * as React from 'react';
 
 import Navbar from '../components/Navbar';
+// FIXME: this should be the layout styles
+import styles from '../styles/Home.module.css';
 
 // FIXME: needs to extend from base props correctly
 export const Layout = ({

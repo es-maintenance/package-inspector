@@ -1,7 +1,7 @@
 import { extendType, objectType } from 'nexus';
+
 import { humanFileSize } from '../../lib/utils';
 import { getPackageID } from '../utils';
-
 import { MiniPackage, Package } from './Package';
 import { Suggestion } from './Suggestion';
 

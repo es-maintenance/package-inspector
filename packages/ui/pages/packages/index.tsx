@@ -1,19 +1,16 @@
-import type { NextPage } from 'next';
-
+import { gql, useQuery } from '@apollo/client';
 import {
+  Link,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  Link,
 } from '@mui/material';
-
 import { Link as LinkUI } from '@nextui-org/react';
-
-import { gql, useQuery } from '@apollo/client';
+import type { NextPage } from 'next';
 
 import { Layout, LoadingView } from '../../components';
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';

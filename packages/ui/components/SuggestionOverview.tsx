@@ -1,11 +1,9 @@
-import React from 'react';
-import Link from 'next/link';
 import { Grid, Link as LinkUI } from '@nextui-org/react';
-
-import { Report } from '../pages/index';
+import Link from 'next/link';
+import React from 'react';
 
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
-
+import { Report } from '../pages/index';
 import styles from '../styles/SuggestionOverview.module.css';
 
 interface SuggestionCount {

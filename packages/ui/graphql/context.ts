@@ -1,4 +1,5 @@
 import { Report } from '@package-inspector/core';
+
 import { JsonProvider } from '../data';
 
 export interface Context {

@@ -1,17 +1,15 @@
-import type { NextPage } from 'next';
-import { Card, Grid, Loading, Text } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client';
-
-import { PluginProvider } from '../lib/PluginProvider';
-
-import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
+import { Card, Grid, Loading, Text } from '@nextui-org/react';
+import type { NextPage } from 'next';
 
 import {
-  LoadingView,
-  Layout,
-  SuggestionOverview,
   CardView,
+  Layout,
+  LoadingView,
+  SuggestionOverview,
 } from '../components';
+import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
+import { PluginProvider } from '../lib/PluginProvider';
 
 export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
   root: NexusGenFieldTypes['Package'];

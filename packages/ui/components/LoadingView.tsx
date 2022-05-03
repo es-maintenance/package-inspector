@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { Loading } from '@nextui-org/react';
+import * as React from 'react';
 
 import styles from '../styles/LoadingView.module.css';
 

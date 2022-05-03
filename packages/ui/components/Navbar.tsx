@@ -1,21 +1,18 @@
-import * as React from 'react';
-
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Menu,
-  Container,
   Button,
-  Tooltip,
+  Container,
+  IconButton,
+  Menu,
   MenuItem,
+  Toolbar,
+  Tooltip,
+  Typography,
 } from '@mui/material';
-
-import MenuIcon from '@mui/icons-material/Menu';
-
 import NextLink from 'next/link';
+import * as React from 'react';
 
 import { PluginProvider } from '../lib/PluginProvider';
 
