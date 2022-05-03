@@ -1,9 +1,8 @@
+import { gql, useQuery } from '@apollo/client';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
 
 import { Layout, LoadingView } from '../../../components';
-
 import { NexusGenFieldTypes } from '../../../graphql/generated/nexus-typegen';
 
 interface PackageData {

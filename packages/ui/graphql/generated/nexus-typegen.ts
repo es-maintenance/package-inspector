@@ -70,6 +70,11 @@ export interface NexusGenObjects {
     message: string; // String!
     targetPackageId: string; // String!
   };
+  TopSuggestions: {
+    // root type
+    count: number; // Int!
+    package: NexusGenRootTypes['Package']; // Package!
+  };
 }
 
 export interface NexusGenInterfaces {}
@@ -126,6 +131,7 @@ export interface NexusGenFieldTypes {
     root: NexusGenRootTypes['Package']; // Package!
     suggestions: Array<NexusGenRootTypes['Suggestion'] | null>; // [Suggestion]!
     summary: string; // String!
+    topSuggestions: Array<NexusGenRootTypes['TopSuggestions'] | null>; // [TopSuggestions]!
   };
   SizeInfo: {
     // field return type
@@ -135,6 +141,7 @@ export interface NexusGenFieldTypes {
   Suggestion: {
     // field return type
     actions: Array<NexusGenRootTypes['SuggestionAction'] | null>; // [SuggestionAction]!
+    count: number; // Int!
     id: string; // ID!
     message: string; // String!
     name: string; // String!
@@ -145,6 +152,11 @@ export interface NexusGenFieldTypes {
     message: string; // String!
     targetPackage: NexusGenRootTypes['Package'] | null; // Package
     targetPackageId: string; // String!
+  };
+  TopSuggestions: {
+    // field return type
+    count: number; // Int!
+    package: NexusGenRootTypes['Package']; // Package!
   };
 }
 
@@ -194,6 +206,7 @@ export interface NexusGenFieldTypeNames {
     root: 'Package';
     suggestions: 'Suggestion';
     summary: 'String';
+    topSuggestions: 'TopSuggestions';
   };
   SizeInfo: {
     // field return type name
@@ -203,6 +216,7 @@ export interface NexusGenFieldTypeNames {
   Suggestion: {
     // field return type name
     actions: 'SuggestionAction';
+    count: 'Int';
     id: 'ID';
     message: 'String';
     name: 'String';
@@ -213,6 +227,11 @@ export interface NexusGenFieldTypeNames {
     message: 'String';
     targetPackage: 'Package';
     targetPackageId: 'String';
+  };
+  TopSuggestions: {
+    // field return type name
+    count: 'Int';
+    package: 'Package';
   };
 }
 

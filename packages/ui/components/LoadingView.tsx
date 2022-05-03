@@ -1,8 +1,7 @@
+import { Loading } from '@nextui-org/react';
 import * as React from 'react';
 
-import { Loading } from '@nextui-org/react';
-
-import styles from '../styles/LoadingView.module.css';
+import styles from './LoadingView.module.css';
 
 export const LoadingView: React.FC = () => {
   return (

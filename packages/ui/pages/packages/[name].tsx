@@ -1,10 +1,9 @@
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { gql, useQuery } from '@apollo/client';
+import { NextPage } from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { Layout, LoadingView } from '../../components';
-
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
 
 interface PackageData {
@@ -75,8 +74,6 @@ const Package: NextPage = () => {
   if (loadingReport) return <LoadingView />;
   if (reportError) return <p>Oh no... {reportError.message}</p>;
   if (!reportData) return <p>Oh no... could not load Report</p>;
-
-  console.log(data);
 
   return (
     <Layout title={reportData.report.root.name}>

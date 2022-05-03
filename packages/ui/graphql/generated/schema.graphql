@@ -45,6 +45,7 @@ type Report {
   root: Package!
   suggestions: [Suggestion]!
   summary: String!
+  topSuggestions: [TopSuggestions]!
 }
 
 type SizeInfo {
@@ -54,6 +55,7 @@ type SizeInfo {
 
 type Suggestion {
   actions: [SuggestionAction]!
+  count: Int!
   id: ID!
   message: String!
   name: String!
@@ -64,4 +66,9 @@ type SuggestionAction {
   message: String!
   targetPackage: Package
   targetPackageId: String!
+}
+
+type TopSuggestions {
+  count: Int!
+  package: Package!
 }
