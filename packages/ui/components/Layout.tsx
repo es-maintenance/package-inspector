@@ -6,12 +6,10 @@ import * as React from 'react';
 import Navbar from '../components/Navbar';
 import styles from './Layout.module.css';
 
-// FIXME: needs to extend from base props correctly
-interface LayoutProps {
+type LayoutProps = React.PropsWithChildren<{
   title: string;
   hero?: React.FC;
-  children: JSX.Element | JSX.Element[];
-}
+}>;
 
 export const Layout: React.FC<LayoutProps> = ({ title, hero, children }) => {
   return (
