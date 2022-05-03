@@ -1,8 +1,14 @@
 import { gql, useQuery } from '@apollo/client';
-import { Container, Divider, Grid, Paper, Typography } from '@mui/material';
-import { Link as LinkUI } from '@nextui-org/react';
+import {
+  Container,
+  Divider,
+  Grid,
+  Link,
+  Paper,
+  Typography,
+} from '@mui/material';
 import type { NextPage } from 'next';
-import Link from 'next/link';
+import NextLink from 'next/link';
 
 import { CardView, Layout, LoadingView } from '../components';
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
@@ -72,14 +78,14 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
             {topSuggestions.map((dep, i) => {
               return (
                 <li key={i}>
-                  <Link
+                  <NextLink
                     href={`packages/${encodeURIComponent(dep.package.name)}/${
                       dep.package.version
                     }`}
                     passHref={true}
                   >
-                    <LinkUI>{dep.package.id}</LinkUI>
-                  </Link>{' '}
+                    <Link>{dep.package.id}</Link>
+                  </NextLink>{' '}
                   with {dep.count.toLocaleString()} suggestions
                 </li>
               );
