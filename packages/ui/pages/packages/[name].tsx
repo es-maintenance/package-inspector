@@ -75,8 +75,6 @@ const Package: NextPage = () => {
   if (reportError) return <p>Oh no... {reportError.message}</p>;
   if (!reportData) return <p>Oh no... could not load Report</p>;
 
-  console.log(data);
-
   return (
     <Layout title={reportData.report.root.name}>
       <h1>Package: {name}</h1>
