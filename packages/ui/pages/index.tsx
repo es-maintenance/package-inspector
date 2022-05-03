@@ -10,7 +10,7 @@ import { PluginProvider } from '../lib/PluginProvider';
 
 export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
   root: NexusGenFieldTypes['Package'];
-  top: NexusGenFieldTypes['Top'][];
+  topSuggestions: NexusGenFieldTypes['TopSuggestions'][];
   suggestions: NexusGenFieldTypes['Suggestion'][];
 };
 
@@ -104,21 +104,23 @@ const Home: NextPage = () => {
   return (
     <Layout
       title={data.report.root.name}
-      hero={
-        <Paper variant="outlined" square={true}>
-          <Container maxWidth="lg">
-            <br />
-            <Typography variant="h2" align="center">
-              {data.report.root.name}
-            </Typography>
-            <br />
-            <SuggestionOverview
-              summary={data.report.summary}
-              topSuggestions={data.report.topSuggestions}
-            />
-          </Container>
-        </Paper>
-      }
+      hero={() => {
+        return (
+          <Paper variant="outlined" square={true}>
+            <Container maxWidth="lg">
+              <br />
+              <Typography variant="h2" align="center">
+                {data.report.root.name}
+              </Typography>
+              <br />
+              <SuggestionOverview
+                summary={data.report.summary}
+                topSuggestions={data.report.topSuggestions}
+              />
+            </Container>
+          </Paper>
+        );
+      }}
     >
       <Container maxWidth="md">
         <Grid
