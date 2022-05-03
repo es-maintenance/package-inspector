@@ -42,7 +42,7 @@ export const SuggestionOverview: React.FC<SuggestionOverviewProps> = (
                     }`}
                     passHref={true}
                   >
-                    <LinkUI>{dep.package.name}</LinkUI>
+                    <LinkUI>{dep.package.id}</LinkUI>
                   </Link>{' '}
                   with {dep.count.toLocaleString()} suggestions
                 </li>

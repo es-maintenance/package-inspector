@@ -36,6 +36,7 @@ const ReportQuery = gql`
         count
         package {
           id
+          version
           name
         }
       }
