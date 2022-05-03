@@ -1,7 +1,6 @@
 import type { BrowserPlugin, Suggestion } from '@package-inspector/core';
-import { Card, Grid, Text } from '@nextui-org/react';
-
 import React from 'react';
+
 // FIXME: should expose this nicer
 import { CardView } from '@package-inspector/ui/components/CardView';
 export class TestPlugin implements BrowserPlugin {
@@ -25,7 +24,7 @@ export class TestPlugin implements BrowserPlugin {
     };
   }
 
-  // // Renders as a full page experience
+  // Renders as a full page experience
   get pluginPageView(): React.FC {
     return () => {
       return (
