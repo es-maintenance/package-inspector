@@ -12,7 +12,9 @@
     "packages/*"
   ],
   "scripts": {
+    "build": "yarn workspaces run build",
     "dev:ui": "yarn workspace @package-inspector/ui dev",
+    "test:ci": "yarn workspaces run test:ci",
     "prepare": "husky install"
   },
   "devDependencies": {

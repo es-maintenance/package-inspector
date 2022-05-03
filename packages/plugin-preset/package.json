@@ -24,6 +24,8 @@
   },
   "scripts": {
     "build": "tsc -p .",
+    "test": "echo 'NO TESTS DEFINED YET'",
+    "test:ci": "echo 'NO TESTS DEFINED YET'",
     "watch": "tsc -p . --watch"
   },
   "dependencies": {

@@ -1,3 +1,6 @@
+# Temporary Dirs
+__tmp__
+
 # Logs
 logs
 *.log
