@@ -1,5 +1,6 @@
 import type { IDependencyMap, IPackageJson } from 'package-json-type';
 import type { Suggestion } from './models/Report';
+import { SuggestionTask } from './suggestion/SuggestionTask';
 
 export interface IArboristEdge {
   type: string;
@@ -60,7 +61,7 @@ export interface Plugin {
 }
 
 export interface ServerPlugin extends Plugin {
-  getSuggestions?(suggestionInput: SuggestionInput): Promise<Suggestion[]>;
+  getTasks?(): SuggestionTask[];
 }
 
 export interface BrowserPlugin extends Plugin {

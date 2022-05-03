@@ -5,15 +5,9 @@ import fs from 'fs';
 import debug from 'debug';
 import ora from 'ora';
 import yargs from 'yargs';
+import { performance } from 'perf_hooks';
 
-import { generateReport } from '@package-inspector/core';
-
-function getHrTimeInSeconds(hrtime: [number, number]) {
-  const end = process.hrtime(hrtime);
-  const seconds = (end[0] * 1e9 + end[1]) / 1e9;
-
-  return `${seconds}s`;
-}
+import { generateReport, formatDuration } from '@package-inspector/core';
 
 const argv = yargs
   .usage('See how your dependencies are affecting your project.')
@@ -40,10 +34,10 @@ const argv = yargs
   .strict()
   .parseSync();
 
-const start = process.hrtime();
+const start = performance.now();
 const progress = ora('Identifying your node_modules').start();
 const changeStatus = (text: string) =>
-  (progress.text = `(${getHrTimeInSeconds(start)}) - ${text}`);
+  (progress.text = `(${formatDuration(performance.now() - start)}) - ${text}`);
 
 const cwd = path.resolve(process.cwd(), argv.path);
 const reportPath = argv.output.indexOf('.json')
