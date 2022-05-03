@@ -40,6 +40,8 @@ const ReportQuery = gql`
           message
           targetPackage {
             id
+            name
+            version
           }
         }
       }

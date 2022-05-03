@@ -8,6 +8,7 @@ import styles from './SuggestionOverview.module.css';
 
 interface SuggestionCount {
   packageName: string;
+  packageVersion: string;
   count: number;
 }
 
@@ -23,13 +24,14 @@ function getCostlyPackages(
   suggestions.forEach((suggestion) => {
     suggestion.actions.forEach((action) => {
       // FIXME: again not sure why this is not getting the right type information
-      const id = (action as any).targetPackage.id;
+      const { id, version, name } = (action as any).targetPackage;
 
       if (id) {
         if (!countMap[id]) {
           console.log(`Missed: ${id}`);
           const suggestionCount = {
-            packageName: id,
+            packageName: name,
+            packageVersion: version,
             count: 1,
           };
           countMap[id] = suggestionCount;
@@ -79,7 +81,9 @@ export const SuggestionOverview: React.FC<SuggestionOverviewProps> = (
               return (
                 <li key={i}>
                   <Link
-                    href={`packages/${encodeURIComponent(dep.packageName)}`}
+                    href={`packages/${encodeURIComponent(dep.packageName)}/${
+                      dep.packageVersion
+                    }`}
                     passHref={true}
                   >
                     <LinkUI>{dep.packageName}</LinkUI>
