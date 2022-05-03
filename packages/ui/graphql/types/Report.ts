@@ -5,8 +5,8 @@ import { getPackageID } from '../utils';
 import { MiniPackage, Package } from './Package';
 import { Suggestion } from './Suggestion';
 
-export const Top = objectType({
-  name: 'Top',
+export const TopSuggestions = objectType({
+  name: 'TopSuggestions',
   definition(t) {
     t.nonNull.field('package', { type: Package });
     t.nonNull.int('count');
@@ -76,8 +76,8 @@ export const Report = objectType({
       },
     });
 
-    t.nonNull.list.field('top', {
-      type: Top,
+    t.nonNull.list.field('topSuggestions', {
+      type: TopSuggestions,
       resolve(parent, _, ctx) {
         // FIXME: this should be passed in from the query with a decorator
         const limit = 5;

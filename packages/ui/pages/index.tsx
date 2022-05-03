@@ -29,7 +29,7 @@ const ReportQuery = gql`
           id
         }
       }
-      top {
+      topSuggestions {
         count
         package {
           id
@@ -49,12 +49,12 @@ const ReportQuery = gql`
 `;
 
 interface SuggestionOverviewProps {
-  top: NexusGenFieldTypes['Top'][];
+  topSuggestions: NexusGenFieldTypes['TopSuggestions'][];
   summary: string;
 }
 
 const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
-  const { top, summary } = props;
+  const { topSuggestions, summary } = props;
 
   return (
     <Container maxWidth="md" sx={{ my: 2 }}>
@@ -65,10 +65,11 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
         <Divider orientation="vertical" flexItem sx={{ m: 2 }} />
         <Grid item xs>
           <Typography>
-            The top {top.length.toLocaleString()} with the most suggestions are:
+            The top {topSuggestions.length.toLocaleString()} with the most
+            suggestions are:
           </Typography>
           <ul>
-            {top.map((dep, i) => {
+            {topSuggestions.map((dep, i) => {
               return (
                 <li key={i}>
                   <Link
@@ -113,7 +114,7 @@ const Home: NextPage = () => {
             <br />
             <SuggestionOverview
               summary={data.report.summary}
-              top={data.report.top}
+              topSuggestions={data.report.topSuggestions}
             />
           </Container>
         </Paper>
