@@ -9,9 +9,11 @@ import styles from './Layout.module.css';
 // FIXME: needs to extend from base props correctly
 export const Layout = ({
   title,
+  belowNavbarArea, // FIXME: this needs to have a better name
   children,
 }: {
   title: string;
+  belowNavbarArea?: any;
   children: any;
 }) => {
   return (
@@ -24,7 +26,9 @@ export const Layout = ({
 
       <Navbar title={title} />
 
-      <Container sx={{ py: 8 }} maxWidth="xl">
+      {belowNavbarArea ? belowNavbarArea : null}
+
+      <Container sx={{ py: 8, backgroundColor: 'grey.100' }} maxWidth={false}>
         {children}
       </Container>
 
