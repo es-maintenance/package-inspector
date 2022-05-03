@@ -109,7 +109,6 @@ const Packages: NextPage = () => {
                   <TableCell component="th" scope="row">
                     <Link
                       href={`packages/${encodeURIComponent(dependency.name)}`}
-                      passHref={true}
                     >
                       <LinkUI>{dependency.name}</LinkUI>
                     </Link>
