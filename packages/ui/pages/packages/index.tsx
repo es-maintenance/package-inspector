@@ -9,8 +9,8 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { Link as LinkUI } from '@nextui-org/react';
 import type { NextPage } from 'next';
+import NextLink from 'next/link';
 
 import { Layout, LoadingView } from '../../components';
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
@@ -107,11 +107,12 @@ const Packages: NextPage = () => {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    <Link
+                    <NextLink
                       href={`packages/${encodeURIComponent(dependency.name)}`}
+                      passHref={true}
                     >
-                      <LinkUI>{dependency.name}</LinkUI>
-                    </Link>
+                      <Link>{dependency.name}</Link>
+                    </NextLink>
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {dependency.version}
