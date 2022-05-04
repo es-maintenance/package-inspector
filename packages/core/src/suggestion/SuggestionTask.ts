@@ -3,23 +3,14 @@ import { performance } from 'perf_hooks';
 import { Suggestion } from '../models';
 import { SuggestionInput } from '../types';
 
-interface SuggestionTaskInterface {
-  name: string;
-  elapsedTime: number;
-}
-
-export class SuggestionTask implements SuggestionTaskInterface {
+export abstract class SuggestionTask {
   name: string = '';
   elapsedTime: number = 0;
 
-  task(suggestionInput: SuggestionInput): Promise<Suggestion | undefined> {
-    throw new Error('Please implement task on your subclass of SuggestionTask');
-
-    return Promise.resolve(undefined);
-  }
+  abstract task(suggestionInput: SuggestionInput): Promise<Suggestion>;
 
   // Handles running the task and getting the elapsed time of the task
-  async run(suggestionInput: SuggestionInput): Promise<Suggestion | undefined> {
+  async run(suggestionInput: SuggestionInput): Promise<Suggestion> {
     if (typeof this?.task !== 'function') {
       throw new Error(
         'Please implement task on your subclass of SuggestionTask'
