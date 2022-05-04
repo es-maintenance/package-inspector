@@ -136,7 +136,11 @@ export async function generateReport(
       const suggestionTasks = plugin?.getTasks();
 
       for (const suggestionTask of suggestionTasks) {
-        report.suggestions.push(await suggestionTask.run(suggestionInput));
+        const suggestionOutput = await suggestionTask.run(suggestionInput);
+
+        if (suggestionOutput) {
+          report.suggestions.push(suggestionOutput);
+        }
       }
 
       console.log();
