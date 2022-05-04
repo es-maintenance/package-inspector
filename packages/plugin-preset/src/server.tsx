@@ -2,14 +2,15 @@ import type {
   Suggestion,
   ServerPlugin,
   SuggestionInput,
+  SuggestionTask,
 } from '@package-inspector/core';
 
 import {
-  nestedDependencyFreshness,
-  notBeingAbsorbedByTopLevel,
-  packagesWithExtraArtifacts,
-  topLevelDepsFreshness,
-  packagesWithPinnedVersions,
+  NestedDependencyFreshness,
+  NotBeingAbsorbedByTopLevel,
+  PackagesWithExtraArtifacts,
+  TopLevelDepsFreshness,
+  PackagesWithPinnedVersions,
 } from './suggestors';
 export class TestPlugin implements ServerPlugin {
   name: string;
@@ -25,16 +26,14 @@ export class TestPlugin implements ServerPlugin {
     this.pluginData = {};
   }
 
-  async getSuggestions(
-    suggestionInput: SuggestionInput
-  ): Promise<Suggestion[]> {
-    this.suggestions.push(await packagesWithPinnedVersions(suggestionInput));
-    this.suggestions.push(await nestedDependencyFreshness(suggestionInput));
-    this.suggestions.push(await notBeingAbsorbedByTopLevel(suggestionInput));
-    this.suggestions.push(await packagesWithExtraArtifacts(suggestionInput));
-    this.suggestions.push(await topLevelDepsFreshness(suggestionInput));
-
-    return this.suggestions;
+  getTasks(): SuggestionTask[] {
+    return [
+      new PackagesWithPinnedVersions(),
+      new NestedDependencyFreshness(),
+      new NotBeingAbsorbedByTopLevel(),
+      new PackagesWithExtraArtifacts(),
+      new TopLevelDepsFreshness(),
+    ];
   }
 }
 

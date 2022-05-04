@@ -7,4 +7,6 @@ export {
   getDirectorySize,
   getLatestPackages,
   parseDependencyKey,
+  formatDuration,
 } from './package';
+export { SuggestionTask } from './suggestion/SuggestionTask';

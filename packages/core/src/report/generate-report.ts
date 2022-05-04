@@ -6,6 +6,7 @@ import {
   getDirectorySize,
   getLatestPackages,
   stripPathOnDisk,
+  formatDuration,
 } from '../package';
 
 import { Report } from '../models';
@@ -131,10 +132,27 @@ export async function generateReport(
   const suggestionInput = { arboristValues, rootArboristNode };
 
   for (const plugin of processedPlugins) {
-    if (plugin.getSuggestions) {
-      const suggestions = await plugin?.getSuggestions(suggestionInput);
+    if (plugin.getTasks) {
+      const suggestionTasks = plugin.getTasks();
 
-      report.suggestions.push(...suggestions);
+      for (const suggestionTask of suggestionTasks) {
+        const suggestionOutput = await suggestionTask.run(suggestionInput);
+
+        if (suggestionOutput) {
+          report.suggestions.push(suggestionOutput);
+        }
+      }
+
+      console.log();
+      console.log(`Timing for tasks for: ${plugin.name}`);
+      for (const suggestionTask of suggestionTasks) {
+        console.log(
+          `${suggestionTask.name} (${formatDuration(
+            suggestionTask.elapsedTime
+          )})`
+        );
+      }
+      console.log();
     }
   }
 
