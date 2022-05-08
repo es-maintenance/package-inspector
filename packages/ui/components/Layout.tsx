@@ -1,6 +1,6 @@
-import { Container } from '@mui/material';
+import { Container, Link } from '@mui/material';
 import Head from 'next/head';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import * as React from 'react';
 
 import Navbar from '../components/Navbar';
@@ -10,7 +10,11 @@ type LayoutProps = React.PropsWithChildren<{
   hero?: React.FC;
 }>;
 
-const MAIN_CONTAINER_SX_OPTIONS = { py: 8, backgroundColor: 'grey.100' };
+const MAIN_CONTAINER_SX_OPTIONS = {
+  py: 8,
+  backgroundColor: 'grey.100',
+  flexGrow: 1,
+};
 
 export const Layout: React.FC<LayoutProps> = ({ hero, children }) => {
   const Hero = hero || null;
@@ -34,9 +38,12 @@ export const Layout: React.FC<LayoutProps> = ({ hero, children }) => {
       <footer className={styles.footer}>
         Powered by &nbsp;
         <span>
-          <Link href="https://github.com/es-maintenance/package-inspector">
-            es-maintenance@package-inspector
-          </Link>
+          <NextLink
+            href="https://github.com/es-maintenance/package-inspector"
+            passHref={true}
+          >
+            <Link>es-maintenance@package-inspector</Link>
+          </NextLink>
         </span>
       </footer>
     </>
