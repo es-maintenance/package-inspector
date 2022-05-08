@@ -12,7 +12,7 @@ import {
 import type { NextPage } from 'next';
 import NextLink from 'next/link';
 
-import { Layout, LoadingView } from '../../components';
+import { LoadingView } from '../../components';
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
 
 type ColumnKey = 'name' | 'version' | 'dep-count' | 'dev-dep-count';
@@ -45,6 +45,7 @@ interface PackageData {
 const PackagesQuery = gql`
   query Packages {
     packages {
+      id
       name
       version
       dependencies {
@@ -87,47 +88,44 @@ const Packages: NextPage = () => {
   ];
 
   return (
-    <Layout title={reportData.report.root.name}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell key={column.key}>{column.label}</TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.packages.map((dependency) => {
-              if (!dependency) return;
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }}>
+        <TableHead>
+          <TableRow>
+            {columns.map((column) => (
+              <TableCell key={column.key}>{column.label}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.packages.map((dependency) => {
+            if (!dependency) return;
 
-              return (
-                <TableRow
-                  key={dependency.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <NextLink
-                      href={`packages/${encodeURIComponent(dependency.name)}`}
-                      passHref={true}
-                    >
-                      <Link>{dependency.name}</Link>
-                    </NextLink>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {dependency.version}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {/* FIXME: need to figure out why the types are not passing through */}
-                    {(dependency as any).dependencies?.length}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Layout>
+            return (
+              <TableRow
+                key={dependency.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  <NextLink
+                    href={`packages/${encodeURIComponent(dependency.name)}`}
+                    passHref={true}
+                  >
+                    <Link>{dependency.name}</Link>
+                  </NextLink>
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {dependency.version}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {dependency.dependencies.length}
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

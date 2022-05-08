@@ -1,3 +1,4 @@
+import { gql, useQuery } from '@apollo/client';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
@@ -16,8 +17,24 @@ import * as React from 'react';
 
 import { PluginProvider } from '../lib/PluginProvider';
 
-const ResponsiveAppBar = ({ title }: { title: string }) => {
+const TitleQuery = gql`
+  query TitleQuery {
+    title
+  }
+`;
+
+interface TitleData {
+  title: string;
+}
+
+interface NavBarProps {
+  title?: string;
+}
+
+const NavBar: React.FC<NavBarProps> = (props) => {
   const pluginProvider = new PluginProvider();
+
+  const { data } = useQuery<TitleData>(TitleQuery);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -52,7 +69,7 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
               sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
             >
               <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-                {title}
+                {props.title || data?.title || '...'}
               </Button>
             </Typography>
           </NextLink>
@@ -106,7 +123,7 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
               sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
             >
               <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-                {title}
+                {props.title || data?.title || '...'}
               </Button>
             </Typography>
           </NextLink>
@@ -161,4 +178,4 @@ const ResponsiveAppBar = ({ title }: { title: string }) => {
     </AppBar>
   );
 };
-export default ResponsiveAppBar;
+export default NavBar;

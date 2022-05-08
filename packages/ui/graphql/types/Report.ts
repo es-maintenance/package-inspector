@@ -139,3 +139,14 @@ export const ReportQuery = extendType({
     });
   },
 });
+
+export const TitleQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.nonNull.string('title', {
+      resolve(_, __, ctx) {
+        return ctx.report.root.name;
+      },
+    });
+  },
+});

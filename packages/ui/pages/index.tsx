@@ -7,12 +7,12 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import type { NextPage } from 'next';
 import NextLink from 'next/link';
 
 import { CardView, Layout, LoadingView } from '../components';
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 import { PluginProvider } from '../lib/PluginProvider';
+import { NextPageWithLayout } from '../next-types';
 
 export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
   root: NexusGenFieldTypes['Package'];
@@ -97,7 +97,7 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
   );
 };
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   // TODO: talk to Lewis about making this a hook?
   const pluginProvider = new PluginProvider();
 
@@ -109,7 +109,6 @@ const Home: NextPage = () => {
 
   return (
     <Layout
-      title={data.report.root.name}
       hero={() => {
         return (
           <Paper variant="outlined" square={true}>
@@ -136,20 +135,26 @@ const Home: NextPage = () => {
           justifyContent="center"
         >
           {data &&
-            data.report.suggestions.map((suggestion) => {
+            data.report.suggestions.map((suggestion, idx) => {
               const CustomCardView = pluginProvider.cardView(
                 suggestion.pluginTarget
               );
               if (CustomCardView) {
-                return <CustomCardView suggestion={suggestion} />;
+                return (
+                  <CustomCardView suggestion={suggestion} key={suggestion.id} />
+                );
               } else {
-                return <CardView suggestion={suggestion} />;
+                return <CardView suggestion={suggestion} key={suggestion.id} />;
               }
             })}
         </Grid>
       </Container>
     </Layout>
   );
+};
+
+Home.getLayout = function getLayout(page: React.ReactElement) {
+  return <>{page}</>;
 };
 
 export default Home;
