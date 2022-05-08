@@ -97,7 +97,11 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
   );
 };
 
-const Home: NextPage = () => {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+const Home: NextPageWithLayout = () => {
   // TODO: talk to Lewis about making this a hook?
   const pluginProvider = new PluginProvider();
 
@@ -109,7 +113,6 @@ const Home: NextPage = () => {
 
   return (
     <Layout
-      title={data.report.root.name}
       hero={() => {
         return (
           <Paper variant="outlined" square={true}>
@@ -136,20 +139,26 @@ const Home: NextPage = () => {
           justifyContent="center"
         >
           {data &&
-            data.report.suggestions.map((suggestion) => {
+            data.report.suggestions.map((suggestion, idx) => {
               const CustomCardView = pluginProvider.cardView(
                 suggestion.pluginTarget
               );
               if (CustomCardView) {
-                return <CustomCardView suggestion={suggestion} />;
+                return (
+                  <CustomCardView suggestion={suggestion} key={suggestion.id} />
+                );
               } else {
-                return <CardView suggestion={suggestion} />;
+                return <CardView suggestion={suggestion} key={suggestion.id} />;
               }
             })}
         </Grid>
       </Container>
     </Layout>
   );
+};
+
+Home.getLayout = function getLayout(page: React.ReactElement) {
+  return <>{page}</>;
 };
 
 export default Home;

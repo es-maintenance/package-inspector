@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { Layout } from './';
 import styles from './ErrorView.module.css';
 
 interface ErrorViewProps {
@@ -9,9 +8,5 @@ interface ErrorViewProps {
 }
 
 export const ErrorView: React.FC<ErrorViewProps> = ({ title, message }) => {
-  return (
-    <Layout title={title}>
-      <div className={styles.errorContainer}>{message}</div>
-    </Layout>
-  );
+  return <div className={styles.errorContainer}>{message}</div>;
 };

@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { Layout, LoadingView } from '../../../components';
+import { LoadingView } from '../../../components';
 import { NexusGenFieldTypes } from '../../../graphql/generated/nexus-typegen';
 
 interface PackageData {
@@ -92,10 +92,10 @@ const Package: NextPage = () => {
   if (!reportData) return <p>Oh no... could not load Report</p>;
 
   return (
-    <Layout title={reportData.report.root.name}>
+    <>
       <h1>Package: {name}</h1>
       <pre>{JSON.stringify((data as any).packageByVersion, null, 4)}</pre>
-    </Layout>
+    </>
   );
 };
 

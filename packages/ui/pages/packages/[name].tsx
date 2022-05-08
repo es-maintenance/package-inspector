@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { Layout, LoadingView } from '../../components';
+import { LoadingView } from '../../components';
 import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
 
 interface PackageData {
@@ -76,7 +76,7 @@ const Package: NextPage = () => {
   if (!reportData) return <p>Oh no... could not load Report</p>;
 
   return (
-    <Layout title={reportData.report.root.name}>
+    <>
       <h1>Package: {name}</h1>
       {/* Why aren't the types  */}
       <h3>Versions:</h3>
@@ -118,7 +118,7 @@ const Package: NextPage = () => {
           </div>
         );
       })}
-    </Layout>
+    </>
   );
 };
 

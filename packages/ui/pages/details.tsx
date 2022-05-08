@@ -14,7 +14,7 @@ import { ResponsiveTreeMap } from '@nivo/treemap';
 import type { NextPage } from 'next';
 import NextLink from 'next/link';
 
-import { Layout, LoadingView } from '../components';
+import { LoadingView } from '../components';
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 interface ReportData {
   report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
@@ -72,7 +72,7 @@ const Report: NextPage = () => {
   const nivoContainerStyles = { height: '300px' };
 
   return (
-    <Layout title={data.report.root.name}>
+    <>
       <h1> Details </h1>
 
       <h2>Dependency Map:</h2>
@@ -143,7 +143,7 @@ const Report: NextPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Layout>
+    </>
   );
 };
 

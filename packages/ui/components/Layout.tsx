@@ -7,11 +7,14 @@ import Navbar from '../components/Navbar';
 import styles from './Layout.module.css';
 
 type LayoutProps = React.PropsWithChildren<{
-  title: string;
   hero?: React.FC;
 }>;
 
-export const Layout: React.FC<LayoutProps> = ({ title, hero, children }) => {
+const MAIN_CONTAINER_SX_OPTIONS = { py: 8, backgroundColor: 'grey.100' };
+
+export const Layout: React.FC<LayoutProps> = ({ hero, children }) => {
+  const Hero = hero || null;
+
   return (
     <>
       <Head>
@@ -20,11 +23,11 @@ export const Layout: React.FC<LayoutProps> = ({ title, hero, children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar title={title} />
+      <Navbar />
 
-      {hero ? hero : null}
+      {Hero && <Hero />}
 
-      <Container sx={{ py: 8, backgroundColor: 'grey.100' }} maxWidth={false}>
+      <Container sx={MAIN_CONTAINER_SX_OPTIONS} maxWidth={false}>
         {children}
       </Container>
 

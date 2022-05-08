@@ -122,6 +122,7 @@ export interface NexusGenFieldTypes {
     packages: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
     report: NexusGenRootTypes['Report']; // Report!
     suggestion: NexusGenRootTypes['Suggestion'] | null; // Suggestion
+    title: string; // String!
   };
   Report: {
     // field return type
@@ -197,6 +198,7 @@ export interface NexusGenFieldTypeNames {
     packages: 'Package';
     report: 'Report';
     suggestion: 'Suggestion';
+    title: 'String';
   };
   Report: {
     // field return type name
