@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
+import { Link } from '@mui/material';
 import { NextPage } from 'next';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 import { LoadingView } from '../../components';
@@ -68,11 +69,11 @@ const Package: NextPage = () => {
   } = useQuery<ReportData>(ReportQuery);
 
   if (loading) return <LoadingView />;
-  if (error) return <p>Oh no... {error.message}</p>;
+  if (error) return <p>Oh no... package error: {error.message}</p>;
   if (!data) return <p>Oh no... could not load package list</p>;
 
   if (loadingReport) return <LoadingView />;
-  if (reportError) return <p>Oh no... {reportError.message}</p>;
+  if (reportError) return <p>Oh no... report error: {reportError.message}</p>;
   if (!reportData) return <p>Oh no... could not load Report</p>;
 
   return (
@@ -83,13 +84,13 @@ const Package: NextPage = () => {
       {(data.package as any).variants.map((variant: any) => {
         return (
           <div key={variant.id}>
-            <Link
+            <NextLink
               href={`/packages/${encodeURIComponent(variant.name)}/${
                 variant.version
               }`}
             >
               {variant.version}
-            </Link>
+            </NextLink>
 
             {variant.parent.length > 0 ? (
               <>
@@ -99,13 +100,14 @@ const Package: NextPage = () => {
                   {variant.parent.map((parent: any) => {
                     return (
                       <li key={parent.id}>
-                        <Link
+                        <NextLink
                           href={`/packages/${encodeURIComponent(parent.name)}/${
                             parent.version
                           }`}
+                          passHref={true}
                         >
-                          {`${parent.name}@${parent.version}`}
-                        </Link>
+                          <Link>{`${parent.name}@${parent.version}`}</Link>
+                        </NextLink>
                       </li>
                     );
                   })}
