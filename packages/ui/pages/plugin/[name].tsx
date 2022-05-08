@@ -47,12 +47,7 @@ const Package: NextPage = () => {
   const PluginPageView = pluginProvider.pluginPageView(name);
 
   if (!PluginPageView) {
-    return (
-      <ErrorView
-        title="Plugin Page Error"
-        message="Plugin does not have a page view"
-      />
-    );
+    return <ErrorView message="Plugin does not have a page view" />;
   }
 
   // FIXME: Talk to Lewis about how to get data into the plugin page view

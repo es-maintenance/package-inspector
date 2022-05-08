@@ -7,12 +7,12 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import type { NextPage } from 'next';
 import NextLink from 'next/link';
 
 import { CardView, Layout, LoadingView } from '../components';
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 import { PluginProvider } from '../lib/PluginProvider';
+import { NextPageWithLayout } from '../next-types';
 
 export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
   root: NexusGenFieldTypes['Package'];
@@ -95,10 +95,6 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
       </Grid>
     </Container>
   );
-};
-
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: React.ReactElement) => React.ReactNode;
 };
 
 const Home: NextPageWithLayout = () => {

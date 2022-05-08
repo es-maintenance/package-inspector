@@ -5,22 +5,18 @@ import { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import * as React from 'react';
 
 import { Layout } from '../components';
 import apolloClient from '../lib/apollo';
+import { NextPageWithLayout } from '../next-types';
 import createEmotionCache from '../styles/createEmotionCache';
 import theme from '../styles/theme';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
-
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: React.ReactElement) => React.ReactNode;
-};
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
