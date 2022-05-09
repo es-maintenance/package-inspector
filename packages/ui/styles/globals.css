@@ -1,5 +1,6 @@
 html,
 body {
+  height: 100%;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -13,4 +14,11 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+/* Allow for our pages to be at least the full page height and have flexible sizes. */
+#__next {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
