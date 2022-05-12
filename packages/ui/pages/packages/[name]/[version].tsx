@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { LoadingView } from '../../../components';
-import { usePackagesByNameAndVersionPackageQuery } from '../../../graphql/generated';
+import { usePackagesByNameAndVersionPackageQuery } from '../../../graphql/generated/client';
 
 gql`
   query PackagesByNameAndVersionPackage(

@@ -15,7 +15,7 @@ import type { NextPage } from 'next';
 import NextLink from 'next/link';
 
 import { LoadingView } from '../components';
-import { useDetailsReportQuery } from '../graphql/generated';
+import { useDetailsReportQuery } from '../graphql/generated/client';
 
 gql`
   query DetailsReport {

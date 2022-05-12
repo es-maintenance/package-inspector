@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { LoadingView } from '../../components';
-import { useSuggestionsByIdSuggestionQuery } from '../../graphql/generated';
+import { useSuggestionsByIdSuggestionQuery } from '../../graphql/generated/client';
 
 gql`
   query SuggestionsByIdSuggestion($suggestionId: String!) {
@@ -43,9 +43,9 @@ const Suggestion: NextPage = () => {
     id = id.join();
   }
 
-  const { data, loading, error } = useSuggestionsByIdSuggestionQuery(
-    { variables: { suggestionId: id } }
-  );
+  const { data, loading, error } = useSuggestionsByIdSuggestionQuery({
+    variables: { suggestionId: id },
+  });
 
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;

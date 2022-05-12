@@ -16,7 +16,7 @@ import { LoadingView } from '../../components';
 import {
   usePackagesPackagesQuery,
   usePackagesReportQuery,
-} from '../../graphql/generated';
+} from '../../graphql/generated/client';
 
 type ColumnKey = 'name' | 'version' | 'dep-count' | 'dev-dep-count';
 

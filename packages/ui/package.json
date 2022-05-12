@@ -6,10 +6,11 @@
     "node": ">= 16"
   },
   "scripts": {
-    "dev": "yarn build:nexus && next dev",
-    "build": "yarn build:nexus && next build",
-    "build:nexus": "yarn generate-graphql-types && ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only graphql/schema.ts && prettier --write graphql/generated/*",
-    "generate-graphql-types": "graphql-codegen",
+    "dev": "yarn build:nexus && yarn build:graphql && next dev",
+    "build": "yarn build:nexus && yarn build:graphql && next build",
+    "build:nexus": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only graphql/schema.ts",
+    "build:graphql": "yarn build:nexus && yarn build:graphql-codegen",
+    "build:graphql-codegen": "graphql-codegen",
     "start": "next start",
     "lint": "yarn build:nexus && next lint",
     "test:ci": "echo 'TESTING NOT AVAILABLE YET'"

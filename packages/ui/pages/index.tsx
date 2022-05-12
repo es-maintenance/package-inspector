@@ -13,11 +13,19 @@ import { CardView, Layout, LoadingView } from '../components';
 import {
   type IndexReportQuery,
   useIndexReportQuery,
-} from '../graphql/generated';
+} from '../graphql/generated/client';
 import { PluginProvider } from '../lib/PluginProvider';
 import { NextPageWithLayout } from '../next-types';
 
 gql`
+  fragment CardViewSuggestions on Suggestion {
+    id
+    pluginTarget
+    name
+    message
+    count
+  }
+
   query IndexReport {
     report {
       summary
@@ -37,11 +45,7 @@ gql`
         }
       }
       suggestions {
-        id
-        pluginTarget
-        name
-        message
-        count
+        ...CardViewSuggestions
       }
     }
   }

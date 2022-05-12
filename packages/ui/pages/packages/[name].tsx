@@ -5,7 +5,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 import { LoadingView } from '../../components';
-import { usePackageByNamePackageInfoQuery } from '../../graphql/generated';
+import { usePackageByNamePackageInfoQuery } from '../../graphql/generated/client';
 
 gql`
   query PackageByNamePackageInfo($packageName: String!) {
