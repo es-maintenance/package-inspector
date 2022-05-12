@@ -4,6 +4,7 @@ import {
   type SuggestionInput,
   getBreadcrumb,
   SuggestionTask,
+  humanFileSize,
 } from '@package-inspector/core';
 
 import debug from 'debug';
@@ -16,7 +17,10 @@ const logger = debug('pi-core:suggestor:packages-with-pinned-versions');
 export class PackagesWithPinnedVersions extends SuggestionTask {
   name = 'Packages with Pinned Versions';
 
-  async task({ arboristValues }: SuggestionInput): Promise<Suggestion> {
+  async task({
+    arboristValues,
+    dependencies,
+  }: SuggestionInput): Promise<Suggestion> {
     const packagedWithPinned: SuggestionAction[] = [];
 
     for (const node of arboristValues) {
@@ -39,20 +43,18 @@ export class PackagesWithPinnedVersions extends SuggestionTask {
       }
     }
 
-    // TODO: This is the old message that we need to be able to somehow get back.
-    // It does require us to pass in the dependencyMap / the report to get the node info such as size
-    /**
-     `There are currently ${
-        new Set(packagedWithPinned.map((action) => action.meta.name)).size
-      } packages with pinned versions which will never collapse those dependencies causing an additional ${humanFileSize(
-        packagedWithPinned.reduce((total, dep) => total + dep.meta.size, 0)
-      )}`,
-    */
     return Promise.resolve({
       id: 'packagesWithPinnedVersions',
       pluginTarget: '@package-inspector/plugin-preset',
       name: 'Packages with pinned dependencies',
-      message: `There are currently ${packagedWithPinned.length.toLocaleString()} pinned dependencies`,
+      message: `There are currently ${packagedWithPinned.length.toLocaleString()} pinned dependencies contributing to ${humanFileSize(
+        packagedWithPinned.reduce(
+          (total, dep) =>
+            total +
+            (dependencies[dep.targetPackageId].metadata?.size?.physical || 0),
+          0
+        )
+      )}`,
       actions: packagedWithPinned,
     });
   }
