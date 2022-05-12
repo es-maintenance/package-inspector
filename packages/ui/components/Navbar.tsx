@@ -15,7 +15,7 @@ import {
 import NextLink from 'next/link';
 import * as React from 'react';
 
-import { useNavbarTitleQuery } from '../graphql/generated';
+import { useNavbarTitleQuery } from '../graphql/generated/client';
 import { PluginProvider } from '../lib/PluginProvider';
 
 gql`

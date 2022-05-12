@@ -160,6 +160,17 @@ export type CardViewSuggestionsFragment = {
   count: number;
 };
 
+export type IndexPageTopSuggestionFragment = {
+  __typename?: 'TopSuggestions';
+  count: number;
+  package: {
+    __typename?: 'Package';
+    id: string;
+    version: string;
+    name: string;
+  };
+};
+
 export type IndexReportQueryVariables = Exact<{ [key: string]: never }>;
 
 export type IndexReportQuery = {
@@ -304,6 +315,16 @@ export const CardViewSuggestionsFragmentDoc = gql`
     count
   }
 `;
+export const IndexPageTopSuggestionFragmentDoc = gql`
+  fragment IndexPageTopSuggestion on TopSuggestions {
+    count
+    package {
+      id
+      version
+      name
+    }
+  }
+`;
 export const NavbarTitleDocument = gql`
   query NavbarTitle {
     title
@@ -442,18 +463,14 @@ export const IndexReportDocument = gql`
         }
       }
       topSuggestions {
-        count
-        package {
-          id
-          version
-          name
-        }
+        ...IndexPageTopSuggestion
       }
       suggestions {
         ...CardViewSuggestions
       }
     }
   }
+  ${IndexPageTopSuggestionFragmentDoc}
   ${CardViewSuggestionsFragmentDoc}
 `;
 

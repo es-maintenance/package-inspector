@@ -11,7 +11,7 @@ import NextLink from 'next/link';
 
 import { CardView, Layout, LoadingView } from '../components';
 import {
-  type IndexReportQuery,
+  IndexPageTopSuggestion,
   useIndexReportQuery,
 } from '../graphql/generated/client';
 import { PluginProvider } from '../lib/PluginProvider';
@@ -26,6 +26,15 @@ gql`
     count
   }
 
+  fragment IndexPageTopSuggestion on TopSuggestions {
+    count
+    package {
+      id
+      version
+      name
+    }
+  }
+
   query IndexReport {
     report {
       summary
@@ -37,12 +46,7 @@ gql`
         }
       }
       topSuggestions {
-        count
-        package {
-          id
-          version
-          name
-        }
+        ...IndexPageTopSuggestion
       }
       suggestions {
         ...CardViewSuggestions
@@ -52,7 +56,7 @@ gql`
 `;
 
 interface SuggestionOverviewProps {
-  topSuggestions: IndexReportQuery['report']['topSuggestions'];
+  topSuggestions: IndexPageTopSuggestion;
   summary: string;
 }
 
