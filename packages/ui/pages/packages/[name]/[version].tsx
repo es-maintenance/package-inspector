@@ -1,32 +1,15 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { LoadingView } from '../../../components';
-import { NexusGenFieldTypes } from '../../../graphql/generated/nexus-typegen';
+import { usePackagesByNameAndVersionPackageQuery } from '../../../graphql/generated';
 
-interface PackageData {
-  package: NexusGenFieldTypes['Package'][];
-}
-
-interface ReportData {
-  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
-    root: NexusGenFieldTypes['Package'];
-  };
-}
-
-const ReportQuery = gql`
-  query {
-    report {
-      root {
-        name
-      }
-    }
-  }
-`;
-
-const PackageQuery = gql`
-  query ($packageName: String!, $packageVersion: String!) {
+gql`
+  query PackagesByNameAndVersionPackage(
+    $packageName: String!
+    $packageVersion: String!
+  ) {
     packageByVersion(
       packageName: $packageName
       packageVersion: $packageVersion
@@ -70,26 +53,16 @@ const Package: NextPage = () => {
     version = version.join();
   }
 
-  const { data, loading, error } = useQuery<PackageData>(PackageQuery, {
+  const { data, loading, error } = usePackagesByNameAndVersionPackageQuery({
     variables: {
       packageName: name,
       packageVersion: version,
     },
   });
 
-  const {
-    data: reportData,
-    loading: loadingReport,
-    error: reportError,
-  } = useQuery<ReportData>(ReportQuery);
-
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load package list</p>;
-
-  if (loadingReport) return <LoadingView />;
-  if (reportError) return <p>Oh no... {reportError.message}</p>;
-  if (!reportData) return <p>Oh no... could not load Report</p>;
 
   return (
     <>

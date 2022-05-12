@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import {
   Link,
   Paper,
@@ -13,7 +13,10 @@ import type { NextPage } from 'next';
 import NextLink from 'next/link';
 
 import { LoadingView } from '../../components';
-import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
+import {
+  usePackagesPackagesQuery,
+  usePackagesReportQuery,
+} from '../../graphql/generated';
 
 type ColumnKey = 'name' | 'version' | 'dep-count' | 'dev-dep-count';
 
@@ -22,14 +25,8 @@ interface Column {
   label: string;
 }
 
-interface ReportData {
-  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
-    root: NexusGenFieldTypes['Package'];
-  };
-}
-
-const ReportQuery = gql`
-  query {
+gql`
+  query PackagesReport {
     report {
       root {
         name
@@ -38,12 +35,8 @@ const ReportQuery = gql`
   }
 `;
 
-interface PackageData {
-  packages: NexusGenFieldTypes['Package'][];
-}
-
 const PackagesQuery = gql`
-  query Packages {
+  query PackagesPackages {
     packages {
       id
       name
@@ -56,13 +49,13 @@ const PackagesQuery = gql`
 `;
 
 const Packages: NextPage = () => {
-  const { data, loading, error } = useQuery<PackageData>(PackagesQuery);
+  const { data, loading, error } = usePackagesPackagesQuery();
 
   const {
     data: reportData,
     loading: loadingReport,
     error: reportError,
-  } = useQuery<ReportData>(ReportQuery);
+  } = usePackagesReportQuery();
 
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;

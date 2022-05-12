@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import {
   Container,
   Divider,
@@ -10,22 +10,15 @@ import {
 import NextLink from 'next/link';
 
 import { CardView, Layout, LoadingView } from '../components';
-import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
+import {
+  type IndexReportQuery,
+  useIndexReportQuery,
+} from '../graphql/generated';
 import { PluginProvider } from '../lib/PluginProvider';
 import { NextPageWithLayout } from '../next-types';
 
-export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
-  root: NexusGenFieldTypes['Package'];
-  topSuggestions: NexusGenFieldTypes['TopSuggestions'][];
-  suggestions: NexusGenFieldTypes['Suggestion'][];
-};
-
-interface ReportData {
-  report: Report;
-}
-
-const ReportQuery = gql`
-  query {
+gql`
+  query IndexReport {
     report {
       summary
       root {
@@ -55,7 +48,7 @@ const ReportQuery = gql`
 `;
 
 interface SuggestionOverviewProps {
-  topSuggestions: NexusGenFieldTypes['TopSuggestions'][];
+  topSuggestions: IndexReportQuery['report']['topSuggestions'];
   summary: string;
 }
 
@@ -76,6 +69,8 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
           </Typography>
           <ul>
             {topSuggestions.map((dep, i) => {
+              if (!dep) return <></>;
+
               return (
                 <li key={i}>
                   <NextLink
@@ -101,7 +96,7 @@ const Home: NextPageWithLayout = () => {
   // TODO: talk to Lewis about making this a hook?
   const pluginProvider = new PluginProvider();
 
-  const { data, loading, error } = useQuery<ReportData>(ReportQuery);
+  const { data, loading, error } = useIndexReportQuery();
 
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -136,6 +131,8 @@ const Home: NextPageWithLayout = () => {
         >
           {data &&
             data.report.suggestions.map((suggestion, idx) => {
+              if (!suggestion) return <></>;
+
               const CustomCardView = pluginProvider.cardView(
                 suggestion.pluginTarget
               );

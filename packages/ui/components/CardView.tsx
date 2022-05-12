@@ -14,7 +14,7 @@ import * as React from 'react';
 import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
 
 export const CardView: React.FC<{
-  suggestion: NexusGenFieldTypes['Suggestion'];
+  suggestion: Pick<NexusGenFieldTypes['Suggestion'], 'id' | 'name' | 'message' | 'count'>;
 }> = ({ suggestion }) => {
   const router = useRouter();
 

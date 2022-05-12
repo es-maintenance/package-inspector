@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import {
   Container,
   Link,
@@ -15,15 +15,10 @@ import type { NextPage } from 'next';
 import NextLink from 'next/link';
 
 import { LoadingView } from '../components';
-import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
-interface ReportData {
-  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
-    root: NexusGenFieldTypes['Package'];
-  };
-}
+import { useDetailsReportQuery } from '../graphql/generated';
 
-const ReportQuery = gql`
-  query {
+gql`
+  query DetailsReport {
     report {
       summary
       root {
@@ -47,7 +42,7 @@ const ReportQuery = gql`
 `;
 
 const Report: NextPage = () => {
-  const { data, loading, error } = useQuery<ReportData>(ReportQuery);
+  const { data, loading, error } = useDetailsReportQuery();
 
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;

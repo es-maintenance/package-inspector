@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import {
   Container,
   Paper,
@@ -14,29 +14,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { LoadingView } from '../../components';
-import { NexusGenFieldTypes } from '../../graphql/generated/nexus-typegen';
-interface ReportData {
-  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
-    root: NexusGenFieldTypes['Package'];
-  };
-}
+import { useSuggestionsByIdSuggestionQuery } from '../../graphql/generated';
 
-const ReportQuery = gql`
-  query {
-    report {
-      root {
-        name
-      }
-    }
-  }
-`;
-
-interface SuggestionData {
-  suggestion: NexusGenFieldTypes['Suggestion'];
-}
-
-const SuggestionQuery = gql`
-  query GetSuggestion($suggestionId: String!) {
+gql`
+  query SuggestionsByIdSuggestion($suggestionId: String!) {
     suggestion(id: $suggestionId) {
       id
       message
@@ -62,28 +43,17 @@ const Suggestion: NextPage = () => {
     id = id.join();
   }
 
-  const { data, loading, error } = useQuery<
-    SuggestionData,
-    { suggestionId: string }
-  >(SuggestionQuery, { variables: { suggestionId: id } });
-
-  const {
-    data: reportData,
-    loading: loadingReport,
-    error: reportError,
-  } = useQuery<ReportData>(ReportQuery);
+  const { data, loading, error } = useSuggestionsByIdSuggestionQuery(
+    { variables: { suggestionId: id } }
+  );
 
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load Suggestion</p>;
 
-  if (loadingReport) return <LoadingView />;
-  if (reportError) return <p>Oh no... {reportError.message}</p>;
-  if (!reportData) return <p>Oh no... could not load Report</p>;
-
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
-      {data.suggestion.message}
+      {data?.suggestion?.message}
       <br />
       <br />
       <h2>Actions</h2>
@@ -96,13 +66,9 @@ const Suggestion: NextPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.suggestion.actions
-              .filter((a) => a !== null)
-              .map((_action, idx) => {
-                // FIXME: we shouldn't have to do this.
-                const action =
-                  _action as NexusGenFieldTypes['SuggestionAction'];
-
+            {data?.suggestion?.actions
+              ?.filter((a) => a !== null)
+              .map((action, idx) => {
                 return (
                   <TableRow
                     key={idx}
