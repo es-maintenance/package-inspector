@@ -11,7 +11,7 @@ import NextLink from 'next/link';
 
 import { CardView, Layout, LoadingView } from '../components';
 import {
-  IndexPageTopSuggestion,
+  IndexPageTopSuggestionFragment,
   useIndexReportQuery,
 } from '../graphql/generated/client';
 import { PluginProvider } from '../lib/PluginProvider';
@@ -56,7 +56,7 @@ gql`
 `;
 
 interface SuggestionOverviewProps {
-  topSuggestions: IndexPageTopSuggestion;
+  topSuggestions: Array<IndexPageTopSuggestionFragment | null>;
   summary: string;
 }
 
@@ -72,11 +72,11 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
         <Divider orientation="vertical" flexItem sx={{ m: 2 }} />
         <Grid item xs>
           <Typography>
-            The top {topSuggestions.length.toLocaleString()} with the most
+            The top {topSuggestions?.length.toLocaleString()} with the most
             suggestions are:
           </Typography>
           <ul>
-            {topSuggestions.map((dep, i) => {
+            {topSuggestions?.map((dep, i) => {
               if (!dep) return <></>;
 
               return (
