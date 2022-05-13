@@ -1,3 +1,5 @@
+import { PluginProvider } from './PluginProvider';
+
 export function humanFileSize(bytes: number, si = false, dp = 1) {
   const thresh = si ? 1000 : 1024;
 
@@ -20,4 +22,10 @@ export function humanFileSize(bytes: number, si = false, dp = 1) {
   );
 
   return bytes.toFixed(dp) + ' ' + units[u];
+}
+
+export function usePluginProvider(): PluginProvider {
+  const pluginProvider = new PluginProvider();
+
+  return pluginProvider;
 }

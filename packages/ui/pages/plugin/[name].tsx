@@ -2,12 +2,12 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { ErrorView } from '../../components';
-import { PluginProvider } from '../../lib/PluginProvider';
+import { usePluginProvider } from '../../lib';
 
 const Package: NextPage = () => {
-  const pluginProvider = new PluginProvider();
-
+  const pluginProvider = usePluginProvider();
   const router = useRouter();
+
   let { name } = router.query;
 
   if (!name) {
