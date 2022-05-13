@@ -1,5 +1,5 @@
 import type { IDependencyMap, IPackageJson } from 'package-json-type';
-import type { Suggestion } from './models/Report';
+import type { Suggestion, DependenciesMap } from './models/Report';
 import { SuggestionTask } from './suggestion/SuggestionTask';
 
 export interface IArboristEdge {
@@ -49,6 +49,7 @@ export interface IArboristNode {
 export interface SuggestionInput {
   rootArboristNode?: IArboristNode;
   arboristValues: IArboristNode[];
+  dependencies: DependenciesMap;
   latestPackages?: IDependencyMap;
 }
 

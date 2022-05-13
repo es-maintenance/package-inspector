@@ -129,7 +129,11 @@ export async function generateReport(
       }),
   };
 
-  const suggestionInput = { arboristValues, rootArboristNode };
+  const suggestionInput = {
+    arboristValues,
+    rootArboristNode,
+    dependencies: report.dependencies,
+  };
 
   for (const plugin of processedPlugins) {
     if (plugin.getTasks) {
