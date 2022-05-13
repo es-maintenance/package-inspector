@@ -9,16 +9,12 @@ import {
 } from '@mui/material';
 import NextLink from 'next/link';
 
-import {
-  CardView,
-  Layout,
-  LoadingView,
-  usePluginProvider,
-} from '../components';
+import { CardView, Layout, LoadingView } from '../components';
 import {
   IndexPageTopSuggestionFragment,
   useIndexReportQuery,
 } from '../graphql/generated/client';
+import { usePluginProvider } from '../hooks';
 import { NextPageWithLayout } from '../next-types';
 
 gql`

@@ -1,7 +1,8 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { ErrorView, usePluginProvider } from '../../components';
+import { ErrorView } from '../../components';
+import { usePluginProvider } from '../../hooks';
 
 const Package: NextPage = () => {
   const pluginProvider = usePluginProvider();
