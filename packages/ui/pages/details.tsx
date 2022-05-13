@@ -1,15 +1,6 @@
 import { gql } from '@apollo/client';
-import {
-  Container,
-  Link,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material';
+import { Container, Link } from '@mui/material';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ResponsiveTreeMap } from '@nivo/treemap';
 import type { NextPage } from 'next';
 import NextLink from 'next/link';
@@ -56,8 +47,7 @@ const Report: NextPage = () => {
 
         return {
           name: dependency.name,
-          // FIXME: what the heck is going on here
-          size: (dependency as any).metadata?.size?.physical,
+          size: dependency.metadata?.size?.physical,
           children: [],
         };
       }
@@ -104,40 +94,43 @@ const Report: NextPage = () => {
 
       <h2>Dependencies:</h2>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>NAME</TableCell>
-              <TableCell>VERSION</TableCell>
-              <TableCell>TYPE</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.report.root.dependencies.map(
-              (dep) =>
-                dep &&
-                dep.name && (
-                  <TableRow
-                    key={dep.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell component="td">
+      <div style={{ height: 500, width: '100%' }}>
+        <div style={{ display: 'flex', height: '100%' }}>
+          <div style={{ flexGrow: 1 }}>
+            <DataGrid
+              columns={[
+                {
+                  field: 'name',
+                  flex: 1,
+                  renderCell(params) {
+                    return (
                       <NextLink
-                        href={`packages/${encodeURIComponent(dep.name)}`}
+                        href={`packages/${encodeURIComponent(params.value)}`}
                         passHref={true}
                       >
-                        <Link>{dep.name}</Link>
+                        <Link>{params.value}</Link>
                       </NextLink>
-                    </TableCell>
-                    <TableCell component="td">{dep.version}</TableCell>
-                    <TableCell component="td">{dep.type}</TableCell>
-                  </TableRow>
-                )
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                    );
+                  },
+                },
+                { field: 'version', flex: 1 },
+                { field: 'type', flex: 1 },
+                { field: 'size', flex: 1 },
+              ]}
+              rows={data.report.root.dependencies.map((dep) => {
+                return {
+                  id: dep?.id,
+                  name: dep?.name,
+                  version: dep?.version,
+                  type: dep?.type,
+                  size: dep?.metadata?.size?.physical || 0,
+                };
+              })}
+              components={{ Toolbar: GridToolbar }}
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 };
