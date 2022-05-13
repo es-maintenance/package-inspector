@@ -26,7 +26,7 @@ const Packages: NextPage = () => {
   if (!data) return <p>Oh no... could not load package list</p>;
 
   return (
-    <div style={{ height: 500, width: '100%' }}>
+    <div style={{ height: '80vh', width: '100%' }}>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>
           <DataGrid
