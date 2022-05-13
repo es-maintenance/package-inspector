@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import {
   Container,
   Divider,
@@ -10,22 +10,32 @@ import {
 import NextLink from 'next/link';
 
 import { CardView, Layout, LoadingView } from '../components';
-import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
+import {
+  IndexPageTopSuggestionFragment,
+  useIndexReportQuery,
+} from '../graphql/generated/client';
 import { PluginProvider } from '../lib/PluginProvider';
 import { NextPageWithLayout } from '../next-types';
 
-export type Report = Pick<NexusGenFieldTypes['Report'], 'summary'> & {
-  root: NexusGenFieldTypes['Package'];
-  topSuggestions: NexusGenFieldTypes['TopSuggestions'][];
-  suggestions: NexusGenFieldTypes['Suggestion'][];
-};
+gql`
+  fragment CardViewSuggestions on Suggestion {
+    id
+    pluginTarget
+    name
+    message
+    count
+  }
 
-interface ReportData {
-  report: Report;
-}
+  fragment IndexPageTopSuggestion on TopSuggestions {
+    count
+    package {
+      id
+      version
+      name
+    }
+  }
 
-const ReportQuery = gql`
-  query {
+  query IndexReport {
     report {
       summary
       root {
@@ -36,26 +46,17 @@ const ReportQuery = gql`
         }
       }
       topSuggestions {
-        count
-        package {
-          id
-          version
-          name
-        }
+        ...IndexPageTopSuggestion
       }
       suggestions {
-        id
-        pluginTarget
-        name
-        message
-        count
+        ...CardViewSuggestions
       }
     }
   }
 `;
 
 interface SuggestionOverviewProps {
-  topSuggestions: NexusGenFieldTypes['TopSuggestions'][];
+  topSuggestions: Array<IndexPageTopSuggestionFragment | null>;
   summary: string;
 }
 
@@ -71,11 +72,13 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
         <Divider orientation="vertical" flexItem sx={{ m: 2 }} />
         <Grid item xs>
           <Typography>
-            The top {topSuggestions.length.toLocaleString()} with the most
+            The top {topSuggestions?.length.toLocaleString()} with the most
             suggestions are:
           </Typography>
           <ul>
-            {topSuggestions.map((dep, i) => {
+            {topSuggestions?.map((dep, i) => {
+              if (!dep) return <></>;
+
               return (
                 <li key={i}>
                   <NextLink
@@ -101,7 +104,7 @@ const Home: NextPageWithLayout = () => {
   // TODO: talk to Lewis about making this a hook?
   const pluginProvider = new PluginProvider();
 
-  const { data, loading, error } = useQuery<ReportData>(ReportQuery);
+  const { data, loading, error } = useIndexReportQuery();
 
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -136,6 +139,8 @@ const Home: NextPageWithLayout = () => {
         >
           {data &&
             data.report.suggestions.map((suggestion, idx) => {
+              if (!suggestion) return <></>;
+
               const CustomCardView = pluginProvider.cardView(
                 suggestion.pluginTarget
               );
