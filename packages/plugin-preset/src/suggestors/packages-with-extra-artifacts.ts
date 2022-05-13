@@ -18,7 +18,10 @@ import {
 export class PackagesWithExtraArtifacts extends SuggestionTask {
   name = 'Package With Extra Artifacts';
 
-  async task({ arboristValues }: SuggestionInput): Promise<Suggestion> {
+  async task({
+    arboristValues,
+    dependencies,
+  }: SuggestionInput): Promise<Suggestion> {
     const extraArtifacts: SuggestionAction[] = [];
 
     for (const node of arboristValues) {
@@ -59,19 +62,18 @@ export class PackagesWithExtraArtifacts extends SuggestionTask {
       }
     }
 
-    // TODO: this message is no longer possible
-    /**
-     `There are currently ${
-        new Set(extraArtifacts.map((action) => action.meta.name)).size
-      } packages with artifacts that are superflous and are not necessary for production usage. ${humanFileSize(
-        extraArtifacts.reduce((total, dep) => total + dep.meta.size, 0)
-      )}`
-    */
     return Promise.resolve({
       id: 'packagesWithExtraArtifacts',
       pluginTarget: '@package-inspector/plugin-preset',
       name: 'Packages with extra artifacts',
-      message: `There are currently ${extraArtifacts.length.toLocaleString()} extra artifacts`,
+      message: `There are currently ${extraArtifacts.length.toLocaleString()} extra artifacts contributing to ${humanFileSize(
+        extraArtifacts.reduce(
+          (total, dep) =>
+            total +
+            (dependencies[dep.targetPackageId].metadata?.size?.physical || 0),
+          0
+        )
+      )}`,
       actions: extraArtifacts,
     });
   }

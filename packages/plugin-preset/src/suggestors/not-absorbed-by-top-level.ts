@@ -24,6 +24,7 @@ export class NotBeingAbsorbedByTopLevel extends SuggestionTask {
   async task({
     rootArboristNode,
     arboristValues,
+    dependencies,
   }: SuggestionInput): Promise<Suggestion> {
     const notAbsorbed: SuggestionAction[] = [];
 
@@ -66,19 +67,18 @@ export class NotBeingAbsorbedByTopLevel extends SuggestionTask {
       }
     }
 
-    // TODO: this is no longer possible
-    /**
-     `There are currently ${
-        notAbsorbed.length
-      } duplicate packages being installed on disk because they are not being absorbed into the top level semver range. This equates to a total of ${humanFileSize(
-        notAbsorbed.reduce((total, dep) => total + dep.meta.size, 0)
-      )}`
-    */
     return Promise.resolve({
       id: 'notBeingAbsorbedByTopLevel',
       pluginTarget: '@package-inspector/plugin-preset',
       name: 'Dependencies not being absorbed',
-      message: `There are currently ${notAbsorbed.length.toLocaleString()} duplicate packages being installed on disk`,
+      message: `There are currently ${notAbsorbed.length.toLocaleString()} duplicate packages being installed on disk contributing to ${humanFileSize(
+        notAbsorbed.reduce(
+          (total, dep) =>
+            total +
+            (dependencies[dep.targetPackageId].metadata?.size?.physical || 0),
+          0
+        )
+      )}`,
       actions: notAbsorbed,
     });
   }
