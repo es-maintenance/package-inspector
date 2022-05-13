@@ -6,8 +6,8 @@
     "node": ">= 16"
   },
   "scripts": {
-    "dev": "yarn build:nexus && yarn build:graphql && next dev",
-    "build": "yarn build:nexus && yarn build:graphql && next build",
+    "dev": "yarn build:graphql && next dev",
+    "build": "yarn build:graphql && next build",
     "build:nexus": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only graphql/schema.ts",
     "build:graphql": "yarn build:nexus && yarn build:graphql-codegen",
     "build:graphql-codegen": "graphql-codegen",

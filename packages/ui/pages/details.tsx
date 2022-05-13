@@ -47,7 +47,7 @@ const Report: NextPage = () => {
 
         return {
           name: dependency.name,
-          size: dependency?.metadata?.size?.physical,
+          size: dependency.metadata?.size?.physical,
           children: [],
         };
       }
