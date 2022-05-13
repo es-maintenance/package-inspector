@@ -9,12 +9,16 @@ import {
 } from '@mui/material';
 import NextLink from 'next/link';
 
-import { CardView, Layout, LoadingView } from '../components';
+import {
+  CardView,
+  Layout,
+  LoadingView,
+  usePluginProvider,
+} from '../components';
 import {
   IndexPageTopSuggestionFragment,
   useIndexReportQuery,
 } from '../graphql/generated/client';
-import { usePluginProvider } from '../lib/';
 import { NextPageWithLayout } from '../next-types';
 
 gql`
@@ -140,7 +144,7 @@ const Home: NextPageWithLayout = () => {
             data.report.suggestions.map((suggestion, idx) => {
               if (!suggestion) return <></>;
 
-              const CustomCardView = pluginProvider.cardView(
+              const CustomCardView = pluginProvider?.cardView(
                 suggestion.pluginTarget
               );
               if (CustomCardView) {

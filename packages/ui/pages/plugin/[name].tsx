@@ -1,8 +1,7 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { ErrorView } from '../../components';
-import { usePluginProvider } from '../../lib';
+import { ErrorView, usePluginProvider } from '../../components';
 
 const Package: NextPage = () => {
   const pluginProvider = usePluginProvider();
@@ -16,7 +15,7 @@ const Package: NextPage = () => {
     name = name.join();
   }
 
-  const PluginPageView = pluginProvider.pluginPageView(name);
+  const PluginPageView = pluginProvider?.pluginPageView(name);
 
   if (!PluginPageView) {
     return <ErrorView message="Plugin does not have a page view" />;
