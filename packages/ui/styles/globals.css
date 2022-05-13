@@ -22,3 +22,21 @@ a {
   display: flex;
   flex-direction: column;
 }
+
+/* TODO: get rid of this when https://github.com/mui/mui-x/pull/4859 lands */
+.MuiDataGrid-viewport,
+.MuiDataGrid-row,
+.MuiDataGrid-renderingZone {
+  max-height: none !important;
+}
+
+.MuiDataGrid-cell {
+  max-height: none !important;
+  overflow: auto;
+  white-space: initial !important;
+  line-height: 16px !important;
+  display: flex !important;
+  align-items: center;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
