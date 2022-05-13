@@ -45,7 +45,22 @@ const Packages: NextPage = () => {
                   );
                 },
               },
-              { field: 'version', flex: 1 },
+              {
+                field: 'version',
+                flex: 1,
+                renderCell(params) {
+                  return (
+                    <NextLink
+                      href={`packages/${encodeURIComponent(params.value)}/${
+                        params.row.version
+                      }`}
+                      passHref={true}
+                    >
+                      <Link>{params.value}</Link>
+                    </NextLink>
+                  );
+                },
+              },
               { field: 'count', flex: 1 },
             ]}
             rows={data.packages.map((dep) => {
