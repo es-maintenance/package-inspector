@@ -1,11 +1,6 @@
 import type { BrowserPlugin, Suggestion } from '@package-inspector/core';
 
-import type { CardViewSuggestionsFragment } from '@package-inspector/ui';
-
 import React from 'react';
-
-// FIXME: should expose this nicer
-import { CardView } from '@package-inspector/ui/components/CardView';
 export class TestPlugin implements BrowserPlugin {
   name: string;
   version: string;
@@ -42,14 +37,6 @@ export class TestPlugin implements BrowserPlugin {
   get packageView(): React.FC {
     return () => {
       return <div style={{ border: '1px solid purple' }}>Package View</div>;
-    };
-  }
-
-  // Renders the card view for a given suggestion
-  // TODO: talk to lewis about how graphql types don't overlap with report types
-  get cardView(): React.FC<{ suggestion: CardViewSuggestionsFragment }> {
-    return ({ suggestion }) => {
-      return <CardView suggestion={suggestion} />;
     };
   }
 }
