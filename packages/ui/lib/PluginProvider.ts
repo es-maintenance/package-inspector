@@ -1,8 +1,8 @@
 import { type BrowserPlugin, type Suggestion } from '@package-inspector/core';
-import { default as TestPlugin } from '@package-inspector/plugin-preset/browser';
-
 // FIXME: This should be automatically generated at build time based on input commands such as what plugins we are requiring
 // we don't want to import anything here
+import { default as TestPlugin } from '@package-inspector/plugin-preset/browser';
+
 export class PluginProvider {
   plugins: BrowserPlugin[] = [];
 

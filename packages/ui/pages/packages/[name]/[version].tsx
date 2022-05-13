@@ -67,7 +67,7 @@ const Package: NextPage = () => {
   return (
     <>
       <h1>Package: {name}</h1>
-      <pre>{JSON.stringify((data as any).packageByVersion, null, 4)}</pre>
+      <pre>{JSON.stringify(data.packageByVersion, null, 4)}</pre>
     </>
   );
 };

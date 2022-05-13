@@ -49,34 +49,32 @@ const Package: NextPage = () => {
   return (
     <>
       <h1>Package: {name}</h1>
-      {/* Why aren't the types  */}
       <h3>Versions:</h3>
-      {(data.package as any).variants.map((variant: any) => {
+      {data.package?.variants?.map((variant) => {
         return (
-          <div key={variant.id}>
+          <div key={variant?.id}>
             <NextLink
-              href={`/packages/${encodeURIComponent(variant.name)}/${
-                variant.version
+              href={`/packages/${encodeURIComponent(variant?.name || '')}/${
+                variant?.version
               }`}
             >
-              {variant.version}
+              {variant?.version}
             </NextLink>
 
-            {variant.parent.length > 0 ? (
+            {(variant?.parent?.length || 0) > 0 ? (
               <>
                 <h3>Packages that depend on this</h3>
                 <ul>
-                  {/* FIXME: why don't the types pass down */}
-                  {variant.parent.map((parent: any) => {
+                  {variant?.parent.map((parent) => {
                     return (
-                      <li key={parent.id}>
+                      <li key={parent?.id}>
                         <NextLink
-                          href={`/packages/${encodeURIComponent(parent.name)}/${
-                            parent.version
-                          }`}
+                          href={`/packages/${encodeURIComponent(
+                            parent?.name || ''
+                          )}/${parent?.version}`}
                           passHref={true}
                         >
-                          <Link>{`${parent.name}@${parent.version}`}</Link>
+                          <Link>{`${parent?.name}@${parent?.version}`}</Link>
                         </NextLink>
                       </li>
                     );

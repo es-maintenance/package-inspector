@@ -47,8 +47,7 @@ const Report: NextPage = () => {
 
         return {
           name: dependency.name,
-          // FIXME: what the heck is going on here
-          size: (dependency as any).metadata?.size?.physical,
+          size: dependency?.metadata?.size?.physical,
           children: [],
         };
       }
@@ -124,7 +123,7 @@ const Report: NextPage = () => {
                   name: dep?.name,
                   version: dep?.version,
                   type: dep?.type,
-                  size: (dep as any)?.metadata?.size?.physical || 0,
+                  size: dep?.metadata?.size?.physical || 0,
                 };
               })}
               components={{ Toolbar: GridToolbar }}
