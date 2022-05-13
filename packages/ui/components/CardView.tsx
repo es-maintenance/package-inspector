@@ -11,10 +11,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
-import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
+import type { CardViewSuggestionsFragment } from '../';
 
 export const CardView: React.FC<{
-  suggestion: NexusGenFieldTypes['Suggestion'];
+  suggestion: CardViewSuggestionsFragment;
 }> = ({ suggestion }) => {
   const router = useRouter();
 

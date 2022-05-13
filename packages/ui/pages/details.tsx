@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { Container, Link } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ResponsiveTreeMap } from '@nivo/treemap';
@@ -6,15 +6,10 @@ import type { NextPage } from 'next';
 import NextLink from 'next/link';
 
 import { LoadingView } from '../components';
-import { NexusGenFieldTypes } from '../graphql/generated/nexus-typegen';
-interface ReportData {
-  report: Pick<NexusGenFieldTypes['Report'], 'summary'> & {
-    root: NexusGenFieldTypes['Package'];
-  };
-}
+import { useDetailsReportQuery } from '../graphql/generated/client';
 
-const ReportQuery = gql`
-  query {
+gql`
+  query DetailsReport {
     report {
       summary
       root {
@@ -38,7 +33,7 @@ const ReportQuery = gql`
 `;
 
 const Report: NextPage = () => {
-  const { data, loading, error } = useQuery<ReportData>(ReportQuery);
+  const { data, loading, error } = useDetailsReportQuery();
 
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -52,8 +47,7 @@ const Report: NextPage = () => {
 
         return {
           name: dependency.name,
-          // FIXME: what the heck is going on here
-          size: (dependency as any).metadata?.size?.physical,
+          size: dependency.metadata?.size?.physical,
           children: [],
         };
       }
@@ -129,7 +123,7 @@ const Report: NextPage = () => {
                   name: dep?.name,
                   version: dep?.version,
                   type: dep?.type,
-                  size: (dep as any)?.metadata?.size?.physical || 0,
+                  size: dep?.metadata?.size?.physical || 0,
                 };
               })}
               components={{ Toolbar: GridToolbar }}
