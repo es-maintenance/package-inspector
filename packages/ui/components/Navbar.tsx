@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
@@ -15,17 +15,14 @@ import {
 import NextLink from 'next/link';
 import * as React from 'react';
 
+import { useNavbarTitleQuery } from '../graphql/generated/client';
 import { PluginProvider } from '../lib/PluginProvider';
 
-const TitleQuery = gql`
-  query TitleQuery {
+gql`
+  query NavbarTitle {
     title
   }
 `;
-
-interface TitleData {
-  title: string;
-}
 
 interface NavBarProps {
   title?: string;
@@ -34,7 +31,7 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = (props) => {
   const pluginProvider = new PluginProvider();
 
-  const { data } = useQuery<TitleData>(TitleQuery);
+  const { data } = useNavbarTitleQuery();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null

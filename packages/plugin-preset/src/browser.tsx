@@ -1,7 +1,6 @@
 import type { BrowserPlugin, Suggestion } from '@package-inspector/core';
 
-// FIXME: we should not be shipping this end stage
-import type { NexusGenFieldTypes } from '@package-inspector/ui/graphql/generated/nexus-typegen';
+import type { CardViewSuggestionsFragment } from '@package-inspector/ui';
 
 import React from 'react';
 
@@ -48,7 +47,7 @@ export class TestPlugin implements BrowserPlugin {
 
   // Renders the card view for a given suggestion
   // TODO: talk to lewis about how graphql types don't overlap with report types
-  get cardView(): React.FC<{ suggestion: NexusGenFieldTypes['Suggestion'] }> {
+  get cardView(): React.FC<{ suggestion: CardViewSuggestionsFragment }> {
     return ({ suggestion }) => {
       return <CardView suggestion={suggestion} />;
     };
