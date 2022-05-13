@@ -75,6 +75,16 @@ export const Package = objectType({
     t.nonNull.id('id');
     t.nonNull.string('name');
     t.nonNull.string('version');
+    t.nonNull.int('dependencyCount', {
+      resolve(me, _, ctx) {
+        const pkg =
+          me.name === ctx.report.root.name
+            ? ctx.report.root // If this is the root, get the serialized-package from the report's root.
+            : ctx.report.dependencies[me.id];
+
+        return pkg.dependencies.length;
+      },
+    });
 
     t.nonNull.list.field('dependencies', {
       type: Package,

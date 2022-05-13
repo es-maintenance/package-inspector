@@ -94,6 +94,7 @@ export interface NexusGenFieldTypes {
   Package: {
     // field return type
     dependencies: Array<NexusGenRootTypes['Package'] | null>; // [Package]!
+    dependencyCount: number; // Int!
     funding: string | null; // String
     homepage: string | null; // String
     id: string; // ID!
@@ -170,6 +171,7 @@ export interface NexusGenFieldTypeNames {
   Package: {
     // field return type name
     dependencies: 'Package';
+    dependencyCount: 'Int';
     funding: 'String';
     homepage: 'String';
     id: 'ID';
