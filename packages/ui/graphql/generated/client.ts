@@ -30,6 +30,7 @@ export type MiniPackage = {
 export type Package = {
   __typename?: 'Package';
   dependencies: Array<Maybe<Package>>;
+  dependencyCount: Scalars['Int'];
   funding?: Maybe<Scalars['String']>;
   homepage?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -263,16 +264,6 @@ export type PackagesByNameAndVersionPackageQuery = {
   } | null;
 };
 
-export type PackagesReportQueryVariables = Exact<{ [key: string]: never }>;
-
-export type PackagesReportQuery = {
-  __typename?: 'Query';
-  report: {
-    __typename?: 'Report';
-    root: { __typename?: 'Package'; name: string };
-  };
-};
-
 export type PackagesPackagesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type PackagesPackagesQuery = {
@@ -282,7 +273,7 @@ export type PackagesPackagesQuery = {
     id: string;
     name: string;
     version: string;
-    dependencies: Array<{ __typename?: 'Package'; name: string } | null>;
+    dependencyCount: number;
   } | null>;
 };
 
@@ -673,74 +664,13 @@ export type PackagesByNameAndVersionPackageQueryResult = Apollo.QueryResult<
   PackagesByNameAndVersionPackageQuery,
   PackagesByNameAndVersionPackageQueryVariables
 >;
-export const PackagesReportDocument = gql`
-  query PackagesReport {
-    report {
-      root {
-        name
-      }
-    }
-  }
-`;
-
-/**
- * __usePackagesReportQuery__
- *
- * To run a query within a React component, call `usePackagesReportQuery` and pass it any options that fit your needs.
- * When your component renders, `usePackagesReportQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePackagesReportQuery({
- *   variables: {
- *   },
- * });
- */
-export function usePackagesReportQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    PackagesReportQuery,
-    PackagesReportQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<PackagesReportQuery, PackagesReportQueryVariables>(
-    PackagesReportDocument,
-    options
-  );
-}
-export function usePackagesReportLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    PackagesReportQuery,
-    PackagesReportQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<PackagesReportQuery, PackagesReportQueryVariables>(
-    PackagesReportDocument,
-    options
-  );
-}
-export type PackagesReportQueryHookResult = ReturnType<
-  typeof usePackagesReportQuery
->;
-export type PackagesReportLazyQueryHookResult = ReturnType<
-  typeof usePackagesReportLazyQuery
->;
-export type PackagesReportQueryResult = Apollo.QueryResult<
-  PackagesReportQuery,
-  PackagesReportQueryVariables
->;
 export const PackagesPackagesDocument = gql`
   query PackagesPackages {
     packages {
       id
       name
       version
-      dependencies {
-        name
-      }
+      dependencyCount
     }
   }
 `;

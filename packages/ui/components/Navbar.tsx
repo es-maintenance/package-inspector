@@ -16,7 +16,7 @@ import NextLink from 'next/link';
 import * as React from 'react';
 
 import { useNavbarTitleQuery } from '../graphql/generated/client';
-import { PluginProvider } from '../lib/PluginProvider';
+import { usePluginProvider } from '../hooks';
 
 gql`
   query NavbarTitle {
@@ -29,7 +29,7 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = (props) => {
-  const pluginProvider = new PluginProvider();
+  const pluginProvider = usePluginProvider();
 
   const { data } = useNavbarTitleQuery();
 
@@ -159,7 +159,7 @@ const NavBar: React.FC<NavBarProps> = (props) => {
               open={Boolean(anchorElPluginMenu)}
               onClose={handleClosePluginMenu}
             >
-              {pluginProvider.hasReportView().map((pluginTarget) => (
+              {pluginProvider?.hasReportView().map((pluginTarget) => (
                 <MenuItem key={pluginTarget} onClick={handleClosePluginMenu}>
                   <NextLink
                     href={`/plugin/${encodeURIComponent(pluginTarget)}`}

@@ -1,6 +1,6 @@
 import type { BrowserPlugin, Suggestion } from '@package-inspector/core';
-import React from 'react';
 
+import React from 'react';
 export class TestPlugin implements BrowserPlugin {
   name: string;
   version: string;

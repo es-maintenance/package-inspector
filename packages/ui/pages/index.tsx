@@ -14,7 +14,7 @@ import {
   IndexPageTopSuggestionFragment,
   useIndexReportQuery,
 } from '../graphql/generated/client';
-import { PluginProvider } from '../lib/PluginProvider';
+import { usePluginProvider } from '../hooks';
 import { NextPageWithLayout } from '../next-types';
 
 gql`
@@ -101,8 +101,7 @@ const SuggestionOverview: React.FC<SuggestionOverviewProps> = (props) => {
 };
 
 const Home: NextPageWithLayout = () => {
-  // TODO: talk to Lewis about making this a hook?
-  const pluginProvider = new PluginProvider();
+  const pluginProvider = usePluginProvider();
 
   const { data, loading, error } = useIndexReportQuery();
 
@@ -141,7 +140,7 @@ const Home: NextPageWithLayout = () => {
             data.report.suggestions.map((suggestion, idx) => {
               if (!suggestion) return <></>;
 
-              const CustomCardView = pluginProvider.cardView(
+              const CustomCardView = pluginProvider?.cardView(
                 suggestion.pluginTarget
               );
               if (CustomCardView) {
