@@ -1,16 +1,8 @@
 import { gql } from '@apollo/client';
-import {
-  Container,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material';
+import { Container, Link } from '@mui/material';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import type { NextPage } from 'next';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 import { LoadingView } from '../../components';
@@ -57,45 +49,40 @@ const Suggestion: NextPage = () => {
       <br />
       <br />
       <h2>Actions</h2>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="actions table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Message</TableCell>
-              <TableCell align="right">Package</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data?.suggestion?.actions
-              ?.filter((a) => a !== null)
-              .map((action, idx) => {
-                return (
-                  <TableRow
-                    key={idx}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {action?.message}
-                    </TableCell>
-                    <TableCell align="right">
-                      {action?.targetPackage?.name ? (
-                        <Link
-                          href={`/packages/${encodeURIComponent(
-                            action.targetPackage.name
-                          )}`}
-                        >
-                          {action.targetPackage.name}
-                        </Link>
-                      ) : (
-                        'None'
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div style={{ height: 500, width: '100%' }}>
+        <div style={{ display: 'flex', height: '100%' }}>
+          <div style={{ flexGrow: 1 }}>
+            <DataGrid
+              columns={[
+                { field: 'message', flex: 1 },
+                {
+                  field: 'packageName',
+                  renderCell(params) {
+                    return (
+                      <NextLink
+                        href={`packages/${encodeURIComponent(params.value)}`}
+                        passHref={true}
+                      >
+                        <Link>{params.value}</Link>
+                      </NextLink>
+                    );
+                  },
+                },
+              ]}
+              rows={
+                data?.suggestion?.actions.map((action, i) => {
+                  return {
+                    id: i,
+                    message: action?.message || 'N/A',
+                    packageName: action?.targetPackage?.name || 'N/A',
+                  };
+                }) || []
+              }
+              components={{ Toolbar: GridToolbar }}
+            />
+          </div>
+        </div>
+      </div>
     </Container>
   );
 };
