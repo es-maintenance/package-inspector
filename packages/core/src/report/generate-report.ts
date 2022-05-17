@@ -71,6 +71,8 @@ export async function generateReport(
     const lookupKey = `${depNode.name}@${depNode.version}`;
 
     if (!report.dependencies[lookupKey]) {
+      const { devDependencies } = require(`${depNode.realpath}/package.json`);
+
       report.dependencies[lookupKey] = {
         funding: depNode.funding,
         homepage: depNode.homepage,
@@ -84,6 +86,9 @@ export async function generateReport(
           }),
           pathsOnDisk: [],
         },
+        devDependencies: Object.keys(devDependencies || {}).map((name) => {
+          return `${name}${devDependencies?.[name] || 'N/A'}`;
+        }),
         dependencies: [...depNode.edgesOut.values()]
           .filter((dependency) => {
             const node = dependency.to;
@@ -114,6 +119,7 @@ export async function generateReport(
     metadata: {
       pathsOnDisk: [stripPathOnDisk(rootArboristNode.path, cwd)],
     },
+    devDependencies: [],
     dependencies: [...rootArboristNode.edgesOut.values()]
       .filter((dependencyEdge) => {
         const dependencyNode = dependencyEdge.to;
