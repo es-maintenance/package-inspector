@@ -1,7 +1,6 @@
 import type {
   Suggestion,
   ServerPlugin,
-  SuggestionInput,
   SuggestionTask,
 } from '@package-inspector/core';
 
@@ -11,6 +10,7 @@ import {
   PackagesWithExtraArtifacts,
   TopLevelDepsFreshness,
   PackagesWithPinnedVersions,
+  PublishedFreshness,
 } from './suggestors';
 export class TestPlugin implements ServerPlugin {
   name: string;
@@ -33,6 +33,7 @@ export class TestPlugin implements ServerPlugin {
       new NotBeingAbsorbedByTopLevel(),
       new PackagesWithExtraArtifacts(),
       new TopLevelDepsFreshness(),
+      new PublishedFreshness(),
     ];
   }
 }
