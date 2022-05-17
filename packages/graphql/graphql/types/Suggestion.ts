@@ -1,6 +1,6 @@
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
 
-import { getPackageID } from '../utils';
+import { getPackageID } from '../../lib/utils';
 import { Package } from './Package';
 
 export const SuggestionAction = objectType({
@@ -52,8 +52,9 @@ export const SuggestionQuery = extendType({
         id: nonNull(stringArg()),
       },
       resolve(me, args, ctx) {
+        // TODO: Fix
         const suggestionModel = ctx.report.suggestions.find(
-          (s) => s.id === args.id
+          (s: any) => s.id === args.id
         );
 
         return suggestionModel

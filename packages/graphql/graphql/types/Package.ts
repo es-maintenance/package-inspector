@@ -1,7 +1,7 @@
 import { parseDependencyKey } from '@package-inspector/core';
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
 
-import { getPackageID } from '../utils';
+import { getPackageID } from '../../lib/utils';
 import { Suggestion } from './Suggestion';
 
 export const MiniPackage = objectType({
@@ -95,7 +95,8 @@ export const Package = objectType({
             : ctx.report.dependencies[me.id]; // Otherwise find the package definition in the provided map.
 
         return pkg
-          ? pkg.dependencies.map((depID) => {
+          ? // TODO: fix
+            pkg.dependencies.map((depID: any) => {
               const pkgDep = ctx.report.dependencies[depID];
               return {
                 id: getPackageID(pkgDep),
@@ -134,19 +135,24 @@ export const Package = objectType({
         // This is going to give us the packageKey
         const id = me.id;
 
-        return ctx.report.suggestions
-          .map((suggestion) => {
-            return {
-              ...suggestion,
-              actions: suggestion.actions.filter((action) => {
-                return action.targetPackageId === id;
-              }),
-            };
-          })
-          .filter((suggestion) => {
-            // only return suggestions that have suggestions that have actions
-            return suggestion?.actions.length > 0;
-          });
+        return (
+          ctx.report.suggestions
+            // TOOD: fix
+            .map((suggestion: any) => {
+              return {
+                ...suggestion,
+                // TODO: fix
+                actions: suggestion.actions.filter((action: any) => {
+                  return action.targetPackageId === id;
+                }),
+              };
+            })
+            // TODO: fix
+            .filter((suggestion: any) => {
+              // only return suggestions that have suggestions that have actions
+              return suggestion?.actions.length > 0;
+            })
+        );
       },
     });
 
@@ -180,7 +186,8 @@ export const PackagesQuery = extendType({
     t.nonNull.list.field('packages', {
       type: Package,
       resolve(_, __, ctx) {
-        return Object.values(ctx.report.dependencies).map((dep) => {
+        // TOOD: fix
+        return Object.values(ctx.report.dependencies).map((dep: any) => {
           return {
             id: getPackageID(dep),
             name: dep.name,

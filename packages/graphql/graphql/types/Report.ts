@@ -1,7 +1,6 @@
 import { extendType, objectType } from 'nexus';
 
-import { humanFileSize } from '../../lib/utils';
-import { getPackageID } from '../utils';
+import { getPackageID, humanFileSize } from '../../lib/utils';
 import { MiniPackage, Package } from './Package';
 import { Suggestion } from './Suggestion';
 
@@ -20,7 +19,8 @@ export const Report = objectType({
     t.nonNull.list.field('dependencies', {
       type: Package,
       resolve: (_, __, ctx) => {
-        return Object.values(ctx.report.dependencies).map((dep) => {
+        // TODO: fix
+        return Object.values(ctx.report.dependencies).map((dep: any) => {
           return {
             id: getPackageID(dep),
             name: dep.name,
@@ -51,19 +51,21 @@ export const Report = objectType({
         const directDeps = ctx.report.root.dependencies;
         const allDeps = Object.keys(ctx.report.dependencies);
         const suggestionCount = ctx.report.suggestions
-          .map((suggestion) => suggestion.actions.length)
-          .reduce((a, b) => a + b, 0)
+          // TODO: Fix
+          .map((suggestion: any) => suggestion.actions.length)
+          .reduce((a: number, b: number) => a + b, 0)
           .toLocaleString();
 
         const fileSize = humanFileSize(
           Object.keys(ctx.report.dependencies)
-            .map((dependencyLookupKey) => {
+            .map((dependencyLookupKey: any) => {
               return (
                 ctx.report.dependencies[dependencyLookupKey].metadata?.size
                   ?.physical || 0
               );
             })
-            .reduce((a, b) => a + b, 0)
+            // TODO: fix
+            .reduce((a: number, b: number) => a + b, 0)
         );
 
         return (
@@ -86,8 +88,10 @@ export const Report = objectType({
 
         const suggestions = ctx.report.suggestions;
 
-        suggestions.forEach((suggestion) => {
-          suggestion.actions.forEach((action) => {
+        // TODO: fix
+        suggestions.forEach((suggestion: any) => {
+          // TODO: fix
+          suggestion.actions.forEach((action: any) => {
             const id = action.targetPackageId;
             const target = ctx.report.dependencies[id];
             const { version, name } = target;

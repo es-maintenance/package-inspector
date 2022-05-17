@@ -1,4 +1,4 @@
-schema: ./graphql/generated/schema.graphql
+schema: 'schema.js'
 documents: './(pages|components)/**/*.tsx'
 generates:
   graphql/generated/client.ts:
