@@ -9,7 +9,8 @@
   "types": "./dist/lib/index",
   "scripts": {
     "build": "tsc -p . && yarn build:graphql",
-    "build:graphql": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only lib/schema.ts"
+    "build:graphql": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only lib/schema.ts",
+    "test:ci": "echo 'TESTING NOT AVAILABLE YET'"
   },
   "dependencies": {
     "@package-inspector/core": "*"
