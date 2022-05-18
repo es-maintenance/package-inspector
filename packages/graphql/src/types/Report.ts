@@ -1,7 +1,7 @@
 import { extendType, objectType } from 'nexus';
 
-import { Context } from '../../lib/context';
-import { getPackageID, humanFileSize } from '../../lib/utils';
+import { Context } from '../context';
+import { getPackageID, humanFileSize } from '../utils';
 import { MiniPackage, Package } from './Package';
 import { Suggestion } from './Suggestion';
 
@@ -19,7 +19,7 @@ export const Report = objectType({
     t.nonNull.id('id');
     t.nonNull.list.field('dependencies', {
       type: Package,
-      resolve: (_, __, ctx: Context) => {
+      resolve: (_, __, ctx) => {
         return Object.values(ctx.report.dependencies).map((dep) => {
           return {
             id: getPackageID(dep),

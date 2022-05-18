@@ -1,7 +1,7 @@
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
 
-import { Context } from '../../lib/context';
-import { getPackageID } from '../../lib/utils';
+import { Context } from '../context';
+import { getPackageID } from '../utils';
 import { Package } from './Package';
 
 export const SuggestionAction = objectType({

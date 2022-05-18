@@ -5,11 +5,12 @@
   "engines": {
     "node": ">= 16"
   },
-  "main": "./dist/lib/index.js",
-  "types": "./dist/lib/index",
+  "main": "./dist/index",
+  "types": "./dist/index",
   "scripts": {
-    "build": "tsc -p . && yarn build:graphql",
-    "build:graphql": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only lib/schema.ts",
+    "build": "yarn build:graphql && tsc -p .",
+    "build:graphql": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only src/schema.ts",
+    "clean": "rimraf dist",
     "test:ci": "echo 'TESTING NOT AVAILABLE YET'"
   },
   "dependencies": {

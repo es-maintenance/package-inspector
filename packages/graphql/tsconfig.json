@@ -16,6 +16,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["**/*.ts"],
+  "include": ["src/"],
   "exclude": ["node_modules", "dist"]
 }
