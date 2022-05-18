@@ -11,7 +11,7 @@ export const SuggestionAction = objectType({
     t.nonNull.string('targetPackageId');
     t.field('targetPackage', {
       type: Package,
-      resolve(me, args, ctx: Context) {
+      resolve(me, args, ctx) {
         const target = ctx.report.dependencies[me.targetPackageId];
 
         return target
@@ -34,7 +34,7 @@ export const Suggestion = objectType({
     t.nonNull.string('pluginTarget');
     t.nonNull.string('message');
     t.nonNull.int('count', {
-      resolve(me, args, ctx: Context) {
+      resolve(me, args, ctx) {
         const actions = me.actions;
 
         return actions.length;
@@ -52,7 +52,7 @@ export const SuggestionQuery = extendType({
       args: {
         id: nonNull(stringArg()),
       },
-      resolve(me, args, ctx: Context) {
+      resolve(me, args, ctx) {
         const suggestionModel = ctx.report.suggestions.find(
           (s) => s.id === args.id
         );

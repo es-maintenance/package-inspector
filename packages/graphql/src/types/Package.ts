@@ -89,7 +89,7 @@ export const Package = objectType({
 
     t.nonNull.list.field('dependencies', {
       type: Package,
-      resolve(me, __, ctx: Context) {
+      resolve(me, __, ctx) {
         const pkg =
           me.name === ctx.report.root.name
             ? ctx.report.root // If this is the root, get the serialized-package from the report's root.
@@ -131,7 +131,7 @@ export const Package = objectType({
 
     t.nonNull.list.field('suggestions', {
       type: Suggestion,
-      resolve(me, __, ctx: Context) {
+      resolve(me, __, ctx) {
         // This is going to give us the packageKey
         const id = me.id;
 
@@ -180,7 +180,7 @@ export const PackagesQuery = extendType({
   definition(t) {
     t.nonNull.list.field('packages', {
       type: Package,
-      resolve(_, __, ctx: Context) {
+      resolve(_, __, ctx) {
         return Object.values(ctx.report.dependencies).map((dep) => {
           return {
             id: getPackageID(dep),
@@ -202,7 +202,7 @@ export const PackageByVersionQuery = extendType({
         packageName: nonNull(stringArg()),
         packageVersion: nonNull(stringArg()),
       },
-      resolve(_, args, ctx: Context) {
+      resolve(_, args, ctx) {
         const packageModel =
           ctx.report.dependencies[`${args.packageName}@${args.packageVersion}`];
 

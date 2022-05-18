@@ -9,7 +9,7 @@
   "types": "./dist/index",
   "scripts": {
     "build": "yarn build:graphql && tsc -p .",
-    "build:graphql": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only src/schema.ts",
+    "build:graphql": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only src/schema.ts && yarn prettier --write ./src/codegen/",
     "clean": "rimraf dist",
     "test:ci": "echo 'TESTING NOT AVAILABLE YET'"
   },

@@ -47,7 +47,7 @@ export const Report = objectType({
     t.nonNull.list.field('suggestions', { type: Suggestion });
 
     t.nonNull.string('summary', {
-      resolve(parent, _, ctx: Context) {
+      resolve(parent, _, ctx) {
         const directDeps = ctx.report.root.dependencies;
         const allDeps = Object.keys(ctx.report.dependencies);
         const suggestionCount = ctx.report.suggestions
@@ -78,7 +78,7 @@ export const Report = objectType({
 
     t.nonNull.list.field('topSuggestions', {
       type: TopSuggestions,
-      resolve(parent, _, ctx: Context) {
+      resolve(parent, _, ctx) {
         // FIXME: this should be passed in from the query with a decorator
         const limit = 5;
 
