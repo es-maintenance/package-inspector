@@ -1,6 +1,7 @@
 import { parseDependencyKey } from '@package-inspector/core';
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
 
+import { Context } from '../../lib/context';
 import { getPackageID } from '../../lib/utils';
 import { Suggestion } from './Suggestion';
 
@@ -88,15 +89,14 @@ export const Package = objectType({
 
     t.nonNull.list.field('dependencies', {
       type: Package,
-      resolve(me, __, ctx) {
+      resolve(me, __, ctx: Context) {
         const pkg =
           me.name === ctx.report.root.name
             ? ctx.report.root // If this is the root, get the serialized-package from the report's root.
             : ctx.report.dependencies[me.id]; // Otherwise find the package definition in the provided map.
 
         return pkg
-          ? // TODO: fix
-            pkg.dependencies.map((depID: any) => {
+          ? pkg.dependencies.map((depID) => {
               const pkgDep = ctx.report.dependencies[depID];
               return {
                 id: getPackageID(pkgDep),
@@ -131,28 +131,23 @@ export const Package = objectType({
 
     t.nonNull.list.field('suggestions', {
       type: Suggestion,
-      resolve(me, __, ctx) {
+      resolve(me, __, ctx: Context) {
         // This is going to give us the packageKey
         const id = me.id;
 
-        return (
-          ctx.report.suggestions
-            // TOOD: fix
-            .map((suggestion: any) => {
-              return {
-                ...suggestion,
-                // TODO: fix
-                actions: suggestion.actions.filter((action: any) => {
-                  return action.targetPackageId === id;
-                }),
-              };
-            })
-            // TODO: fix
-            .filter((suggestion: any) => {
-              // only return suggestions that have suggestions that have actions
-              return suggestion?.actions.length > 0;
-            })
-        );
+        return ctx.report.suggestions
+          .map((suggestion) => {
+            return {
+              ...suggestion,
+              actions: suggestion.actions.filter((action) => {
+                return action.targetPackageId === id;
+              }),
+            };
+          })
+          .filter((suggestion) => {
+            // only return suggestions that have suggestions that have actions
+            return suggestion?.actions.length > 0;
+          });
       },
     });
 
@@ -185,9 +180,8 @@ export const PackagesQuery = extendType({
   definition(t) {
     t.nonNull.list.field('packages', {
       type: Package,
-      resolve(_, __, ctx) {
-        // TOOD: fix
-        return Object.values(ctx.report.dependencies).map((dep: any) => {
+      resolve(_, __, ctx: Context) {
+        return Object.values(ctx.report.dependencies).map((dep) => {
           return {
             id: getPackageID(dep),
             name: dep.name,
@@ -208,7 +202,7 @@ export const PackageByVersionQuery = extendType({
         packageName: nonNull(stringArg()),
         packageVersion: nonNull(stringArg()),
       },
-      resolve(_, args, ctx) {
+      resolve(_, args, ctx: Context) {
         const packageModel =
           ctx.report.dependencies[`${args.packageName}@${args.packageVersion}`];
 

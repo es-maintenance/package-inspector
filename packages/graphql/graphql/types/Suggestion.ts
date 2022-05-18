@@ -1,5 +1,6 @@
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
 
+import { Context } from '../../lib/context';
 import { getPackageID } from '../../lib/utils';
 import { Package } from './Package';
 
@@ -10,7 +11,7 @@ export const SuggestionAction = objectType({
     t.nonNull.string('targetPackageId');
     t.field('targetPackage', {
       type: Package,
-      resolve(me, args, ctx) {
+      resolve(me, args, ctx: Context) {
         const target = ctx.report.dependencies[me.targetPackageId];
 
         return target
@@ -33,7 +34,7 @@ export const Suggestion = objectType({
     t.nonNull.string('pluginTarget');
     t.nonNull.string('message');
     t.nonNull.int('count', {
-      resolve(me, args, ctx) {
+      resolve(me, args, ctx: Context) {
         const actions = me.actions;
 
         return actions.length;
@@ -51,10 +52,9 @@ export const SuggestionQuery = extendType({
       args: {
         id: nonNull(stringArg()),
       },
-      resolve(me, args, ctx) {
-        // TODO: Fix
+      resolve(me, args, ctx: Context) {
         const suggestionModel = ctx.report.suggestions.find(
-          (s: any) => s.id === args.id
+          (s) => s.id === args.id
         );
 
         return suggestionModel

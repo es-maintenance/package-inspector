@@ -8,7 +8,7 @@
   "main": "./dist/lib/index.js",
   "types": "./dist/lib/index",
   "scripts": {
-    "build": "yarn build:graphql && tsc -p .",
+    "build": "tsc -p . && yarn build:graphql",
     "build:graphql": "ts-node-dev -O '{ \"module\": \"commonjs\" }' --transpile-only lib/schema.ts"
   },
   "dependencies": {

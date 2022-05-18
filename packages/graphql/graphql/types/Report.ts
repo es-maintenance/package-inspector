@@ -1,5 +1,6 @@
 import { extendType, objectType } from 'nexus';
 
+import { Context } from '../../lib/context';
 import { getPackageID, humanFileSize } from '../../lib/utils';
 import { MiniPackage, Package } from './Package';
 import { Suggestion } from './Suggestion';
@@ -18,9 +19,8 @@ export const Report = objectType({
     t.nonNull.id('id');
     t.nonNull.list.field('dependencies', {
       type: Package,
-      resolve: (_, __, ctx) => {
-        // TODO: fix
-        return Object.values(ctx.report.dependencies).map((dep: any) => {
+      resolve: (_, __, ctx: Context) => {
+        return Object.values(ctx.report.dependencies).map((dep) => {
           return {
             id: getPackageID(dep),
             name: dep.name,
@@ -47,25 +47,23 @@ export const Report = objectType({
     t.nonNull.list.field('suggestions', { type: Suggestion });
 
     t.nonNull.string('summary', {
-      resolve(parent, _, ctx) {
+      resolve(parent, _, ctx: Context) {
         const directDeps = ctx.report.root.dependencies;
         const allDeps = Object.keys(ctx.report.dependencies);
         const suggestionCount = ctx.report.suggestions
-          // TODO: Fix
-          .map((suggestion: any) => suggestion.actions.length)
-          .reduce((a: number, b: number) => a + b, 0)
+          .map((suggestion) => suggestion.actions.length)
+          .reduce((a, b) => a + b, 0)
           .toLocaleString();
 
         const fileSize = humanFileSize(
           Object.keys(ctx.report.dependencies)
-            .map((dependencyLookupKey: any) => {
+            .map((dependencyLookupKey) => {
               return (
                 ctx.report.dependencies[dependencyLookupKey].metadata?.size
                   ?.physical || 0
               );
             })
-            // TODO: fix
-            .reduce((a: number, b: number) => a + b, 0)
+            .reduce((a, b) => a + b, 0)
         );
 
         return (
@@ -80,7 +78,7 @@ export const Report = objectType({
 
     t.nonNull.list.field('topSuggestions', {
       type: TopSuggestions,
-      resolve(parent, _, ctx) {
+      resolve(parent, _, ctx: Context) {
         // FIXME: this should be passed in from the query with a decorator
         const limit = 5;
 
@@ -88,10 +86,8 @@ export const Report = objectType({
 
         const suggestions = ctx.report.suggestions;
 
-        // TODO: fix
-        suggestions.forEach((suggestion: any) => {
-          // TODO: fix
-          suggestion.actions.forEach((action: any) => {
+        suggestions.forEach((suggestion) => {
+          suggestion.actions.forEach((action) => {
             const id = action.targetPackageId;
             const target = ctx.report.dependencies[id];
             const { version, name } = target;
