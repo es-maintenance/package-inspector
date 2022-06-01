@@ -86,9 +86,7 @@ export async function generateReport(
           }),
           pathsOnDisk: [],
         },
-        devDependencies: Object.keys(devDependencies || {}).map((name) => {
-          return `${name}${devDependencies?.[name] || 'N/A'}`;
-        }),
+        devDependencies: Object.entries(devDependencies || {}).map(([name, maybeVersion]) => `${name}@${maybeVersion}`),
         dependencies: [...depNode.edgesOut.values()]
           .filter((dependency) => {
             const node = dependency.to;
