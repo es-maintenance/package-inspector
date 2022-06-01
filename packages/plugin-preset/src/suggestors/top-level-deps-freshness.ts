@@ -1,6 +1,8 @@
 import {
   type Suggestion,
   getLatestPackages,
+  SuggestionAction,
+  SuggestionInput,
   SuggestionTask,
 } from '@package-inspector/core';
 import debug from 'debug';
@@ -78,7 +80,7 @@ export class TopLevelDepsFreshness extends SuggestionTask {
     const latestPackages = await getLatestPackages(arboristValues);
 
     if (rootArboristNode?.edgesOut) {
-      for (const [, edge] of rootArboristNode?.edgesOut) {
+      for (const [, edge] of rootArboristNode.edgesOut) {
         // we will need to iterate through the workspace deps to get the most update information
         if (edge.type === 'workspace') {
           if (edge.to.package.devDependencies) {
