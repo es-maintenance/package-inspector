@@ -28,6 +28,7 @@ export interface Package {
 export interface SuggestionAction {
   message: string;
   targetPackageId: string;
+  priority?: number;
 }
 
 export interface Suggestion {

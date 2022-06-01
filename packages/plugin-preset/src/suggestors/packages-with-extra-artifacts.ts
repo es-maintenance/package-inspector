@@ -40,6 +40,7 @@ export class PackagesWithExtraArtifacts extends SuggestionTask {
               size.physical
             )}.`,
             targetPackageId: `${node.name}@${node.version}`,
+            priority: size.physical,
           });
         }
       }
@@ -57,6 +58,7 @@ export class PackagesWithExtraArtifacts extends SuggestionTask {
               size.physical
             )}.`,
             targetPackageId: `${node.name}@${node.version}`,
+            priority: size.physical,
           });
         }
       }

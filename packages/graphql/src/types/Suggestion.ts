@@ -8,6 +8,7 @@ export const SuggestionAction = objectType({
   name: 'SuggestionAction',
   definition(t) {
     t.nonNull.string('message');
+    t.int('priority');
     t.nonNull.string('targetPackageId');
     t.field('targetPackage', {
       type: Package,

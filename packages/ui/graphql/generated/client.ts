@@ -108,6 +108,7 @@ export type Suggestion = {
 export type SuggestionAction = {
   __typename?: 'SuggestionAction';
   message: Scalars['String'];
+  priority?: Maybe<Scalars['Int']>;
   targetPackage?: Maybe<Package>;
   targetPackageId: Scalars['String'];
 };
@@ -292,6 +293,7 @@ export type SuggestionsByIdSuggestionQuery = {
     actions: Array<{
       __typename?: 'SuggestionAction';
       message: string;
+      priority?: number | null;
       targetPackage?: { __typename?: 'Package'; name: string } | null;
     } | null>;
   } | null;
@@ -733,6 +735,7 @@ export const SuggestionsByIdSuggestionDocument = gql`
       pluginTarget
       actions {
         message
+        priority
         targetPackage {
           name
         }

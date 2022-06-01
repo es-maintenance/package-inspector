@@ -17,6 +17,7 @@ gql`
       pluginTarget
       actions {
         message
+        priority
         targetPackage {
           name
         }
@@ -68,6 +69,7 @@ const Suggestion: NextPage = () => {
                     );
                   },
                 },
+                { field: 'priority' },
               ]}
               rows={
                 data?.suggestion?.actions.map((action, i) => {
@@ -75,6 +77,7 @@ const Suggestion: NextPage = () => {
                     id: i,
                     message: action?.message || 'N/A',
                     packageName: action?.targetPackage?.name || 'N/A',
+                    priority: action?.priority || 0,
                   };
                 }) || []
               }

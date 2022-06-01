@@ -68,6 +68,7 @@ export interface NexusGenObjects {
   SuggestionAction: {
     // root type
     message: string; // String!
+    priority?: number | null; // Int
     targetPackageId: string; // String!
   };
   TopSuggestions: {
@@ -152,6 +153,7 @@ export interface NexusGenFieldTypes {
   SuggestionAction: {
     // field return type
     message: string; // String!
+    priority: number | null; // Int
     targetPackage: NexusGenRootTypes['Package'] | null; // Package
     targetPackageId: string; // String!
   };
@@ -229,6 +231,7 @@ export interface NexusGenFieldTypeNames {
   SuggestionAction: {
     // field return type name
     message: 'String';
+    priority: 'Int';
     targetPackage: 'Package';
     targetPackageId: 'String';
   };
