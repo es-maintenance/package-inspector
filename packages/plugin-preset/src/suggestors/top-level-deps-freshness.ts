@@ -9,9 +9,43 @@ import {
   getLatestPackages,
   parseDependencyKey,
   SuggestionTask,
+  IArboristNode,
 } from '@package-inspector/core';
 
 const logger = debug('pi-core:suggestor:top-level-deps-freshness');
+
+function categorizeDepByType(
+  outOfDate: {
+    major: string[];
+    minor: string[];
+    patch: string[];
+  },
+  latestPackages: any,
+  name: string,
+  version: string
+) {
+  let diff;
+
+  try {
+    diff = semverDiff(version, latestPackages[name]);
+  } catch (ex) {
+    logger(
+      `Could not get a diff for ${name} between (${version} <> ${latestPackages[name]})`
+    );
+  }
+
+  switch (diff) {
+    case 'major':
+      outOfDate.major.push(`${name}@${version}`);
+      break;
+    case 'minor':
+      outOfDate.minor.push(`${name}@${version}`);
+      break;
+    case 'patch':
+      outOfDate.patch.push(`${name}@${version}`);
+      break;
+  }
+}
 
 export class TopLevelDepsFreshness extends SuggestionTask {
   name = 'Top Level Dependency Freshness';
@@ -20,12 +54,8 @@ export class TopLevelDepsFreshness extends SuggestionTask {
     rootArboristNode,
     arboristValues,
   }: SuggestionInput): Promise<Suggestion> {
-    const dependencies = Object.assign(
-      {},
-      Object.assign({}, rootArboristNode?.package.devDependencies ?? {}),
-      rootArboristNode?.package.dependencies ?? {}
-    );
-    const totalDeps = Object.keys(dependencies).length;
+    let totalDeps = 0;
+
     const outOfDate: {
       major: string[];
       minor: string[];
@@ -34,50 +64,45 @@ export class TopLevelDepsFreshness extends SuggestionTask {
     // TODO: this should not be done in this package, it should be done at the top level core library
     const latestPackages = await getLatestPackages(arboristValues);
 
-    for (const dependency in dependencies) {
-      try {
-        const topLevelPackage = rootArboristNode?.children.get(dependency);
+    if (rootArboristNode?.edgesOut) {
+      for (const [name, edge] of rootArboristNode?.edgesOut) {
+        // we will need to iterate through the workspace deps to get the most update information
+        if (edge.type === 'workspace') {
+          if (edge.to.package.devDependencies) {
+            for (const name in edge.to.package.devDependencies) {
+              totalDeps += 1;
 
-        if (topLevelPackage) {
-          // ignore links or workspaces
-          if (topLevelPackage.isLink || topLevelPackage.isWorkspace) {
-            continue;
+              categorizeDepByType(
+                outOfDate,
+                latestPackages,
+                name,
+                edge.to.package.devDependencies[name]
+              );
+            }
           }
 
-          const breadcrumb = getBreadcrumb(topLevelPackage);
-          let diff;
-          try {
-            diff = semverDiff(
-              topLevelPackage.version,
-              latestPackages[topLevelPackage.name]
-            );
-          } catch (ex) {
-            logger(
-              `Could not get a diff for ${topLevelPackage.name} between (${
-                topLevelPackage.version
-              } <> ${latestPackages[topLevelPackage.name]}) (${
-                topLevelPackage.isLink || topLevelPackage.isWorkspace
-              })`
-            );
-          }
+          if (edge.to.package.dependencies) {
+            for (const name in edge.to.package.dependencies) {
+              totalDeps += 1;
 
-          switch (diff) {
-            case 'major':
-              outOfDate.major.push(`${dependency}@${topLevelPackage.version}`);
-              break;
-            case 'minor':
-              outOfDate.minor.push(`${dependency}@${topLevelPackage.version}`);
-              break;
-            case 'patch':
-              outOfDate.patch.push(`${dependency}@${topLevelPackage.version}`);
-              break;
+              categorizeDepByType(
+                outOfDate,
+                latestPackages,
+                name,
+                edge.to.package.dependencies[name]
+              );
+            }
           }
         } else {
-          logger(`No topLevelPackage found for ${dependency}`);
+          totalDeps += 1;
+
+          categorizeDepByType(
+            outOfDate,
+            latestPackages,
+            edge.to.name,
+            edge.to.version
+          );
         }
-      } catch (ex) {
-        // TODO: better debugging messaging here
-        logger(ex);
       }
     }
 

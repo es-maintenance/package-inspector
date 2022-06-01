@@ -108,6 +108,7 @@ export type Suggestion = {
 export type SuggestionAction = {
   __typename?: 'SuggestionAction';
   message: Scalars['String'];
+  priority?: Maybe<Scalars['Int']>;
   targetPackage?: Maybe<Package>;
   targetPackageId: Scalars['String'];
 };
