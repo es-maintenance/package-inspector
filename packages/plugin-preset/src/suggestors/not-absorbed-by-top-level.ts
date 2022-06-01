@@ -1,15 +1,14 @@
-import path from 'path';
-import debug from 'debug';
-
 import {
-  type SuggestionAction,
   type Suggestion,
+  type SuggestionAction,
   type SuggestionInput,
   getBreadcrumb,
   getDirectorySize,
   humanFileSize,
   SuggestionTask,
 } from '@package-inspector/core';
+import debug from 'debug';
+import path from 'path';
 
 const logger = debug('pi-core:suggestor:not-absorbed-by-top-level');
 

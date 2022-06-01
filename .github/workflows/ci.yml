@@ -37,5 +37,7 @@ jobs:
         run: yarn install
       - name: Build Workspaces
         run: yarn build
+      - name: Lint Workspaces
+        run: yarn lint:ci
       - name: Test Workspaces
         run: yarn test:ci

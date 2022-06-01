@@ -1,15 +1,14 @@
-import fs from 'fs';
-import path from 'path';
-
 import {
-  type SuggestionInput,
-  type SuggestionAction,
   type Suggestion,
+  type SuggestionAction,
+  type SuggestionInput,
   getBreadcrumb,
   getDirectorySize,
   humanFileSize,
   SuggestionTask,
 } from '@package-inspector/core';
+import fs from 'fs';
+import path from 'path';
 
 /**
  * // docs/ or tests/ is published to npm - how do you NOT publish them
