@@ -47,10 +47,10 @@ export interface IArboristNode {
 }
 
 export interface SuggestionInput {
-  rootArboristNode?: IArboristNode;
+  rootArboristNode: IArboristNode;
   arboristValues: IArboristNode[];
   dependencies: DependenciesMap;
-  latestPackages?: IDependencyMap;
+  latestPackages: IDependencyMap;
 }
 
 export interface Plugin {

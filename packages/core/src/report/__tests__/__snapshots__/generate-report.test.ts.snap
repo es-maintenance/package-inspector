@@ -64,7 +64,13 @@ Report {
 
 exports[`generate-report > it should add latest package info if outdated packages are found 1`] = `
 Report {
-  "dependencies": {},
+  "dependencies": {
+    "foo@0.2.1": {
+      "dependencies": [],
+      "name": "foo",
+      "version": "0.2.1",
+    },
+  },
   "latestPackages": {
     "foo": "0.2.1",
   },

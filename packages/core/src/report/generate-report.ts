@@ -1,7 +1,7 @@
 import path from 'path';
 import Arborist from '@npmcli/arborist';
 
-import { IArboristNode, ServerPlugin } from '../types';
+import { IArboristNode, ServerPlugin, SuggestionInput } from '../types';
 import {
   getDirectorySize,
   getLatestPackages,
@@ -61,6 +61,16 @@ export async function generateReport(
 
   Object.keys(latestPackagesMap).forEach((packageName) => {
     report.latestPackages[packageName] = latestPackagesMap[packageName];
+
+    const version = latestPackagesMap[packageName];
+    const lookupKey = `${packageName}@${version}`;
+
+    // add latest packages to dependency lookup map
+    report.dependencies[lookupKey] = {
+      name: packageName,
+      version,
+      dependencies: [],
+    };
   });
 
   arboristValues.forEach((depNode) => {
@@ -129,9 +139,10 @@ export async function generateReport(
       }),
   };
 
-  const suggestionInput = {
+  const suggestionInput: SuggestionInput = {
     arboristValues,
     rootArboristNode,
+    latestPackages: latestPackagesMap,
     dependencies: report.dependencies,
   };
 
