@@ -5,6 +5,11 @@ Report {
   "dependencies": {
     "left-pad@1.3.0": {
       "dependencies": [],
+      "devDependencies": [
+        "benchmark@^2.1.0",
+        "fast-check@0.0.8",
+        "tape@*",
+      ],
       "funding": undefined,
       "homepage": undefined,
       "metadata": {
@@ -27,6 +32,7 @@ Report {
     "dependencies": [
       "left-pad@1.3.0",
     ],
+    "devDependencies": [],
     "funding": undefined,
     "homepage": undefined,
     "metadata": {
@@ -48,6 +54,7 @@ Report {
   "pluginInfo": {},
   "root": {
     "dependencies": [],
+    "devDependencies": [],
     "funding": undefined,
     "homepage": undefined,
     "metadata": {
@@ -71,6 +78,7 @@ Report {
   "pluginInfo": {},
   "root": {
     "dependencies": [],
+    "devDependencies": [],
     "funding": undefined,
     "homepage": undefined,
     "metadata": {
