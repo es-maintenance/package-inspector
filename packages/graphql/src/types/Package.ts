@@ -1,7 +1,6 @@
 import { parseDependencyKey } from '@package-inspector/core';
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
 
-import { Context } from '../context';
 import { getPackageID } from '../utils';
 import { Suggestion } from './Suggestion';
 

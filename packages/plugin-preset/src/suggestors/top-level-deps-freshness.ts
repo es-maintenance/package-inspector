@@ -1,13 +1,10 @@
-import semverDiff from 'semver/functions/diff';
-import debug from 'debug';
-
 import {
-  type SuggestionInput,
-  type SuggestionAction,
   type Suggestion,
   getLatestPackages,
   SuggestionTask,
 } from '@package-inspector/core';
+import debug from 'debug';
+import semverDiff from 'semver/functions/diff';
 
 const logger = debug('pi-core:suggestor:top-level-deps-freshness');
 

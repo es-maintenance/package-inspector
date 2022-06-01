@@ -1,12 +1,11 @@
 import {
-  type SuggestionAction,
   type Suggestion,
+  type SuggestionAction,
   type SuggestionInput,
   getBreadcrumb,
-  SuggestionTask,
   humanFileSize,
+  SuggestionTask,
 } from '@package-inspector/core';
-
 import debug from 'debug';
 
 const logger = debug('pi-core:suggestor:packages-with-pinned-versions');
@@ -21,6 +20,8 @@ export class PackagesWithPinnedVersions extends SuggestionTask {
     arboristValues,
     dependencies,
   }: SuggestionInput): Promise<Suggestion> {
+    logger('started');
+
     const packagedWithPinned: SuggestionAction[] = [];
 
     for (const node of arboristValues) {
