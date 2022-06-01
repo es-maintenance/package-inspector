@@ -5,24 +5,28 @@ import {
   type SuggestionInput,
   type SuggestionAction,
   type Suggestion,
-  getBreadcrumb,
   getLatestPackages,
-  parseDependencyKey,
   SuggestionTask,
-  IArboristNode,
 } from '@package-inspector/core';
 
 const logger = debug('pi-core:suggestor:top-level-deps-freshness');
 
+type OutOfDateNode = {
+  name: string;
+  version: string;
+  workspace?: string;
+};
+
 function categorizeDepByType(
   outOfDate: {
-    major: string[];
-    minor: string[];
-    patch: string[];
+    major: OutOfDateNode[];
+    minor: OutOfDateNode[];
+    patch: OutOfDateNode[];
   },
   latestPackages: any,
   name: string,
-  version: string
+  version: string,
+  workspace?: string
 ) {
   let diff;
 
@@ -36,13 +40,25 @@ function categorizeDepByType(
 
   switch (diff) {
     case 'major':
-      outOfDate.major.push(`${name}@${version}`);
+      outOfDate.major.push({
+        name,
+        version,
+        workspace,
+      });
       break;
     case 'minor':
-      outOfDate.minor.push(`${name}@${version}`);
+      outOfDate.minor.push({
+        name,
+        version,
+        workspace,
+      });
       break;
     case 'patch':
-      outOfDate.patch.push(`${name}@${version}`);
+      outOfDate.patch.push({
+        name,
+        version,
+        workspace,
+      });
       break;
   }
 }
@@ -57,15 +73,15 @@ export class TopLevelDepsFreshness extends SuggestionTask {
     let totalDeps = 0;
 
     const outOfDate: {
-      major: string[];
-      minor: string[];
-      patch: string[];
+      major: OutOfDateNode[];
+      minor: OutOfDateNode[];
+      patch: OutOfDateNode[];
     } = { major: [], minor: [], patch: [] };
     // TODO: this should not be done in this package, it should be done at the top level core library
     const latestPackages = await getLatestPackages(arboristValues);
 
     if (rootArboristNode?.edgesOut) {
-      for (const [name, edge] of rootArboristNode?.edgesOut) {
+      for (const [, edge] of rootArboristNode?.edgesOut) {
         // we will need to iterate through the workspace deps to get the most update information
         if (edge.type === 'workspace') {
           if (edge.to.package.devDependencies) {
@@ -76,7 +92,8 @@ export class TopLevelDepsFreshness extends SuggestionTask {
                 outOfDate,
                 latestPackages,
                 name,
-                edge.to.package.devDependencies[name]
+                edge.to.package.devDependencies[name],
+                edge.to.package.name
               );
             }
           }
@@ -108,28 +125,40 @@ export class TopLevelDepsFreshness extends SuggestionTask {
 
     const actions: SuggestionAction[] = [];
 
-    outOfDate.major.forEach((dependencyKey) => {
+    outOfDate.major.forEach(({ name, version, workspace }) => {
+      const dependencyKey = `${name}@${version}`;
+
       actions.push({
-        message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
-          latestPackages[parseDependencyKey(dependencyKey).name]
+        message: `"${dependencyKey}" is required as a direct dependency${
+          workspace ? ` of the workspace "${workspace}"` : ','
+        } the latest is ${
+          latestPackages[name]
         }. This is a major version out of date.`,
         targetPackageId: dependencyKey,
       });
     });
 
-    outOfDate.minor.forEach((dependencyKey) => {
+    outOfDate.minor.forEach(({ name, version, workspace }) => {
+      const dependencyKey = `${name}@${version}`;
+
       actions.push({
-        message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
-          latestPackages[parseDependencyKey(dependencyKey).name]
+        message: `"${dependencyKey}" is required as a direct dependency${
+          workspace ? ` of the workspace "${workspace}"` : ','
+        } the latest is ${
+          latestPackages[name]
         }. This is a minor version out of date.`,
         targetPackageId: dependencyKey,
       });
     });
 
-    outOfDate.patch.forEach((dependencyKey) => {
+    outOfDate.patch.forEach(({ name, version, workspace }) => {
+      const dependencyKey = `${name}@${version}`;
+
       actions.push({
-        message: `"${dependencyKey}" is required as a direct dependency, the latest is ${
-          latestPackages[parseDependencyKey(dependencyKey).name]
+        message: `"${dependencyKey}" is required as a direct dependency${
+          workspace ? ` of the workspace "${workspace}"` : ','
+        } the latest is ${
+          latestPackages[name]
         }. This is a patch version out of date.`,
         targetPackageId: dependencyKey,
       });
