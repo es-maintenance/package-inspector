@@ -44,8 +44,6 @@ const Packages: NextPage = () => {
     },
   });
 
-  console.log(data?.packages.pageInfo);
-
   mapPageToNextCursor.current[page + 1] =
     data?.packages.pageInfo.endCursor || 'null';
 
@@ -54,12 +52,12 @@ const Packages: NextPage = () => {
   );
 
   useEffect(() => {
-    setRowCountState((prevRowCountState) =>
-      data?.packages?.totalCount !== undefined
+    return setRowCountState(
+      (data?.packages?.totalCount !== undefined
         ? data?.packages?.totalCount
-        : prevRowCountState || 0
+        : rowCountState) || 0
     );
-  }, [data?.packages?.totalCount, setRowCountState]);
+  }, [data?.packages?.totalCount, rowCountState, setRowCountState]);
 
   const handlePageChange = (newPage: number) => {
     if (data?.packages.pageInfo.hasNextPage) {
