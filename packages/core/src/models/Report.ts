@@ -22,6 +22,7 @@ export interface Package {
   funding?: string;
   homepage?: string;
   dependencies: string[];
+  devDependencies: string[];
   type?: string;
 }
 
@@ -161,6 +162,7 @@ export class Report {
       name: '',
       version: '',
       dependencies: [],
+      devDependencies: [],
     };
   }
 
