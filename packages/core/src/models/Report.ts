@@ -116,8 +116,7 @@ export function serializeReport(jsonReport: any): SerializedReport {
     latestPackages: {},
   };
 
-  // eslint-disable-next-line no-prototype-builtins
-  if (jsonReport.hasOwnProperty('latestPackages')) {
+  if (Object.prototype.hasOwnProperty.call(jsonReport, 'latestPackages')) {
     if (typeof jsonReport.latestPackages !== 'object') {
       errors.push(
         `"jsonReport.latestPackages" should be of type "object" but found "${typeof jsonReport.latestPackages}"`
