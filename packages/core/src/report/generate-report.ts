@@ -1,15 +1,14 @@
-import path from 'path';
 import Arborist from '@npmcli/arborist';
+import path from 'path';
 
-import { IArboristNode, ServerPlugin } from '../types';
+import { Report } from '../models';
 import {
+  formatDuration,
   getDirectorySize,
   getLatestPackages,
   stripPathOnDisk,
-  formatDuration,
 } from '../package';
-
-import { Report } from '../models';
+import { IArboristNode, ServerPlugin } from '../types';
 
 function getValues(dependencyTree: IArboristNode) {
   // ignore the root node
@@ -24,6 +23,7 @@ function processPlugins(plugins: string[]): ServerPlugin[] {
   plugins.forEach((pluginPath) => {
     // FIXME: need to have a try catch for this
     // FIXME: we need to have a test for this code, easily breakable
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const ServerPlugin = require(`${pluginPath}/server`)?.default;
 
     if (ServerPlugin) {

@@ -4,8 +4,8 @@ import { Suggestion } from '../models';
 import { SuggestionInput } from '../types';
 
 export abstract class SuggestionTask {
-  name: string = '';
-  elapsedTime: number = 0;
+  name = '';
+  elapsedTime = 0;
 
   abstract task(suggestionInput: SuggestionInput): Promise<Suggestion>;
 
