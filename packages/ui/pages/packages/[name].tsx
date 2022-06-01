@@ -13,13 +13,17 @@ gql`
       name
       latest
       variants {
-        id
-        version
-        name
-        parent {
+        nodes {
           id
-          name
           version
+          name
+          parent {
+            nodes {
+              id
+              name
+              version
+            }
+          }
         }
       }
     }
@@ -50,7 +54,7 @@ const Package: NextPage = () => {
     <>
       <h1>Package: {name}</h1>
       <h3>Versions:</h3>
-      {data.package?.variants?.map((variant) => {
+      {data.package?.variants?.nodes?.map((variant) => {
         return (
           <div key={variant?.id}>
             <NextLink
@@ -61,11 +65,11 @@ const Package: NextPage = () => {
               {variant?.version}
             </NextLink>
 
-            {(variant?.parent?.length || 0) > 0 ? (
+            {(variant?.parent?.nodes?.length || 0) > 0 ? (
               <>
                 <h3>Packages that depend on this</h3>
                 <ul>
-                  {variant?.parent.map((parent) => {
+                  {variant?.parent?.nodes?.map((parent) => {
                     return (
                       <li key={parent?.id}>
                         <NextLink

@@ -27,26 +27,92 @@ export type MiniPackage = {
   version: Scalars['String'];
 };
 
+export type MiniPackageConnection = {
+  __typename?: 'MiniPackageConnection';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types */
+  edges?: Maybe<Array<Maybe<MiniPackageEdge>>>;
+  /** Flattened list of MiniPackage type */
+  nodes?: Maybe<Array<Maybe<MiniPackage>>>;
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type MiniPackageEdge = {
+  __typename?: 'MiniPackageEdge';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor */
+  cursor: Scalars['String'];
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Node */
+  node?: Maybe<MiniPackage>;
+};
+
 export type Package = {
   __typename?: 'Package';
-  dependencies: Array<Maybe<Package>>;
+  dependencies: PackageConnection;
   dependencyCount: Scalars['Int'];
   funding?: Maybe<Scalars['String']>;
   homepage?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   metadata?: Maybe<PackageMetadata>;
   name: Scalars['String'];
-  parent: Array<Maybe<Package>>;
-  suggestions: Array<Maybe<Suggestion>>;
+  parent: PackageConnection;
+  suggestions: SuggestionConnection;
   type?: Maybe<Scalars['String']>;
   version: Scalars['String'];
+};
+
+export type PackagedependenciesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type PackageparentArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type PackagesuggestionsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 export type PackageCompound = {
   __typename?: 'PackageCompound';
   latest: Scalars['String'];
   name: Scalars['String'];
-  variants: Array<Maybe<Package>>;
+  variants: PackageConnection;
+};
+
+export type PackageCompoundvariantsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type PackageConnection = {
+  __typename?: 'PackageConnection';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types */
+  edges?: Maybe<Array<Maybe<PackageEdge>>>;
+  /** Flattened list of Package type */
+  nodes?: Maybe<Array<Maybe<Package>>>;
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type PackageEdge = {
+  __typename?: 'PackageEdge';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor */
+  cursor: Scalars['String'];
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Node */
+  node?: Maybe<Package>;
 };
 
 export type PackageMetadata = {
@@ -55,11 +121,24 @@ export type PackageMetadata = {
   size?: Maybe<SizeInfo>;
 };
 
+/** PageInfo cursor, as defined in https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo */
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  /** The cursor corresponding to the last nodes in edges. Null if the connection is empty. */
+  endCursor?: Maybe<Scalars['String']>;
+  /** Used to indicate whether more edges exist following the set defined by the clients arguments. */
+  hasNextPage: Scalars['Boolean'];
+  /** Used to indicate whether more edges exist prior to the set defined by the clients arguments. */
+  hasPreviousPage: Scalars['Boolean'];
+  /** The cursor corresponding to the first nodes in edges. Null if the connection is empty. */
+  startCursor?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   package?: Maybe<PackageCompound>;
   packageByVersion?: Maybe<Package>;
-  packages: Array<Maybe<Package>>;
+  packages: PackageConnection;
   report: Report;
   suggestion?: Maybe<Suggestion>;
   title: Scalars['String'];
@@ -74,19 +153,54 @@ export type QuerypackageByVersionArgs = {
   packageVersion: Scalars['String'];
 };
 
+export type QuerypackagesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
 export type QuerysuggestionArgs = {
   id: Scalars['String'];
 };
 
 export type Report = {
   __typename?: 'Report';
-  dependencies: Array<Maybe<Package>>;
+  dependencies: PackageConnection;
   id: Scalars['ID'];
-  latestPackages: Array<Maybe<MiniPackage>>;
+  latestPackages: MiniPackageConnection;
   root: Package;
-  suggestions: Array<Maybe<Suggestion>>;
+  suggestions: SuggestionConnection;
   summary: Scalars['String'];
-  topSuggestions: Array<Maybe<TopSuggestions>>;
+  topSuggestions: TopSuggestionsConnection;
+};
+
+export type ReportdependenciesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type ReportlatestPackagesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type ReportsuggestionsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+export type ReporttopSuggestionsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 export type SizeInfo = {
@@ -112,10 +226,48 @@ export type SuggestionAction = {
   targetPackageId: Scalars['String'];
 };
 
+export type SuggestionConnection = {
+  __typename?: 'SuggestionConnection';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types */
+  edges?: Maybe<Array<Maybe<SuggestionEdge>>>;
+  /** Flattened list of Suggestion type */
+  nodes?: Maybe<Array<Maybe<Suggestion>>>;
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type SuggestionEdge = {
+  __typename?: 'SuggestionEdge';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor */
+  cursor: Scalars['String'];
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Node */
+  node?: Maybe<Suggestion>;
+};
+
 export type TopSuggestions = {
   __typename?: 'TopSuggestions';
   count: Scalars['Int'];
   package: Package;
+};
+
+export type TopSuggestionsConnection = {
+  __typename?: 'TopSuggestionsConnection';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types */
+  edges?: Maybe<Array<Maybe<TopSuggestionsEdge>>>;
+  /** Flattened list of TopSuggestions type */
+  nodes?: Maybe<Array<Maybe<TopSuggestions>>>;
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type TopSuggestionsEdge = {
+  __typename?: 'TopSuggestionsEdge';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor */
+  cursor: Scalars['String'];
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Node */
+  node?: Maybe<TopSuggestions>;
 };
 
 export type NavbarTitleQueryVariables = Exact<{ [key: string]: never }>;
@@ -133,21 +285,24 @@ export type DetailsReportQuery = {
       __typename?: 'Package';
       name: string;
       version: string;
-      dependencies: Array<{
-        __typename?: 'Package';
-        id: string;
-        name: string;
-        version: string;
-        type?: string | null;
-        metadata?: {
-          __typename?: 'PackageMetadata';
-          size?: {
-            __typename?: 'SizeInfo';
-            files?: number | null;
-            physical?: number | null;
+      dependencies: {
+        __typename?: 'PackageConnection';
+        nodes?: Array<{
+          __typename?: 'Package';
+          id: string;
+          name: string;
+          version: string;
+          type?: string | null;
+          metadata?: {
+            __typename?: 'PackageMetadata';
+            size?: {
+              __typename?: 'SizeInfo';
+              files?: number | null;
+              physical?: number | null;
+            } | null;
           } | null;
-        } | null;
-      } | null>;
+        } | null> | null;
+      };
     };
   };
 };
@@ -179,30 +334,31 @@ export type IndexReportQuery = {
   report: {
     __typename?: 'Report';
     summary: string;
-    root: {
-      __typename?: 'Package';
-      name: string;
-      version: string;
-      dependencies: Array<{ __typename?: 'Package'; id: string } | null>;
+    root: { __typename?: 'Package'; name: string; version: string };
+    topSuggestions: {
+      __typename?: 'TopSuggestionsConnection';
+      nodes?: Array<{
+        __typename?: 'TopSuggestions';
+        count: number;
+        package: {
+          __typename?: 'Package';
+          id: string;
+          version: string;
+          name: string;
+        };
+      } | null> | null;
     };
-    topSuggestions: Array<{
-      __typename?: 'TopSuggestions';
-      count: number;
-      package: {
-        __typename?: 'Package';
+    suggestions: {
+      __typename?: 'SuggestionConnection';
+      nodes?: Array<{
+        __typename?: 'Suggestion';
         id: string;
-        version: string;
+        pluginTarget: string;
         name: string;
-      };
-    } | null>;
-    suggestions: Array<{
-      __typename?: 'Suggestion';
-      id: string;
-      pluginTarget: string;
-      name: string;
-      message: string;
-      count: number;
-    } | null>;
+        message: string;
+        count: number;
+      } | null> | null;
+    };
   };
 };
 
@@ -216,18 +372,24 @@ export type PackageByNamePackageInfoQuery = {
     __typename?: 'PackageCompound';
     name: string;
     latest: string;
-    variants: Array<{
-      __typename?: 'Package';
-      id: string;
-      version: string;
-      name: string;
-      parent: Array<{
+    variants: {
+      __typename?: 'PackageConnection';
+      nodes?: Array<{
         __typename?: 'Package';
         id: string;
-        name: string;
         version: string;
-      } | null>;
-    } | null>;
+        name: string;
+        parent: {
+          __typename?: 'PackageConnection';
+          nodes?: Array<{
+            __typename?: 'Package';
+            id: string;
+            name: string;
+            version: string;
+          } | null> | null;
+        };
+      } | null> | null;
+    };
   } | null;
 };
 
@@ -251,30 +413,47 @@ export type PackagesByNameAndVersionPackageQuery = {
         files?: number | null;
       } | null;
     } | null;
-    suggestions: Array<{
-      __typename?: 'Suggestion';
-      id: string;
-      message: string;
-      actions: Array<{
-        __typename?: 'SuggestionAction';
+    suggestions: {
+      __typename?: 'SuggestionConnection';
+      nodes?: Array<{
+        __typename?: 'Suggestion';
+        id: string;
         message: string;
-        targetPackage?: { __typename?: 'Package'; id: string } | null;
-      } | null>;
-    } | null>;
+        actions: Array<{
+          __typename?: 'SuggestionAction';
+          message: string;
+          targetPackage?: { __typename?: 'Package'; id: string } | null;
+        } | null>;
+      } | null> | null;
+    };
   } | null;
 };
 
-export type PackagesPackagesQueryVariables = Exact<{ [key: string]: never }>;
+export type PackagesPackagesQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+}>;
 
 export type PackagesPackagesQuery = {
   __typename?: 'Query';
-  packages: Array<{
-    __typename?: 'Package';
-    id: string;
-    name: string;
-    version: string;
-    dependencyCount: number;
-  } | null>;
+  packages: {
+    __typename?: 'PackageConnection';
+    totalCount?: number | null;
+    nodes?: Array<{
+      __typename?: 'Package';
+      id: string;
+      name: string;
+      version: string;
+      dependencyCount: number;
+    } | null> | null;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      endCursor?: string | null;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      hasNextPage: boolean;
+    };
+  };
 };
 
 export type SuggestionsByIdSuggestionQueryVariables = Exact<{
@@ -377,14 +556,16 @@ export const DetailsReportDocument = gql`
         name
         version
         dependencies {
-          id
-          name
-          version
-          type
-          metadata {
-            size {
-              files
-              physical
+          nodes {
+            id
+            name
+            version
+            type
+            metadata {
+              size {
+                files
+                physical
+              }
             }
           }
         }
@@ -449,15 +630,16 @@ export const IndexReportDocument = gql`
       root {
         name
         version
-        dependencies {
-          id
+      }
+      topSuggestions(first: 5) {
+        nodes {
+          ...IndexPageTopSuggestion
         }
       }
-      topSuggestions {
-        ...IndexPageTopSuggestion
-      }
-      suggestions {
-        ...CardViewSuggestions
+      suggestions(first: 10) {
+        nodes {
+          ...CardViewSuggestions
+        }
       }
     }
   }
@@ -518,13 +700,17 @@ export const PackageByNamePackageInfoDocument = gql`
       name
       latest
       variants {
-        id
-        version
-        name
-        parent {
+        nodes {
           id
-          name
           version
+          name
+          parent {
+            nodes {
+              id
+              name
+              version
+            }
+          }
         }
       }
     }
@@ -600,12 +786,14 @@ export const PackagesByNameAndVersionPackageDocument = gql`
         }
       }
       suggestions {
-        id
-        message
-        actions {
+        nodes {
+          id
           message
-          targetPackage {
-            id
+          actions {
+            message
+            targetPackage {
+              id
+            }
           }
         }
       }
@@ -665,12 +853,21 @@ export type PackagesByNameAndVersionPackageQueryResult = Apollo.QueryResult<
   PackagesByNameAndVersionPackageQueryVariables
 >;
 export const PackagesPackagesDocument = gql`
-  query PackagesPackages {
-    packages {
-      id
-      name
-      version
-      dependencyCount
+  query PackagesPackages($first: Int, $after: String) {
+    packages(first: $first, after: $after) {
+      totalCount
+      nodes {
+        id
+        name
+        version
+        dependencyCount
+      }
+      pageInfo {
+        endCursor
+        hasPreviousPage
+        startCursor
+        hasNextPage
+      }
     }
   }
 `;
@@ -687,6 +884,8 @@ export const PackagesPackagesDocument = gql`
  * @example
  * const { data, loading, error } = usePackagesPackagesQuery({
  *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
  *   },
  * });
  */
