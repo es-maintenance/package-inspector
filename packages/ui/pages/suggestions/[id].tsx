@@ -77,7 +77,7 @@ const Suggestion: NextPage = () => {
                     id: i,
                     message: action?.message || 'N/A',
                     packageName: action?.targetPackage?.name || 'N/A',
-                    priority: action?.priority || 0,
+                    priority: action?.priority || 'LOW',
                   };
                 }) || []
               }

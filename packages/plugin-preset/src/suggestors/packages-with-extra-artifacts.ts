@@ -5,11 +5,24 @@ import {
   type SuggestionInput,
   type SuggestionAction,
   type Suggestion,
+  Priority,
   getBreadcrumb,
   getDirectorySize,
   humanFileSize,
   SuggestionTask,
 } from '@package-inspector/core';
+
+function getPriorityBasedOnSize(size: number): Priority {
+  let priority = Priority.Low;
+
+  if (size > 10000) {
+    priority = Priority.Medium;
+  } else if (size > 1000000) {
+    priority = Priority.High;
+  }
+
+  return priority;
+}
 
 /**
  * // docs/ or tests/ is published to npm - how do you NOT publish them
@@ -40,7 +53,7 @@ export class PackagesWithExtraArtifacts extends SuggestionTask {
               size.physical
             )}.`,
             targetPackageId: `${node.name}@${node.version}`,
-            priority: size.physical,
+            priority: getPriorityBasedOnSize(size.physical),
           });
         }
       }
@@ -58,7 +71,7 @@ export class PackagesWithExtraArtifacts extends SuggestionTask {
               size.physical
             )}.`,
             targetPackageId: `${node.name}@${node.version}`,
-            priority: size.physical,
+            priority: getPriorityBasedOnSize(size.physical),
           });
         }
       }

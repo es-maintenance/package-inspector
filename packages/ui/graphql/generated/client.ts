@@ -108,7 +108,7 @@ export type Suggestion = {
 export type SuggestionAction = {
   __typename?: 'SuggestionAction';
   message: Scalars['String'];
-  priority?: Maybe<Scalars['Int']>;
+  priority?: Maybe<Scalars['String']>;
   targetPackage?: Maybe<Package>;
   targetPackageId: Scalars['String'];
 };
@@ -293,7 +293,7 @@ export type SuggestionsByIdSuggestionQuery = {
     actions: Array<{
       __typename?: 'SuggestionAction';
       message: string;
-      priority?: number | null;
+      priority?: string | null;
       targetPackage?: { __typename?: 'Package'; name: string } | null;
     } | null>;
   } | null;
