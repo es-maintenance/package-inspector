@@ -34,7 +34,7 @@ export const Report = objectType({
           totalCount: entries.length,
         };
       },
-      totalCount: (root, args, ctx) => {
+      totalCount: () => {
         return 0;
       },
     });
@@ -55,7 +55,7 @@ export const Report = objectType({
           totalCount: entries.length,
         };
       },
-      totalCount: (root, args, ctx) => {
+      totalCount: () => {
         return 0;
       },
     });
@@ -68,7 +68,7 @@ export const Report = objectType({
           totalCount: ctx.report.suggestions.length,
         };
       },
-      totalCount: (root, args, ctx) => {
+      totalCount: () => {
         return 0;
       },
     });
@@ -145,7 +145,7 @@ export const Report = objectType({
           totalCount: entries.length,
         };
       },
-      totalCount: (root, args, ctx) => {
+      totalCount: () => {
         return 0;
       },
     });

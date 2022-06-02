@@ -71,7 +71,7 @@ export const PackageCompound = objectType({
           totalCount: entries.length,
         };
       },
-      totalCount: (me, args, ctx) => {
+      totalCount: () => {
         return 0;
       },
     });
@@ -119,7 +119,7 @@ export const Package = objectType({
           totalCount: entries.length,
         };
       },
-      totalCount: (me, args, ctx) => {
+      totalCount: () => {
         return 0;
       },
     });
@@ -146,7 +146,7 @@ export const Package = objectType({
           totalCount: entries.length,
         };
       },
-      totalCount: (root, args, ctx) => {
+      totalCount: () => {
         return 0;
       },
     });
@@ -175,7 +175,7 @@ export const Package = objectType({
           totalCount: entries.length,
         };
       },
-      totalCount: (root, args, ctx) => {
+      totalCount: () => {
         return 0;
       },
     });
@@ -223,7 +223,7 @@ export const PackagesQuery = extendType({
           totalCount: entries.length,
         };
       },
-      totalCount: (root, args, ctx) => {
+      totalCount: () => {
         return 0;
       },
     });
