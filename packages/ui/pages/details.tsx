@@ -4,18 +4,20 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ResponsiveTreeMap } from '@nivo/treemap';
 import type { NextPage } from 'next';
 import NextLink from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 import { LoadingView } from '../components';
 import { useDetailsReportQuery } from '../graphql/generated/client';
 
 gql`
-  query DetailsReport {
+  query DetailsReport($first: Int, $after: String) {
     report {
       summary
       root {
         name
         version
-        dependencies {
+        dependencies(first: $first, after: $after) {
+          totalCount
           nodes {
             id
             name
@@ -28,6 +30,12 @@ gql`
               }
             }
           }
+          pageInfo {
+            endCursor
+            hasPreviousPage
+            startCursor
+            hasNextPage
+          }
         }
       }
     }
@@ -35,7 +43,45 @@ gql`
 `;
 
 const Report: NextPage = () => {
-  const { data, loading, error } = useDetailsReportQuery();
+  const PAGE_SIZE = 100;
+
+  const mapPageToNextCursor = useRef<{ [page: number]: string }>({
+    0: 'null',
+  });
+
+  const [page, setPage] = useState(1);
+
+  const { data, loading, error } = useDetailsReportQuery({
+    variables: {
+      first: PAGE_SIZE,
+      after: mapPageToNextCursor.current[page],
+    },
+  });
+
+  mapPageToNextCursor.current[page + 1] =
+    data?.report.root.dependencies?.pageInfo.endCursor || 'null';
+
+  const [rowCountState, setRowCountState] = useState(
+    data?.report.root.dependencies?.totalCount || 0
+  );
+
+  useEffect(() => {
+    return setRowCountState(
+      (data?.report.root.dependencies?.totalCount !== undefined
+        ? data?.report.root.dependencies?.totalCount
+        : rowCountState) || 0
+    );
+  }, [
+    data?.report.root.dependencies?.totalCount,
+    rowCountState,
+    setRowCountState,
+  ]);
+
+  const handlePageChange = (newPage: number) => {
+    if (data?.report.root.dependencies?.pageInfo.hasNextPage) {
+      setPage(newPage);
+    }
+  };
 
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -131,6 +177,13 @@ const Report: NextPage = () => {
                 }) || []
               }
               components={{ Toolbar: GridToolbar }}
+              disableColumnFilter
+              disableColumnSelector
+              rowCount={rowCountState}
+              page={page}
+              pageSize={PAGE_SIZE}
+              paginationMode="server"
+              onPageChange={handlePageChange}
             />
           </div>
         </div>
