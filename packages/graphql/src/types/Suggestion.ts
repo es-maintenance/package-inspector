@@ -1,6 +1,5 @@
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
 
-import { Context } from '../context';
 import { getPackageID } from '../utils';
 import { Package } from './Package';
 

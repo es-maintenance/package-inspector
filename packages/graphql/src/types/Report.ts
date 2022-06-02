@@ -1,6 +1,6 @@
+import { connectionFromArray } from 'graphql-relay';
 import { extendType, objectType } from 'nexus';
 
-import { connectionFromArray } from 'graphql-relay';
 import { getPackageID, humanFileSize } from '../utils';
 import { MiniPackage, Package } from './Package';
 import { Suggestion } from './Suggestion';
