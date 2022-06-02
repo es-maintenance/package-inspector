@@ -1,4 +1,5 @@
 import fs from 'fs-extra';
+
 import { Priority } from '../types';
 
 export type LatestPackages = Record<string, string>;

@@ -2,10 +2,10 @@ import {
   type Suggestion,
   type SuggestionAction,
   type SuggestionInput,
-  Priority,
   getBreadcrumb,
   getDirectorySize,
   humanFileSize,
+  Priority,
   SuggestionTask,
 } from '@package-inspector/core';
 import fs from 'fs';
