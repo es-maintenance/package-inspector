@@ -1,4 +1,5 @@
 import Arborist from '@npmcli/arborist';
+import fs from 'fs-extra';
 import path from 'path';
 
 import { Report } from '../models';
@@ -71,7 +72,9 @@ export async function generateReport(
     const lookupKey = `${depNode.name}@${depNode.version}`;
 
     if (!report.dependencies[lookupKey]) {
-      const { devDependencies } = require(`${depNode.realpath}/package.json`);
+      const { devDependencies } = fs.readJSONSync(
+        `${depNode.realpath}/package.json`
+      );
 
       report.dependencies[lookupKey] = {
         funding: depNode.funding,
