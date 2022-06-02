@@ -41,15 +41,16 @@ gql`
       root {
         name
         version
-        dependencies {
-          id
+      }
+      topSuggestions(first: 5) {
+        nodes {
+          ...IndexPageTopSuggestion
         }
       }
-      topSuggestions {
-        ...IndexPageTopSuggestion
-      }
-      suggestions {
-        ...CardViewSuggestions
+      suggestions(first: 10) {
+        nodes {
+          ...CardViewSuggestions
+        }
       }
     }
   }
@@ -122,7 +123,7 @@ const Home: NextPageWithLayout = () => {
               <br />
               <SuggestionOverview
                 summary={data.report.summary}
-                topSuggestions={data.report.topSuggestions}
+                topSuggestions={data.report.topSuggestions.nodes || []}
               />
             </Container>
           </Paper>
@@ -137,7 +138,7 @@ const Home: NextPageWithLayout = () => {
           justifyContent="center"
         >
           {data &&
-            data.report.suggestions.map((suggestion, idx) => {
+            data.report.suggestions?.nodes?.map((suggestion, idx) => {
               if (!suggestion) return <></>;
 
               const CustomCardView = pluginProvider?.cardView(

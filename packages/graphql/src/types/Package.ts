@@ -1,4 +1,5 @@
 import { parseDependencyKey } from '@package-inspector/core';
+import { connectionFromArray } from 'graphql-relay';
 import { extendType, nonNull, objectType, stringArg } from 'nexus';
 
 import { getPackageID } from '../utils';
@@ -42,9 +43,9 @@ export const PackageCompound = objectType({
         return ctx.report.latestPackages[name];
       },
     });
-    t.nonNull.list.field('variants', {
+    t.nonNull.connectionField('variants', {
       type: Package,
-      resolve(me, __, ctx) {
+      resolve(me, args, ctx) {
         const packageName = me.name;
 
         const variants = Object.keys(ctx.report.dependencies).filter(
@@ -53,7 +54,7 @@ export const PackageCompound = objectType({
           }
         );
 
-        return variants
+        const entries = variants
           ? variants.map((depID: string) => {
               const pkgDep = ctx.report.dependencies[depID];
               return {
@@ -64,6 +65,15 @@ export const PackageCompound = objectType({
               };
             })
           : [];
+
+        return {
+          ...connectionFromArray(entries, args),
+          totalCount: entries.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
       },
     });
   },
@@ -86,15 +96,14 @@ export const Package = objectType({
       },
     });
 
-    t.nonNull.list.field('dependencies', {
+    t.nonNull.connectionField('dependencies', {
       type: Package,
-      resolve(me, __, ctx) {
+      resolve(me, args, ctx) {
         const pkg =
           me.name === ctx.report.root.name
             ? ctx.report.root // If this is the root, get the serialized-package from the report's root.
             : ctx.report.dependencies[me.id]; // Otherwise find the package definition in the provided map.
-
-        return pkg
+        const entries = pkg
           ? pkg.dependencies.map((depID) => {
               const pkgDep = ctx.report.dependencies[depID];
               return {
@@ -105,17 +114,25 @@ export const Package = objectType({
               };
             })
           : [];
+
+        return {
+          ...connectionFromArray(entries, args),
+          totalCount: entries.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
       },
     });
 
     // This is the list of parents that bring in this dependency
-    t.nonNull.list.field('parent', {
+    t.nonNull.connectionField('parent', {
       type: Package,
-      resolve(me, __, ctx) {
+      resolve(me, args, ctx) {
         // This is going to give us the packageKey
         const id = me.id;
-
-        return Object.keys(ctx.report.dependencies)
+        const entries = Object.keys(ctx.report.dependencies)
           .filter((depId) => {
             return ctx.report.dependencies[depId].dependencies.indexOf(id) > -1;
           })
@@ -125,16 +142,24 @@ export const Package = objectType({
               ...ctx.report.dependencies[depId],
             };
           });
+
+        return {
+          ...connectionFromArray(entries, args),
+          totalCount: entries.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
       },
     });
 
-    t.nonNull.list.field('suggestions', {
+    t.nonNull.connectionField('suggestions', {
       type: Suggestion,
-      resolve(me, __, ctx) {
+      resolve(me, args, ctx) {
         // This is going to give us the packageKey
         const id = me.id;
-
-        return ctx.report.suggestions
+        const entries = ctx.report.suggestions
           .map((suggestion) => {
             return {
               ...suggestion,
@@ -147,6 +172,15 @@ export const Package = objectType({
             // only return suggestions that have suggestions that have actions
             return suggestion?.actions.length > 0;
           });
+
+        return {
+          ...connectionFromArray(entries, args),
+          totalCount: entries.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
       },
     });
 
@@ -177,16 +211,25 @@ export const Package = objectType({
 export const PackagesQuery = extendType({
   type: 'Query',
   definition(t) {
-    t.nonNull.list.field('packages', {
+    t.nonNull.connectionField('packages', {
       type: Package,
-      resolve(_, __, ctx) {
-        return Object.values(ctx.report.dependencies).map((dep) => {
+      resolve(_, args, ctx) {
+        const entries = Object.values(ctx.report.dependencies).map((dep) => {
           return {
             id: getPackageID(dep),
             name: dep.name,
             version: dep.version,
           };
         });
+
+        return {
+          ...connectionFromArray(entries, args),
+          totalCount: entries.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
       },
     });
   },

@@ -1,3 +1,4 @@
+import { connectionFromArray } from 'graphql-relay';
 import { extendType, objectType } from 'nexus';
 
 import { getPackageID, humanFileSize } from '../utils';
@@ -16,10 +17,10 @@ export const Report = objectType({
   name: 'Report',
   definition(t) {
     t.nonNull.id('id');
-    t.nonNull.list.field('dependencies', {
+    t.nonNull.connectionField('dependencies', {
       type: Package,
-      resolve: (_, __, ctx) => {
-        return Object.values(ctx.report.dependencies).map((dep) => {
+      resolve: (_, args, ctx, __) => {
+        const entries = Object.values(ctx.report.dependencies).map((dep) => {
           return {
             id: getPackageID(dep),
             name: dep.name,
@@ -27,12 +28,21 @@ export const Report = objectType({
             type: dep.type,
           };
         });
+
+        return {
+          ...connectionFromArray(entries, args),
+          totalCount: entries.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
       },
     });
-    t.nonNull.list.field('latestPackages', {
+    t.nonNull.connectionField('latestPackages', {
       type: MiniPackage,
-      resolve(_, __, ctx) {
-        return Object.entries(ctx.report.latestPackages).map(
+      async resolve(_, args, ctx, __) {
+        const entries = Object.entries(ctx.report.latestPackages).map(
           ([name, version]) => {
             return {
               name,
@@ -40,10 +50,31 @@ export const Report = objectType({
             };
           }
         );
+
+        return {
+          ...connectionFromArray(entries, args),
+          totalCount: entries.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
       },
     });
     t.nonNull.field('root', { type: Package });
-    t.nonNull.list.field('suggestions', { type: Suggestion });
+    t.nonNull.connectionField('suggestions', {
+      type: Suggestion,
+      async resolve(_, args, ctx, __) {
+        return {
+          ...connectionFromArray(ctx.report.suggestions, args),
+          totalCount: ctx.report.suggestions.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
+      },
+    });
 
     t.nonNull.string('summary', {
       resolve(parent, _, ctx) {
@@ -75,12 +106,9 @@ export const Report = objectType({
       },
     });
 
-    t.nonNull.list.field('topSuggestions', {
+    t.nonNull.connectionField('topSuggestions', {
       type: TopSuggestions,
-      resolve(parent, _, ctx) {
-        // FIXME: this should be passed in from the query with a decorator
-        const limit = 5;
-
+      async resolve(_, args, ctx) {
         const tempMap: any = {};
 
         const suggestions = ctx.report.suggestions;
@@ -109,12 +137,20 @@ export const Report = objectType({
           });
         });
 
-        return Object.keys(tempMap)
+        const entries = Object.keys(tempMap)
           .map((key) => {
             return tempMap[key];
           })
-          .sort((a, b) => b.count - a.count)
-          .slice(0, limit);
+          .sort((a, b) => b.count - a.count);
+
+        return {
+          ...connectionFromArray(entries, args),
+          totalCount: entries.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
       },
     });
   },

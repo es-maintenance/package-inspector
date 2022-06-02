@@ -24,12 +24,14 @@ gql`
         }
       }
       suggestions {
-        id
-        message
-        actions {
+        nodes {
+          id
           message
-          targetPackage {
-            id
+          actions {
+            message
+            targetPackage {
+              id
+            }
           }
         }
       }
