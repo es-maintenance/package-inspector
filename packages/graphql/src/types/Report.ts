@@ -35,6 +35,7 @@ export const Report = objectType({
         };
       },
       totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
         return 0;
       },
     });
@@ -56,6 +57,7 @@ export const Report = objectType({
         };
       },
       totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
         return 0;
       },
     });
@@ -69,6 +71,7 @@ export const Report = objectType({
         };
       },
       totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
         return 0;
       },
     });
@@ -146,6 +149,7 @@ export const Report = objectType({
         };
       },
       totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
         return 0;
       },
     });
