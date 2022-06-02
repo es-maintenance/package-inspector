@@ -1,15 +1,15 @@
-import path from 'path';
 import Arborist from '@npmcli/arborist';
+import fs from 'fs-extra';
+import path from 'path';
 
-import { IArboristNode, ServerPlugin } from '../types';
+import { Report } from '../models';
 import {
+  formatDuration,
   getDirectorySize,
   getLatestPackages,
   stripPathOnDisk,
-  formatDuration,
 } from '../package';
-
-import { Report } from '../models';
+import { IArboristNode, ServerPlugin } from '../types';
 
 function getValues(dependencyTree: IArboristNode) {
   // ignore the root node
@@ -24,6 +24,7 @@ function processPlugins(plugins: string[]): ServerPlugin[] {
   plugins.forEach((pluginPath) => {
     // FIXME: need to have a try catch for this
     // FIXME: we need to have a test for this code, easily breakable
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const ServerPlugin = require(`${pluginPath}/server`)?.default;
 
     if (ServerPlugin) {
@@ -71,6 +72,10 @@ export async function generateReport(
     const lookupKey = `${depNode.name}@${depNode.version}`;
 
     if (!report.dependencies[lookupKey]) {
+      const { devDependencies } = fs.readJSONSync(
+        `${depNode.realpath}/package.json`
+      );
+
       report.dependencies[lookupKey] = {
         funding: depNode.funding,
         homepage: depNode.homepage,
@@ -84,6 +89,9 @@ export async function generateReport(
           }),
           pathsOnDisk: [],
         },
+        devDependencies: Object.entries(devDependencies || {}).map(
+          ([name, maybeVersion]) => `${name}@${maybeVersion}`
+        ),
         dependencies: [...depNode.edgesOut.values()]
           .filter((dependency) => {
             const node = dependency.to;
@@ -114,6 +122,7 @@ export async function generateReport(
     metadata: {
       pathsOnDisk: [stripPathOnDisk(rootArboristNode.path, cwd)],
     },
+    devDependencies: [],
     dependencies: [...rootArboristNode.edgesOut.values()]
       .filter((dependencyEdge) => {
         const dependencyNode = dependencyEdge.to;

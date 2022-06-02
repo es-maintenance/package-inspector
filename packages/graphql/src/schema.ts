@@ -1,4 +1,4 @@
-import { makeSchema } from 'nexus';
+import { makeSchema, connectionPlugin } from 'nexus';
 import { join } from 'path';
 
 import * as types from './types';
@@ -13,4 +13,12 @@ export const schema = makeSchema({
     module: join(__dirname, 'context.ts'),
     export: 'Context',
   },
+  plugins: [
+    connectionPlugin({
+      includeNodesField: true,
+      extendConnection: {
+        totalCount: { type: 'Int' },
+      },
+    }),
+  ],
 });

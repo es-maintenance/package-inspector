@@ -1,16 +1,15 @@
-import fs from 'fs';
-import path from 'path';
-
 import {
-  type SuggestionInput,
-  type SuggestionAction,
   type Suggestion,
+  type SuggestionAction,
+  type SuggestionInput,
   Priority,
   getBreadcrumb,
   getDirectorySize,
   humanFileSize,
   SuggestionTask,
 } from '@package-inspector/core';
+import fs from 'fs';
+import path from 'path';
 
 function getPriorityBasedOnSize(size: number): Priority {
   let priority = Priority.Low;

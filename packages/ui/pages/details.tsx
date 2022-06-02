@@ -16,14 +16,16 @@ gql`
         name
         version
         dependencies {
-          id
-          name
-          version
-          type
-          metadata {
-            size {
-              files
-              physical
+          nodes {
+            id
+            name
+            version
+            type
+            metadata {
+              size {
+                files
+                physical
+              }
             }
           }
         }
@@ -41,7 +43,7 @@ const Report: NextPage = () => {
 
   const nivoData = {
     name: 'dependencies',
-    children: [...(data?.report?.root?.dependencies || [])].map(
+    children: [...(data?.report?.root?.dependencies?.nodes || [])].map(
       (dependency) => {
         if (!dependency) return {};
 
@@ -117,15 +119,17 @@ const Report: NextPage = () => {
                 { field: 'type', flex: 1 },
                 { field: 'size', flex: 1 },
               ]}
-              rows={data.report.root.dependencies.map((dep) => {
-                return {
-                  id: dep?.id,
-                  name: dep?.name,
-                  version: dep?.version,
-                  type: dep?.type,
-                  size: dep?.metadata?.size?.physical || 0,
-                };
-              })}
+              rows={
+                data.report.root.dependencies?.nodes?.map((dep) => {
+                  return {
+                    id: dep?.id,
+                    name: dep?.name,
+                    version: dep?.version,
+                    type: dep?.type,
+                    size: dep?.metadata?.size?.physical || 0,
+                  };
+                }) || []
+              }
               components={{ Toolbar: GridToolbar }}
             />
           </div>

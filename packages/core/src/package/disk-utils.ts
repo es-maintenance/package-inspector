@@ -1,6 +1,6 @@
+import debug from 'debug';
 import fs from 'fs';
 import path from 'path';
-import debug from 'debug';
 
 const logger = debug('pi-core:disk-utils');
 

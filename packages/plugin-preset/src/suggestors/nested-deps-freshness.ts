@@ -1,14 +1,14 @@
-import debug from 'debug';
-import semverDiff from 'semver/functions/diff';
 import {
-  type SuggestionAction,
-  type Suggestion,
   type IArboristNode,
+  type Suggestion,
+  type SuggestionAction,
   type SuggestionInput,
   getBreadcrumb,
   getLatestPackages,
   SuggestionTask,
 } from '@package-inspector/core';
+import debug from 'debug';
+import semverDiff from 'semver/functions/diff';
 
 const logger = debug('pi-core:suggestor:nested-deps-freshness');
 
