@@ -15,9 +15,9 @@ import {
 import NextLink from 'next/link';
 import * as React from 'react';
 
-import { PackageSearchInput } from './';
 import { useNavbarTitleQuery } from '../graphql/generated/client';
 import { usePluginProvider } from '../hooks';
+import { PackageSearchInput } from './';
 
 gql`
   query NavbarTitle {

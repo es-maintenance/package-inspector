@@ -1,12 +1,8 @@
 import { gql } from '@apollo/client';
-import { styled, alpha } from '@mui/material/styles';
-import { Autocomplete, TextField, Typography, InputBase } from '@mui/material';
-import { useRouter } from 'next/router';
-
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import IconButton from '@mui/material/IconButton';
-
+import { Autocomplete, InputBase, Typography } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 import {
@@ -141,7 +137,10 @@ export const PackageSearchInput: React.FC = () => {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" {...params.inputProps} />
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={params.inputProps}
+            />
           </Search>
         </div>
       )}
