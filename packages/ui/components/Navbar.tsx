@@ -15,6 +15,7 @@ import {
 import NextLink from 'next/link';
 import * as React from 'react';
 
+import { PackageSearchInput } from './';
 import { useNavbarTitleQuery } from '../graphql/generated/client';
 import { usePluginProvider } from '../hooks';
 
@@ -135,6 +136,10 @@ const NavBar: React.FC<NavBarProps> = (props) => {
                 <Typography textAlign="center">Packages</Typography>
               </NextLink>
             </Button>
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <PackageSearchInput />
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

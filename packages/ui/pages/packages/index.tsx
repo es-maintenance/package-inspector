@@ -95,9 +95,9 @@ const Packages: NextPage = () => {
                 renderCell(params) {
                   return (
                     <NextLink
-                      href={`packages/${encodeURIComponent(params.value)}/${
-                        params.row.version
-                      }`}
+                      href={`packages/${encodeURIComponent(
+                        params.row.name || ''
+                      )}/${params.row.version}`}
                       passHref={true}
                     >
                       <Link>{params.value}</Link>

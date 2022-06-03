@@ -139,6 +139,7 @@ export type Query = {
   package?: Maybe<PackageCompound>;
   packageByVersion?: Maybe<Package>;
   packages: PackageConnection;
+  packagesBySearchKey: PackageConnection;
   report: Report;
   suggestion?: Maybe<Suggestion>;
   title: Scalars['String'];
@@ -158,6 +159,14 @@ export type QuerypackagesArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+};
+
+export type QuerypackagesBySearchKeyArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  packageName: Scalars['String'];
 };
 
 export type QuerysuggestionArgs = {
@@ -222,7 +231,6 @@ export type Suggestion = {
 export type SuggestionAction = {
   __typename?: 'SuggestionAction';
   message: Scalars['String'];
-  priority?: Maybe<Scalars['String']>;
   targetPackage?: Maybe<Package>;
   targetPackageId: Scalars['String'];
 };
@@ -274,6 +282,32 @@ export type TopSuggestionsEdge = {
 export type NavbarTitleQueryVariables = Exact<{ [key: string]: never }>;
 
 export type NavbarTitleQuery = { __typename?: 'Query'; title: string };
+
+export type PackagesSearchedByKeyFragment = {
+  __typename?: 'Package';
+  name: string;
+  version: string;
+  id: string;
+};
+
+export type PackagesBySearchKeyQueryVariables = Exact<{
+  packageName: Scalars['String'];
+  first?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type PackagesBySearchKeyQuery = {
+  __typename?: 'Query';
+  packagesBySearchKey: {
+    __typename?: 'PackageConnection';
+    totalCount?: number | null;
+    nodes?: Array<{
+      __typename?: 'Package';
+      name: string;
+      version: string;
+      id: string;
+    } | null> | null;
+  };
+};
 
 export type DetailsReportQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
@@ -488,6 +522,13 @@ export type SuggestionsByIdSuggestionQuery = {
   } | null;
 };
 
+export const PackagesSearchedByKeyFragmentDoc = gql`
+  fragment PackagesSearchedByKey on Package {
+    name
+    version
+    id
+  }
+`;
 export const CardViewSuggestionsFragmentDoc = gql`
   fragment CardViewSuggestions on Suggestion {
     id
@@ -559,6 +600,69 @@ export type NavbarTitleLazyQueryHookResult = ReturnType<
 export type NavbarTitleQueryResult = Apollo.QueryResult<
   NavbarTitleQuery,
   NavbarTitleQueryVariables
+>;
+export const PackagesBySearchKeyDocument = gql`
+  query PackagesBySearchKey($packageName: String!, $first: Int) {
+    packagesBySearchKey(packageName: $packageName, first: $first) {
+      totalCount
+      nodes {
+        ...PackagesSearchedByKey
+      }
+    }
+  }
+  ${PackagesSearchedByKeyFragmentDoc}
+`;
+
+/**
+ * __usePackagesBySearchKeyQuery__
+ *
+ * To run a query within a React component, call `usePackagesBySearchKeyQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePackagesBySearchKeyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePackagesBySearchKeyQuery({
+ *   variables: {
+ *      packageName: // value for 'packageName'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function usePackagesBySearchKeyQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    PackagesBySearchKeyQuery,
+    PackagesBySearchKeyQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    PackagesBySearchKeyQuery,
+    PackagesBySearchKeyQueryVariables
+  >(PackagesBySearchKeyDocument, options);
+}
+export function usePackagesBySearchKeyLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PackagesBySearchKeyQuery,
+    PackagesBySearchKeyQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    PackagesBySearchKeyQuery,
+    PackagesBySearchKeyQueryVariables
+  >(PackagesBySearchKeyDocument, options);
+}
+export type PackagesBySearchKeyQueryHookResult = ReturnType<
+  typeof usePackagesBySearchKeyQuery
+>;
+export type PackagesBySearchKeyLazyQueryHookResult = ReturnType<
+  typeof usePackagesBySearchKeyLazyQuery
+>;
+export type PackagesBySearchKeyQueryResult = Apollo.QueryResult<
+  PackagesBySearchKeyQuery,
+  PackagesBySearchKeyQueryVariables
 >;
 export const DetailsReportDocument = gql`
   query DetailsReport($first: Int, $after: String) {
@@ -720,12 +824,12 @@ export const PackageByNamePackageInfoDocument = gql`
     package(packageName: $packageName) {
       name
       latest
-      variants {
+      variants(first: 10) {
         nodes {
           id
           version
           name
-          parent {
+          parent(first: 10) {
             nodes {
               id
               name
@@ -806,7 +910,7 @@ export const PackagesByNameAndVersionPackageDocument = gql`
           files
         }
       }
-      suggestions {
+      suggestions(first: 10) {
         nodes {
           id
           message

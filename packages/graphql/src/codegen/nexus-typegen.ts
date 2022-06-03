@@ -230,6 +230,7 @@ export interface NexusGenFieldTypes {
     package: NexusGenRootTypes['PackageCompound'] | null; // PackageCompound
     packageByVersion: NexusGenRootTypes['Package'] | null; // Package
     packages: NexusGenRootTypes['PackageConnection']; // PackageConnection!
+    packagesBySearchKey: NexusGenRootTypes['PackageConnection']; // PackageConnection!
     report: NexusGenRootTypes['Report']; // Report!
     suggestion: NexusGenRootTypes['Suggestion'] | null; // Suggestion
     title: string; // String!
@@ -362,6 +363,7 @@ export interface NexusGenFieldTypeNames {
     package: 'PackageCompound';
     packageByVersion: 'Package';
     packages: 'PackageConnection';
+    packagesBySearchKey: 'PackageConnection';
     report: 'Report';
     suggestion: 'Suggestion';
     title: 'String';
@@ -476,6 +478,14 @@ export interface NexusGenArgTypes {
       before?: string | null; // String
       first?: number | null; // Int
       last?: number | null; // Int
+    };
+    packagesBySearchKey: {
+      // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+      packageName: string; // String!
     };
     suggestion: {
       // args

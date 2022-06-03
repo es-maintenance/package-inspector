@@ -12,12 +12,12 @@ gql`
     package(packageName: $packageName) {
       name
       latest
-      variants {
+      variants(first: 10) {
         nodes {
           id
           version
           name
-          parent {
+          parent(first: 10) {
             nodes {
               id
               name
