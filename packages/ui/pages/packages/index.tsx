@@ -65,8 +65,6 @@ const Packages: NextPage = () => {
     }
   };
 
-  console.log(data?.packages?.totalCount);
-
   if (loading) return <LoadingView />;
   if (error) return <p>Oh no... {error.message}</p>;
   if (!data) return <p>Oh no... could not load package list</p>;

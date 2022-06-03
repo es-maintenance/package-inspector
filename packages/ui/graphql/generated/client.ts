@@ -222,6 +222,7 @@ export type Suggestion = {
 export type SuggestionAction = {
   __typename?: 'SuggestionAction';
   message: Scalars['String'];
+  priority?: Maybe<Scalars['String']>;
   targetPackage?: Maybe<Package>;
   targetPackageId: Scalars['String'];
 };
@@ -274,7 +275,10 @@ export type NavbarTitleQueryVariables = Exact<{ [key: string]: never }>;
 
 export type NavbarTitleQuery = { __typename?: 'Query'; title: string };
 
-export type DetailsReportQueryVariables = Exact<{ [key: string]: never }>;
+export type DetailsReportQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+}>;
 
 export type DetailsReportQuery = {
   __typename?: 'Query';
@@ -287,6 +291,7 @@ export type DetailsReportQuery = {
       version: string;
       dependencies: {
         __typename?: 'PackageConnection';
+        totalCount?: number | null;
         nodes?: Array<{
           __typename?: 'Package';
           id: string;
@@ -302,6 +307,13 @@ export type DetailsReportQuery = {
             } | null;
           } | null;
         } | null> | null;
+        pageInfo: {
+          __typename?: 'PageInfo';
+          endCursor?: string | null;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          hasNextPage: boolean;
+        };
       };
     };
   };
@@ -549,13 +561,14 @@ export type NavbarTitleQueryResult = Apollo.QueryResult<
   NavbarTitleQueryVariables
 >;
 export const DetailsReportDocument = gql`
-  query DetailsReport {
+  query DetailsReport($first: Int, $after: String) {
     report {
       summary
       root {
         name
         version
-        dependencies {
+        dependencies(first: $first, after: $after) {
+          totalCount
           nodes {
             id
             name
@@ -567,6 +580,12 @@ export const DetailsReportDocument = gql`
                 physical
               }
             }
+          }
+          pageInfo {
+            endCursor
+            hasPreviousPage
+            startCursor
+            hasNextPage
           }
         }
       }
@@ -586,6 +605,8 @@ export const DetailsReportDocument = gql`
  * @example
  * const { data, loading, error } = useDetailsReportQuery({
  *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
  *   },
  * });
  */
