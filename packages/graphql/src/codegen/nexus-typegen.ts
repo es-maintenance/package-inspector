@@ -35,7 +35,9 @@ declare global {
 
 export interface NexusGenInputs {}
 
-export interface NexusGenEnums {}
+export interface NexusGenEnums {
+  priority: 'HIGH' | 'LOW' | 'MEDIUM';
+}
 
 export interface NexusGenScalars {
   String: string;
@@ -122,7 +124,7 @@ export interface NexusGenObjects {
   SuggestionAction: {
     // root type
     message: string; // String!
-    priority?: string | null; // String
+    priority?: NexusGenEnums['priority'] | null; // priority
     targetPackageId: string; // String!
   };
   SuggestionConnection: {
@@ -162,7 +164,9 @@ export interface NexusGenUnions {}
 
 export type NexusGenRootTypes = NexusGenObjects;
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
+export type NexusGenAllTypes = NexusGenRootTypes &
+  NexusGenScalars &
+  NexusGenEnums;
 
 export interface NexusGenFieldTypes {
   MiniPackage: {
@@ -262,7 +266,7 @@ export interface NexusGenFieldTypes {
   SuggestionAction: {
     // field return type
     message: string; // String!
-    priority: string | null; // String
+    priority: NexusGenEnums['priority'] | null; // priority
     targetPackage: NexusGenRootTypes['Package'] | null; // Package
     targetPackageId: string; // String!
   };
@@ -395,7 +399,7 @@ export interface NexusGenFieldTypeNames {
   SuggestionAction: {
     // field return type name
     message: 'String';
-    priority: 'String';
+    priority: 'priority';
     targetPackage: 'Package';
     targetPackageId: 'String';
   };
@@ -525,7 +529,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 
