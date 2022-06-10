@@ -53,6 +53,12 @@ export interface SuggestionInput {
   latestPackages?: IDependencyMap;
 }
 
+export enum Priority {
+  High = 'HIGH',
+  Medium = 'MEDIUM',
+  Low = 'LOW',
+}
+
 export interface Plugin {
   name: string;
   version: string;

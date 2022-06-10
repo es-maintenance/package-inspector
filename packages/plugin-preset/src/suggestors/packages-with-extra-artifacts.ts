@@ -5,10 +5,23 @@ import {
   getBreadcrumb,
   getDirectorySize,
   humanFileSize,
+  Priority,
   SuggestionTask,
 } from '@package-inspector/core';
 import fs from 'fs';
 import path from 'path';
+
+function getPriorityBasedOnSize(size: number): Priority {
+  let priority = Priority.Low;
+
+  if (size > 10000) {
+    priority = Priority.Medium;
+  } else if (size > 1000000) {
+    priority = Priority.High;
+  }
+
+  return priority;
+}
 
 /**
  * // docs/ or tests/ is published to npm - how do you NOT publish them
@@ -39,6 +52,7 @@ export class PackagesWithExtraArtifacts extends SuggestionTask {
               size.physical
             )}.`,
             targetPackageId: `${node.name}@${node.version}`,
+            priority: getPriorityBasedOnSize(size.physical),
           });
         }
       }
@@ -56,6 +70,7 @@ export class PackagesWithExtraArtifacts extends SuggestionTask {
               size.physical
             )}.`,
             targetPackageId: `${node.name}@${node.version}`,
+            priority: getPriorityBasedOnSize(size.physical),
           });
         }
       }

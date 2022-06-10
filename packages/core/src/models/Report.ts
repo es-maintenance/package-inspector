@@ -1,5 +1,7 @@
 import fs from 'fs-extra';
 
+import { Priority } from '../types';
+
 export type LatestPackages = Record<string, string>;
 export interface SizeInfo {
   files: number;
@@ -29,6 +31,7 @@ export interface Package {
 export interface SuggestionAction {
   message: string;
   targetPackageId: string;
+  priority?: Priority;
 }
 
 export interface Suggestion {
