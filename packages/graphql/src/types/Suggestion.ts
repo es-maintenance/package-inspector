@@ -1,4 +1,4 @@
-import { extendType, nonNull, objectType, stringArg } from 'nexus';
+import { enumType, extendType, nonNull, objectType, stringArg } from 'nexus';
 
 import { getPackageID } from '../utils';
 import { Package } from './Package';
@@ -7,6 +7,12 @@ export const SuggestionAction = objectType({
   name: 'SuggestionAction',
   definition(t) {
     t.nonNull.string('message');
+    t.field('priority', {
+      type: enumType({
+        name: 'priority',
+        members: ['HIGH', 'MEDIUM', 'LOW'],
+      }),
+    });
     t.nonNull.string('targetPackageId');
     t.field('targetPackage', {
       type: Package,

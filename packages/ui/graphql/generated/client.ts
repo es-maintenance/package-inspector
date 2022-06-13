@@ -231,6 +231,7 @@ export type Suggestion = {
 export type SuggestionAction = {
   __typename?: 'SuggestionAction';
   message: Scalars['String'];
+  priority?: Maybe<priority>;
   targetPackage?: Maybe<Package>;
   targetPackageId: Scalars['String'];
 };
@@ -278,6 +279,12 @@ export type TopSuggestionsEdge = {
   /** https://facebook.github.io/relay/graphql/connections.htm#sec-Node */
   node?: Maybe<TopSuggestions>;
 };
+
+export enum priority {
+  HIGH = 'HIGH',
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+}
 
 export type NavbarTitleQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -517,6 +524,7 @@ export type SuggestionsByIdSuggestionQuery = {
     actions: Array<{
       __typename?: 'SuggestionAction';
       message: string;
+      priority?: priority | null;
       targetPackage?: { __typename?: 'Package'; name: string } | null;
     } | null>;
   } | null;
@@ -1057,6 +1065,7 @@ export const SuggestionsByIdSuggestionDocument = gql`
       pluginTarget
       actions {
         message
+        priority
         targetPackage {
           name
         }
