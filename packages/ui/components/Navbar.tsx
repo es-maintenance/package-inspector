@@ -17,6 +17,7 @@ import * as React from 'react';
 
 import { useNavbarTitleQuery } from '../graphql/generated/client';
 import { usePluginProvider } from '../hooks';
+import { PackageSearchInput } from './';
 
 gql`
   query NavbarTitle {
@@ -135,6 +136,10 @@ const NavBar: React.FC<NavBarProps> = (props) => {
                 <Typography textAlign="center">Packages</Typography>
               </NextLink>
             </Button>
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <PackageSearchInput />
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

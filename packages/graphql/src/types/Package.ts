@@ -287,3 +287,40 @@ export const PackageQuery = extendType({
     });
   },
 });
+
+export const PackageSearchQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.nonNull.connectionField('packagesBySearchKey', {
+      type: Package,
+      additionalArgs: {
+        packageName: nonNull(stringArg()),
+      },
+      resolve(_, args, ctx) {
+        const { packageName } = args;
+
+        const packageNames = Object.entries(ctx.report.dependencies)
+          .filter(([key]) => {
+            return key.indexOf(packageName) > -1;
+          })
+          .map(([, packageModel]) => {
+            return {
+              id: getPackageID(packageModel),
+              name: packageModel.name,
+              type: packageModel.type,
+              version: packageModel.version,
+            };
+          });
+
+        return {
+          ...connectionFromArray(packageNames, args),
+          totalCount: packageNames.length,
+        };
+      },
+      totalCount: () => {
+        // TODO: This is not running, we think this is an issue with nexus. @gabriel will update with a nexus issue.
+        return 0;
+      },
+    });
+  },
+});

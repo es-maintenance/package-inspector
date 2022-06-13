@@ -23,7 +23,7 @@ gql`
           files
         }
       }
-      suggestions {
+      suggestions(first: 10) {
         nodes {
           id
           message
